@@ -9,7 +9,7 @@
                 
                 <li class="nav-item"> <a href="../HTML/Demande.html" class="navbar-brand fs-6"> Effectuer une demande </a> </li>
                 
-                <li class="nav-item"> <a href="#" class="navbar-brand fs-6" > Se déconnecter </a> </li>   
+                <li class="nav-item"> <a href="../HTML/Connexion.html" class="navbar-brand fs-6" > Se déconnecter </a> </li>   
                 
             </ul>
             

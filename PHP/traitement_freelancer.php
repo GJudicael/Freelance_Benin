@@ -10,13 +10,14 @@
     <?php
     $bddPDO = new PDO('mysql:host=localhost;dbname=freelaance_benin','root',"");
     $bddPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $categorie = $_POST['categorie'];
-    $demande = $_POST['demande'];
+    
     $id_client = $_POST['client'];
+    $activiter = $_POST['activiter'];
+    $description = $_POST['description'];
     
     if(isset($_POST['envoyer']))
     {
-        if(empty($categorie) || empty($demande) || empty($id_client))
+        if(empty($id_client) || empty($activiter) || empty($description))
         {
             echo "Veuiller entrer toute les information";
         }
@@ -32,10 +33,10 @@
             }
             else
             {
-                $requete = $bddPDO->prepare('INSERT INTO demande(categorie , idClients, descriptionDeLaDemande) VALUES(:categorie, :idClients, :descriptionDeLaDemande)');
-                $requete->bindvalue(':categorie', $categorie);
-                $requete->bindvalue(':idClients', $id_client);
-                $requete->bindvalue(':descriptionDeLaDemande',$demande);
+                $requete = $bddPDO->prepare('INSERT INTO freelancer (nomDutilisateur , activite, descriptionDeLActivite) VALUES(:nomDutilisateur, :activite, :descriptionDeLActivite)');
+                $requete->bindvalue(':nomDutilisateur', $id_client);
+                $requete->bindvalue(':activite', $activiter);
+                $requete->bindvalue(':descriptionDeLActivite',$description);
                 $result = $requete->execute();
 
                 if($result)

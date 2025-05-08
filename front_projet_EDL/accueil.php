@@ -20,7 +20,7 @@
 <body>
 
 <?php require_once(__DIR__."/header.php")?>
-    
+
 
 <main>
     <section class = "container mt-4">
@@ -31,7 +31,9 @@
 
     </section>
     <section class="container">
+
         <h4 class="text-secondary mt-4 text-center"> Historique des demandes </h4>
+        <?php require_once("historique.php"); ?>
     </section>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
