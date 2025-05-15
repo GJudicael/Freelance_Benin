@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -7,7 +8,7 @@
    
     <link rel="stylesheet" href="../assets/bootstrap-5.3.6-dist/css/bootstrap.min.css">
     
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../assets/style.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,15 +18,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baumans&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.12.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../assets/bootstrap-icons-1.13.1/bootstrap-icons.min.css">
 </head>
 <body>
-    
+    <?php require_once(__DIR__."/header.php")?>
 
     <main class="container w-50 container-fluide my-5 p-5 shadow">
-    <h4 class="text-center text-secondary "> Faites votre demandes ici ! </h4> 
+    <h4 class="text-center text-secondary "> Faites vos demandes ici ! </h4> 
     
-        <form method="post" action="../PHP/traitement_de_la_demande.php">
+        <form method="post" action="p">
             
                 <div class="p-2">
                     <label class="form-text p-1 fs-6 " for="client"> Nom d'utilisateur </label>
@@ -47,6 +48,8 @@
         </form>
     
     </main>
+
+    <?php require_once(__DIR__."/footer.php")?>
     <script src="../assets/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js" ></script>
 </body>
 </html>

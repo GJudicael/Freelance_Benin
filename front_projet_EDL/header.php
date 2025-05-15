@@ -1,7 +1,7 @@
  
 <header>
 <!-- Barre de navigation -->
-<nav class="navbar navbar-expand-lg navbar-light bg-primary-subtle px-5 shadow">
+<nav class="navbar navbar-expand-lg navbar-light bg-primary-subtle px-5 shadow static-top">
   <a class="navbar-brand site text-secondary fs-4 fw-bolder" href="#">FreeBenin</a>
 
   <!-- Bouton responsive -->
@@ -31,13 +31,13 @@
     <!-- Profil avec dropdown -->
     <div class="dropdown ms-3">
       <a class="d-flex align-items-center text-decoration-none dropdown-toggle" href="#" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-        <img src="348031e77ad618631ce86cc8aa1825c8.jpg" alt="Profil" class="rounded-circle me-2" width="40px" height="40px">
-        <span>Jean Dupont</span>
+        <img src="photo_profile.jpg" alt="Profil" class="rounded-circle me-2" width="50px" height="50px">
+        <span> <?php echo isset($_SESSION["user_name"])? htmlspecialchars($_SESSION["user_name"]): "Profile"?></span>
       </a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
         <li><a class="dropdown-item" href="#">Mon Profil</a></li>
         <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item text-danger" href="Connexion.php">Déconnexion</a></li>
+        <li><a class="dropdown-item text-danger" href="deconnexion.php">Déconnexion</a></li>
       </ul>
     </div>
   </div>

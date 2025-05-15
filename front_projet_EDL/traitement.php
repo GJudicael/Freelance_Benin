@@ -7,8 +7,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $requete = $bddPDO->prepare('INSERT INTO demande (description, categorie) VALUES (:description, :categorie)');
     $requete->execute([
-        ':description' => $description,
-        ':categorie' => $categorie
+        'description' => $description,
+        'categorie' => $categorie
     ]);
 
     header("Location: accueil.php");

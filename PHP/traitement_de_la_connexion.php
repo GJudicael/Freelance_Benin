@@ -1,47 +1,38 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-with,initial-scale=1.0">
-    <title>Creation d'un compte</title>
-</head>
-<body>
+
     <?php
-    $bddPDO = new PDO('mysql:host=localhost;dbname=freelaance_benin','root',"");
-    $bddPDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $nom_utilisateur = $_POST['nom_d_utilisateur'];
-    $mot_de_passe = $_POST['mot_de_passe'];
+    session_start();
+    require_once(__DIR__."/../bdd/creation_bdd.php");
+
+    
+    
     if(isset($_POST['envoyer']))
     {
-        if (empty($nom_utilisateur) || empty($mot_de_passe))
+        $nom_utilisateur = $_POST['nom_d_utilisateur'];
+        $mot_de_passe = $_POST['mot_de_passe'];
+
+        if (isset($nom_utilisateur) && isset($mot_de_passe) && (empty($nom_utilisateur) || empty($mot_de_passe)))
         {
-            echo "Veuiller entrer toute les information";
+            $message_error = "Tous les champs sont requis";
         }
         else
         {
             
-            $nom_utilisateur = $_POST['nom_d_utilisateur'];
-            $mot_de_passe = $_POST['mot_de_passe'];
-
-            $requete = $bddPDO->prepare('SELECT motDePasse FROM inscription WHERE nomDUtilisateur = :nomDUtilisateur');
-            $requete->bindParam(':nomDUtilisateur', $nom_utilisateur, PDO::PARAM_STR);
-            $requete->execute();
+            $requete = $bdd->prepare('SELECT motDePasse FROM inscription WHERE nomDUtilisateur = :nomDUtilisateur');
+            $requete->execute([
+                'nomDUtilisateur' => $nom_utilisateur
+            ]);
             $user = $requete->fetch();
 
-            if ($user && $mot_de_passe === $user['motDePasse']) {
-                header("Location: http://localhost/Freelance_Benin/front_projet_EDL/accueil.php");
+            if(!$user){
+                $error["user_name"] = "Nom d'utilisateur incorrect";
+            }elseif ($user && $mot_de_passe === $user['motDePasse']) {
+                $_SESSION["user_name"] = $nom_utilisateur;
+                header("Location: accueil.php");
                 exit();
             } else {
-                echo "Nom d'utilisateur ou mot de passe incorrect.";
+                $error["password"]= "Mot de passe incorrect";
             }
 
         }
     }
-    else
-    {
-        echo "ERREUR";
-    }
     ?>
-</body>
-</html>
