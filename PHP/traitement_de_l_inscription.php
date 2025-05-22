@@ -19,7 +19,7 @@
             $message = "Tous les champs sont requis";
         }
         if (strlen($motDepasse) < 6 || !preg_match('/^[A-Z]/', $motDepasse) || !preg_match('/\d/', $motDepasse)) {
-                $erreurs["password"] = "Le mot de passe doit contenir au moins 06 caractères; commencer par une lettre majuscule et contenir au moins un chiffre";
+                $error["password"] = "Le mot de passe doit contenir au moins 06 caractères; commencer par une lettre majuscule et contenir au moins un chiffre";
         }
         else
         {

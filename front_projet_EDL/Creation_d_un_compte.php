@@ -77,7 +77,7 @@
                 <label for="mot_de_passe_confirmation" class="form-text  fs-6 p-1"> Confirmer votre mot de passe</label>
                 <div class="input-group input-group-merge">
                     <input id="mot_de_passe_confirmation" type="password" name="mot_de_passe_confirmation" class="form-control
-                    <?php if (isset($erreurs["password"])) {
+                    <?php if (isset($error["password"])) {
                         echo "is-invalid";
                     } ?>" placeholder="Entrer votre mot de passe" aria-describedby="passwordHelp1">
                     <span class="input-group-text cursor-pointer"><i class="bi bi-eye" id="eyeToggle2"></i></span>
