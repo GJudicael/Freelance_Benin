@@ -1,4 +1,5 @@
-<?php session_start() ?>
+<?php session_start();
+ ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,8 +37,8 @@
     
     <section class="my-3 bg-tertiary p-5 shadow">
 
-        <h4 class="text-secondary mt-4 text-center"> Historique des demandes </h4>
-<?php //require_once("historique.php"); ?> 
+        <h4 class="text-primary mt-4 text-center"> Historique des demandes </h4>
+        <?php require_once(__DIR__."/historique.php"); ?> 
     </section>
 </main>
 

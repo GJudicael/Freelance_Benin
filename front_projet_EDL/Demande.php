@@ -1,3 +1,6 @@
+<?php 
+require_once(__DIR__."/../PHP/traitement.php")?>
+
 <!DOCTYPE html>
 
 <html lang="fr">
@@ -26,19 +29,29 @@
     <main class="container w-50 container-fluide my-5 p-5 shadow">
     <h4 class="text-center text-secondary "> Faites vos demandes ici ! </h4> 
     
-        <form method="post" action="p">
+        <form method="post" action="">
+
+        <?php 
+            if(isset($message)){
+                echo '<div class="alert alert-danger">' . $message .' </div>';
+                unset($message);
+            }
+        ?>
             
                 <div class="p-2">
                     <label class="form-text p-1 fs-6 " for="client"> Nom d'utilisateur </label>
                     <input id="client" type="text" name="client" class="form-control fs-6" placeholder="Entrer votre nom d'utilisateur ">
+                    <p> <small class = "text-danger"> <?php echo isset($erreur['nom_utilisateur'])? htmlspecialchars($erreur['nom_utilisateur']): ''?></small></p>
                 </div>
                 <div class="p-2">
-                    <label for="categorie" class="form-text p-1 fs-6 ">Categorie</label>
-                    <input id="categorie" type="text" name="categorie" class="form-control" placeholder="Entrer une categorie pour votre description ">
+                    <label for="categorie" class="form-text p-1 fs-6 ">Titre</label>
+                    <input id="categorie" type="text" name="categorie" class="form-control" placeholder="Entrer le titre de votre demande">
+                    <p> <small class = "text-danger"> <?php echo isset($erreur['categorie'])? htmlspecialchars($erreur['categorie']): ''?></small></p>
                 </div>
                 <div class="p-2">
                     <label for="demande" class="form-text p-1 fs-6">Description</label>
                     <textarea name="demande" rows="5" cols="50" class="form-control" placeholder="Decrivez votre demande ici..."></textarea>
+                    <p> <small class = "text-danger"> <?php echo isset($erreur['description'])? htmlspecialchars($erreur['description']): ''?></small></p>
                 </div>
                 <div class="text-end">
                 <button type="submit" name="envoyer" class="btn btn-outline-primary my-2"> Soumettre </button>

@@ -18,18 +18,24 @@
         {
             $message = "Tous les champs sont requis";
         }
+        if (strlen($motDepasse) < 6 || !preg_match('/^[A-Z]/', $motDepasse) || !preg_match('/\d/', $motDepasse)) {
+                $erreurs["password"] = "Le mot de passe doit contenir au moins 06 caractères; commencer par une lettre majuscule et contenir au moins un chiffre";
+        }
         else
         {
-            $requete = $bdd->prepare('SELECT * FROM inscription WHERE email = :email');
-            $requete->bindParam(':email', $nomUtilisateur, PDO::PARAM_STR);
-            $requete->execute();
-            $user = $requete->fetch();
+            if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
+                $error["email"] = "Cet email est invalid";
+            }else{
+                $requete = $bdd->prepare('SELECT * FROM inscription WHERE email = :email');
+                $requete->execute([
+                    'email' => $email
+                ]);
+                $user = $requete->fetch();
 
             if ($user) {
                 $error["email"] = "Cet email existe déjà.";
-            }
-            else if ($motDepasse != $motDepasseConfirmation)
-            {
+
+            }else if ($motDepasse != $motDepasseConfirmation){
                 $error["password"] = "Mot de passe incorrecte veuiller entrer le même mot de passe dans les deux champs";
             }
             else
@@ -40,19 +46,20 @@
                     'prenom' => $prenom,
                     'numero' => $numero,
                     'email' => $email,
-                    'motDePasse' => $motDepasse,
+                    'motDePasse' => password_hash($motDepasse,PASSWORD_DEFAULT) ,
                     'nomDUtilisateur' => $nomUtilisateur
                 ]);
 
+                    
                     $_SESSION["succes"] = 'Vos informations sont enregistrées avec succès. Vous pouvez à présent vous connecter';
                     header("Location:../front_projet_EDL/Connexion.php");
                     exit();
             }
             
+            }            
         }
     }
    
     ?>
 </body>
 </html>
-<!--CREATE TABLE `freelaance_benin`.`inscription` (`nom` INT NOT NULL , `prenom` INT NOT NULL , `numero` TEXT NOT NULL AUTO_INCREMENT , `email` TEXT NOT NULL , `motDePasse` TEXT NOT NULL , `nomDeLActivite` TEXT NOT NULL , `activie` TEXT NOT NULL , PRIMARY KEY (`numero`)) ENGINE = InnoDB-->

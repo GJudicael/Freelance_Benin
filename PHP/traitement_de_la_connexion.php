@@ -17,16 +17,19 @@
         else
         {
             
-            $requete = $bdd->prepare('SELECT motDePasse FROM inscription WHERE nomDUtilisateur = :nomDUtilisateur');
+            $requete = $bdd->prepare('SELECT motDePasse, id FROM inscription WHERE nomDUtilisateur = :nomDUtilisateur');
             $requete->execute([
                 'nomDUtilisateur' => $nom_utilisateur
             ]);
             $user = $requete->fetch();
+            var_dump($user);
 
             if(!$user){
                 $error["user_name"] = "Nom d'utilisateur incorrect";
-            }elseif ($user && $mot_de_passe === $user['motDePasse']) {
+            }elseif ($user && password_verify($mot_de_passe,$user['motDePasse'])) {
                 $_SESSION["user_name"] = $nom_utilisateur;
+                $_SESSION["user_id"] = $user['id'];
+
                 header("Location: accueil.php");
                 exit();
             } else {

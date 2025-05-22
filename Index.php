@@ -37,11 +37,10 @@
                         </div>
                     </div>
                     <div class="text-center">
-                        <p class="mb-5 text-light"> Choisissez votre type de compte : </p>
-                        <div class="d-flex justify-content-center gap-4">
-                            <a href="front_end_EDL/Creation_d_un_compte_freelancer.php" class="btn btn-primary btn-lg"> Créer un compte client </a>
-                            <a href="front_projet_EDL/Creation_d_un_compte.php" class="btn btn-primary btn-lg"> Créer un compte Freelance</a>
-                        </div>
+                        
+                    
+                            <a href="front_projet_EDL/Creation_d_un_compte.php" class="btn btn-primary btn-lg"> Créer un compte</a>
+                        
                     </div>
         </div>
         </header>

@@ -31,11 +31,11 @@
     <!-- Profil avec dropdown -->
     <div class="dropdown ms-3">
       <a class="d-flex align-items-center text-decoration-none dropdown-toggle" href="#" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-        <img src="photo_profile.jpg" alt="Profil" class="rounded-circle me-2" width="50px" height="50px">
-        <span> <?php echo isset($_SESSION["user_name"])? htmlspecialchars($_SESSION["user_name"]): "Profile"?></span>
+        <img src="../PHP/<?= htmlspecialchars($_SESSION['photo']) ?>"  alt="Profil" class="rounded-circle me-2 mt-2" width="40px" height="40px">
+        <span> <?php echo isset($_SESSION["user_name"])? htmlspecialchars($_SESSION["user_name"]): "Profile" ?></span>
       </a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-        <li><a class="dropdown-item" href="#">Mon Profil</a></li>
+        <li><a class="dropdown-item" href="info_profile.php">Mon Profil</a></li>
         <li><hr class="dropdown-divider"></li>
         <li><a class="dropdown-item text-danger" href="deconnexion.php">Déconnexion</a></li>
       </ul>

@@ -48,7 +48,7 @@
             </div>
             <div class="p-2">
                 <label for="numero" class="form-text  fs-6 p-1">Numéro de téléphone</label>
-                <input id="numero" type="text" name="numero" class="form-control" placeholder="Entrer votre numero">
+                <input id="numero" type="tel" name="numero" class="form-control" placeholder="Entrer votre numero">
             </div>
             <div class="p-2 form-group form-password-toggle ">
                 <label for="email" class="form-text  fs-6 p-1">Email</label>

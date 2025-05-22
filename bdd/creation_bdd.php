@@ -38,7 +38,16 @@ try {
         numero VARCHAR(100) NOT NULL,
         email VARCHAR(100) NOT NULL,
         motDePasse VARCHAR(100) NOT NULL,
-        nomDUtilisateur VARCHAR(100) NOT NULL
+        nomDUtilisateur VARCHAR(100) NOT NULL,
+        photo VARCHAR(200) DEFAULT 'photo_profile.jpg'
+        );
+
+        CREATE TABLE IF NOT EXISTS demande
+        (
+        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL ,
+        categorie VARCHAR(100) NOT NULL,
+        description VARCHAR(100) NOT NULL
         );
 
         

@@ -57,9 +57,9 @@
             <div class="p-2">
                 <label for="nom_d_utilisateur" class="form-text fs-6 p-1">Nom d'utilisateur </label>
                 <input id="nom_d_utilisateur" type="text" name="nom_d_utilisateur" class="form-control
-                <?php if (isset($erreurs["user_name"])) {
+                <?php if (isset($error["user_name"])) {
                             echo "is-invalid";
-                        } ?>" placeholder="Entrer votre nom d'utilisateur">
+                        } ?>" placeholder="Entrer votre nom d'utilisateur" value= <?php echo isset($error["user_name"])? htmlspecialchars($nom_utilisateur) : ""?> >
                 <p> <small class="text-danger"> <?php if(isset($error["user_name"])) { echo htmlspecialchars($error["user_name"]); 
                     unset($error["user_name"]) ; } ?> </small></p>
             
@@ -68,9 +68,9 @@
                 <label for="mot_de_passe" class="form-text fs-6 p-1">Mot de passe </label>
                 <div class="input-group input-group-merge ">
                     <input id="mot_de_passe" type="password" name="mot_de_passe" class="form-control 
-                    <?php if (isset($erreurs["password"])) {
+                    <?php if (isset($error["password"])) {
                             echo "is-invalid";
-                        } ?>" placeholder="Entrer votre mot de passe" aria-describedby="passwordHelp">
+                        } ?>" placeholder="Entrer votre mot de passe" value= <?php echo isset($error["password"])? htmlspecialchars($mot_de_passe) : ""?>>
                         <span class="input-group-text cursor-pointer"><i class="bi bi-eye" id="eyeToggle1"></i></span>
                 </div>
                 <p> <small class="text-danger"> <?php if(isset($error["password"])) { echo htmlspecialchars($error["password"]); 
