@@ -36,7 +36,7 @@
                 $error["email"] = "Cet email existe déjà.";
 
             }else if ($motDepasse != $motDepasseConfirmation){
-                $error["password"] = "Mot de passe incorrecte veuiller entrer le même mot de passe dans les deux champs";
+                $error["pass_confirm"] = "Mot de passe incorrecte veuiller entrer le même mot de passe dans les deux champs";
             }
             else
             {

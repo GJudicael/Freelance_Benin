@@ -7,9 +7,13 @@ require_once(__DIR__."/../PHP/update_profile.php");
 // Simulation d'utilisateur connecté (à remplacer par session et requête réelle)
 $user_id = $_SESSION['user_id']; 
 
-$stmt = $bdd->prepare("SELECT nom, prenom, email, numero, nomDUtilisateur, photo FROM inscription WHERE id = ?");
+$stmt = $bdd->prepare("SELECT nom, prenom, email, numero, nomDUtilisateur, photo, role FROM inscription WHERE id = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$check = $bdd->prepare("SELECT * FROM freelancers WHERE user_id = ?");
+$check->execute([$user_id]);
+$freelancer = $check->fetch();
 
 $_SESSION['photo'] = $user['photo'];
     
@@ -47,7 +51,7 @@ $_SESSION['photo'] = $user['photo'];
   <div class="row">
     <!-- PHOTO -->
     <div class="col-md-4 text-center">
-      <img src="../PHP/<?= htmlspecialchars($_SESSION['photo']) ?>" class=" mb-3 rounded-circle" width="150px" height="150px" alt="Photo de profil">
+      <img src="../photo_profile/<?= htmlspecialchars($_SESSION['photo']) ?>" class=" mb-3 rounded-circle" width="150px" height="150px" alt="Photo de profil">
       <form action="" method="post" enctype="multipart/form-data">
         <input type="file" name="photo" class="form-control mb-2" accept="image/*">
         <p> <small class="text-danger"> <?php echo isset($message)? htmlspecialchars($message): "" ; 
@@ -68,7 +72,35 @@ $_SESSION['photo'] = $user['photo'];
         <p><strong>Nom d'utilisateur :</strong> <?= htmlspecialchars($user['nomDUtilisateur']) ?></p>
         <p><strong>Email :</strong> <?= htmlspecialchars($user['email']) ?></p>
         <p><strong>Numéro de téléphone :</strong> <?= htmlspecialchars($user['numero']) ?></p>
+        <?php if ($freelancer) : ?>
+
+            <p> <strong> Biographie</strong></p>
+            <p><?= nl2br(htmlspecialchars($freelancer['bio'])) ?></p>
+
+            <p> <strong> Compétences </strong></p>
+            <p><?= htmlspecialchars($freelancer['competences']) ?></p>
+          
+        
+        <?php endif; ?>
         <button class="btn btn-outline-primary" onclick="afficherFormulaire()">Modifier mes informations</button>
+        <?php if ($user['role'] === 'client') : ?>
+          <div class="alert alert-info mt-4">
+            Vous êtes actuellement en mode <strong>Client</strong>.
+
+            <form method="POST" action="profile_freelance.php" class="d-inline">
+              <input type="hidden" name="switch_role" value="freelancer">
+              <button type="submit" class="btn btn-sm btn-primary ms-3">Passer en mode Freelance</button>
+            </form>
+          </div>
+        <?php else : ?>
+          <div class="alert alert-success mt-4">
+            Vous êtes en mode <strong>Freelancer</strong>
+          </div>
+          <p><a href="profile_freelance.php" class="btn btn-info"> Complèter mon profile </a></p>
+        <?php endif; ?>
+
+       
+        
       </div>
 
       <!-- Formulaire caché -->

@@ -36,23 +36,23 @@
        
             <div class="p-2">
                 <label for="nom" class="form-text fs-6 p-1">Nom</label>
-                <input id="nom" type="text" name="nom" class="form-control" placeholder="Entrer votre nom">
+                <input id="nom" type="text" name="nom" class="form-control" placeholder="Entrer votre nom" value="<?php echo isset($error)? htmlspecialchars($nom): '' ?>">
             </div>
             <div class="p-2">
                 <label for="prenom" class="form-text  fs-6 p-1">Prénom(s)</label>
-                <input id="prenom" type="text" name="prenom" class="form-control" placeholder="Entrer votre prenom">
+                <input id="prenom" type="text" name="prenom" class="form-control" placeholder="Entrer votre prenom" value="<?php echo isset($error)? htmlspecialchars($prenom): '' ?>">
             </div>
              <div class="p-2">
                 <label for="nom_d_utilisateur" class="form-text  fs-6 p-1">Nom d'utilisateur</label>
-                <input id="nom_d_utilisateur" type="text" name="nom_d_utilisateur" class="form-control" placeholder="Entrer un nom d'utilisateur">
+                <input id="nom_d_utilisateur" type="text" name="nom_d_utilisateur" class="form-control" placeholder="Entrer un nom d'utilisateur" value="<?php echo isset($error)? htmlspecialchars($nomUtilisateur): '' ?>">
             </div>
             <div class="p-2">
                 <label for="numero" class="form-text  fs-6 p-1">Numéro de téléphone</label>
-                <input id="numero" type="tel" name="numero" class="form-control" placeholder="Entrer votre numero">
+                <input id="numero" type="tel" name="numero" class="form-control" placeholder="Entrer votre numero" value="<?php echo isset($error)? htmlspecialchars($numero): '' ?> ">
             </div>
             <div class="p-2 form-group form-password-toggle ">
                 <label for="email" class="form-text  fs-6 p-1">Email</label>
-                <input id="email" type="email" name="email" class="form-control" placeholder="Entrer votre adresse email"  data-sb-validations="required">
+                <input id="email" type="email" name="email" class="form-control" placeholder="Entrer votre adresse email" value="<?php echo isset($error)? htmlspecialchars($email): '' ?>" data-sb-validations="required">
                 <div class="invalid-feedback text-red" data-sb-feedback="emailAddressBelow:required">Email Address is required.</div>
                 <p> <small class="text-danger"> <?php if(isset($error["email"])) { echo htmlspecialchars($error["email"]); 
                         unset($error["email"]) ; } ?> </small></p>
@@ -63,9 +63,9 @@
                 <label for="mot_de_passe" class="form-text  fs-6 p-1">Mot de passe</label>
                 <div class="input-group input-group-merge">
                     <input id="mot_de_passe" type="password" name="mot_de_passe" class="form-control  
-                    <?php if (isset($erreurs["password"])) {
+                    <?php if (isset($error["password"])) {
                         echo "is-invalid";
-                    } ?>" placeholder="Entrer votre mot de passe" aria-describedby="passwordHelp">
+                    } ?>" placeholder="Entrer votre mot de passe" aria-describedby="passwordHelp" value="<?php echo isset($error)? htmlspecialchars($motDepasse): '' ?>">
                     <span class="input-group-text cursor-pointer"><i class="bi bi-eye" id="eyeToggle1"></i></span>
                 </div>
                 <p> <small class="text-danger"> <?php if(isset($error["password"])) { echo htmlspecialchars($error["password"]); 
@@ -76,14 +76,14 @@
             <div class="p-2">
                 <label for="mot_de_passe_confirmation" class="form-text  fs-6 p-1"> Confirmer votre mot de passe</label>
                 <div class="input-group input-group-merge">
-                    <input id="mot_de_passe_confirmation" type="password" name="mot_de_passe_confirmation" class="form-control
-                    <?php if (isset($error["password"])) {
+                    <input id="mot_de_passe_confirmation" type="password" name="mot_de_passe_confirmation" value="<?php echo isset($error)? htmlspecialchars($motDepasseConfirmation): '' ?>" class="form-control
+                    <?php if (isset($error["pass_confirm"])) {
                         echo "is-invalid";
                     } ?>" placeholder="Entrer votre mot de passe" aria-describedby="passwordHelp1">
                     <span class="input-group-text cursor-pointer"><i class="bi bi-eye" id="eyeToggle2"></i></span>
                 </div>
-                <p> <small class="text-danger"> <?php if(isset($error["password"])) { echo htmlspecialchars($error["password"]); 
-                        unset($error["password"]) ; } ?> </small></p>
+                <p> <small class="text-danger"> <?php if(isset($error["pass_confirm"])) { echo htmlspecialchars($error["pass_confirm"]); 
+                        unset($error["pass_confirm"]) ; } ?> </small></p>
                 
             </div>
            

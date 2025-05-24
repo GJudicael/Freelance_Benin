@@ -23,7 +23,10 @@ if(isset($_POST["enregistrer"])){
         $stmt->execute([$nom, $prenom, $email, $motDePasseHache, $numero, $nom_utilisateur, $user_id]);
     }
 
-    $succes = "Infomations changés avec succès";
+    $succes = "Infomations changées avec succès";
+
+    
 }
+
 
 ?>

@@ -3,7 +3,7 @@
 // Définition de constantes
 
 const BDD_HOST = 'localhost';
-const BDD_NAME = 'freelaance_benin';
+const BDD_NAME = 'freelance_benin';
 const BDD_USER = 'root';
 const BDD_PASSWORD = '';
 
@@ -39,7 +39,8 @@ try {
         email VARCHAR(100) NOT NULL,
         motDePasse VARCHAR(100) NOT NULL,
         nomDUtilisateur VARCHAR(100) NOT NULL,
-        photo VARCHAR(200) DEFAULT 'photo_profile.jpg'
+        photo VARCHAR(200) DEFAULT 'photo_profile.jpg',
+        role ENUM('client','freelance') DEFAULT 'client'
         );
 
         CREATE TABLE IF NOT EXISTS demande
@@ -47,7 +48,27 @@ try {
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         user_id INT NOT NULL ,
         categorie VARCHAR(100) NOT NULL,
-        description VARCHAR(100) NOT NULL
+        description VARCHAR(100) NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES inscription(id) 
+        );
+
+        CREATE TABLE IF NOT EXISTS freelancers (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT UNIQUE,
+        bio TEXT,
+        competences TEXT,
+        FOREIGN KEY (user_id) REFERENCES inscription(id) ON DELETE CASCADE
+        );
+
+        CREATE TABLE IF NOT EXISTS projets (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        freelancer_id INT,
+        titre VARCHAR(255),
+        description TEXT,
+        image VARCHAR(255), -- chemin vers l’image (facultatif)
+        lien VARCHAR(255),   -- lien externe (ex: GitHub, site démo)
+        date_projet DATE,
+        FOREIGN KEY (freelancer_id) REFERENCES freelancers(id) ON DELETE CASCADE
         );
 
         

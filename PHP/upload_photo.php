@@ -17,7 +17,7 @@ if (isset($_FILES['photo']) && $_FILES['photo']['error'] === 0) {
 
     if (in_array($extension, $extensionsAutorisees) && $taille < 2 * 1024 * 1024) { // max 2MB
         $nouveauNom = uniqid('profil_') . '.' . $extension;
-        $cheminDestination = __DIR__ . "/../PHP/" . $nouveauNom;
+        $cheminDestination = __DIR__ . "/../photo_profile/" . $nouveauNom;
 
         if (move_uploaded_file($nomTemporaire, $cheminDestination)) {
             // Mise à jour dans la base

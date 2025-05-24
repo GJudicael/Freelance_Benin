@@ -1,7 +1,7 @@
  
 <header>
 <!-- Barre de navigation -->
-<nav class="navbar navbar-expand-lg navbar-light bg-primary-subtle px-5 shadow static-top">
+<nav class="navbar navbar-expand-lg navbar-light px-5 shadow static-top bg-info-subtle">
   <a class="navbar-brand site text-secondary fs-4 fw-bolder" href="#">FreeBenin</a>
 
   <!-- Bouton responsive -->
@@ -31,7 +31,7 @@
     <!-- Profil avec dropdown -->
     <div class="dropdown ms-3">
       <a class="d-flex align-items-center text-decoration-none dropdown-toggle" href="#" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-        <img src="../PHP/<?= htmlspecialchars($_SESSION['photo']) ?>"  alt="Profil" class="rounded-circle me-2 mt-2" width="40px" height="40px">
+        <img src="../photo_profile/<?= isset($_SESSION["photo"])? htmlspecialchars($_SESSION["photo"]) : "photo_profile.jpg " ?>"  alt="Profil" class="rounded-circle me-2 mt-2" width="40px" height="40px">
         <span> <?php echo isset($_SESSION["user_name"])? htmlspecialchars($_SESSION["user_name"]): "Profile" ?></span>
       </a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">

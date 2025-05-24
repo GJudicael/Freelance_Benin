@@ -60,7 +60,7 @@
                 <?php if (isset($error["user_name"])) {
                             echo "is-invalid";
                         } ?>" placeholder="Entrer votre nom d'utilisateur" value= <?php echo isset($error["user_name"])? htmlspecialchars($nom_utilisateur) : ""?> >
-                <p> <small class="text-danger"> <?php if(isset($error["user_name"])) { echo htmlspecialchars($error["user_name"]); 
+                <p> <small class="text-danger"> <?php if(isset($error["user_name"])) { echo htmlspecialchars($error); 
                     unset($error["user_name"]) ; } ?> </small></p>
             
             </div>
@@ -70,7 +70,7 @@
                     <input id="mot_de_passe" type="password" name="mot_de_passe" class="form-control 
                     <?php if (isset($error["password"])) {
                             echo "is-invalid";
-                        } ?>" placeholder="Entrer votre mot de passe" value= <?php echo isset($error["password"])? htmlspecialchars($mot_de_passe) : ""?>>
+                        } ?>" placeholder="Entrer votre mot de passe" value= <?php echo isset($error)? htmlspecialchars($mot_de_passe) : ""?>>
                         <span class="input-group-text cursor-pointer"><i class="bi bi-eye" id="eyeToggle1"></i></span>
                 </div>
                 <p> <small class="text-danger"> <?php if(isset($error["password"])) { echo htmlspecialchars($error["password"]); 
@@ -83,8 +83,8 @@
             </div>   
                 
         </form>
-        <p class="d-flex justify-content-center"> Êtes-vous nouveau sur le site ?  
-            <a href="Creation_d_un_compte.php" class="nav-link text-primary">Créez un compte</a>
+        <p class=" text-center"> Êtes-vous nouveau sur le site ?  
+            <a href="Creation_d_un_compte.php" class=" text-decoration-none">Créez un compte</a>
         </p>
       
         </section>
