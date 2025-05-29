@@ -43,15 +43,6 @@ try {
         role ENUM('client','freelance') DEFAULT 'client'
         );
 
-        CREATE TABLE IF NOT EXISTS demande
-        (
-        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        user_id INT NOT NULL ,
-        categorie VARCHAR(100) NOT NULL,
-        description VARCHAR(100) NOT NULL,
-        FOREIGN KEY (user_id) REFERENCES inscription(id) 
-        );
-
         CREATE TABLE IF NOT EXISTS freelancers (
         id INT AUTO_INCREMENT PRIMARY KEY,
         user_id INT UNIQUE,
@@ -59,6 +50,23 @@ try {
         competences TEXT,
         FOREIGN KEY (user_id) REFERENCES inscription(id) ON DELETE CASCADE
         );
+
+        CREATE TABLE IF NOT EXISTS demande
+        (
+        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL ,
+        freelancer_id INT NULL ,
+        categorie VARCHAR(100) NOT NULL,
+        titre VARCHAR(100) NOT NULL,
+        description VARCHAR(100) NOT NULL,
+        date_soumission DATE ,
+        date_attribution DATE NULL,
+        date_fin DATE NULL,
+        FOREIGN KEY (user_id) REFERENCES inscription(id) ON DELETE CASCADE ,
+        FOREIGN KEY (freelancer_id) REFERENCES freelancers(id) ON DELETE CASCADE  
+        );
+
+        
 
         CREATE TABLE IF NOT EXISTS projets (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -69,6 +77,18 @@ try {
         lien VARCHAR(255),   -- lien externe (ex: GitHub, site démo)
         date_projet DATE,
         FOREIGN KEY (freelancer_id) REFERENCES freelancers(id) ON DELETE CASCADE
+        );
+
+        CREATE TABLE IF NOT EXISTS notation (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        freelancer_id INT,
+        user_id INT,
+        order_id INT,
+        stars TINYINT,
+        comment VARCHAR(100),
+        FOREIGN KEY (freelancer_id) REFERENCES freelancers(id) ON DELETE CASCADE ,
+        FOREIGN KEY (user_id) REFERENCES inscription(id) ON DELETE CASCADE,
+        FOREIGN KEY (order_id) REFERENCES demande(id) ON DELETE CASCADE
         );
 
         

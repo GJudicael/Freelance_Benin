@@ -5,7 +5,8 @@ require_once(__DIR__."/../PHP/upload_photo.php");
 require_once(__DIR__."/../PHP/update_profile.php");
 
 // Simulation d'utilisateur connecté (à remplacer par session et requête réelle)
-$user_id = $_SESSION['user_id']; 
+
+$user_id = isset($_GET['id'])? (int) $_GET['id'] : $_SESSION['user_id'] ;
 
 $stmt = $bdd->prepare("SELECT nom, prenom, email, numero, nomDUtilisateur, photo, role FROM inscription WHERE id = ?");
 $stmt->execute([$user_id]);
@@ -14,6 +15,10 @@ $user = $stmt->fetch(PDO::FETCH_ASSOC);
 $check = $bdd->prepare("SELECT * FROM freelancers WHERE user_id = ?");
 $check->execute([$user_id]);
 $freelancer = $check->fetch();
+
+$stmt2 = $bdd->prepare("SELECT description, categorie, titre, date_soumission FROM demande WHERE user_id = ?");
+$stmt2->execute([$user_id]);
+$demandes = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
 $_SESSION['photo'] = $user['photo'];
     
@@ -49,9 +54,58 @@ $_SESSION['photo'] = $user['photo'];
   <h2 class="mb-4">Mon profil</h2>
 
   <div class="row">
+     <!-- Profile public -->
+    <?php if(isset($_GET['id'])): ?>
+      <div class="col-md-4">
+        <img src="../photo_profile/<?= htmlspecialchars($_SESSION['photo']) ?>" class=" mb-3 rounded-circle" width="150px" height="150px" alt="Photo de profil">
+      </div>
+
+      <div class="col-md-8">
+      <div id="infos-affichage">
+        <?php if(isset($succes)){ echo '<div class="alert alert-success">'. htmlspecialchars($succes) .' </div>';} ?>
+        <p><strong>Nom :</strong> <?= htmlspecialchars($user['nom']) ?></p>
+        <p><strong>Prénom :</strong> <?= htmlspecialchars($user['prenom']) ?></p>
+        <p><strong>Nom d'utilisateur :</strong> <?= htmlspecialchars($user['nomDUtilisateur']) ?></p>
+        <p><strong>Email :</strong> <?= htmlspecialchars($user['email']) ?></p>
+        <p><strong>Numéro de téléphone :</strong> <?= htmlspecialchars($user['numero']) ?></p>
+        <?php if ($freelancer) : ?>
+
+            <p> <strong> Biographie</strong></p>
+            <p><?= nl2br(htmlspecialchars($freelancer['bio'])) ?></p>
+
+            <p> <strong> Compétences </strong></p>
+            <p><?= htmlspecialchars($freelancer['competences']) ?></p>
+          
+        <?php endif; ?>
+
+        <h4 class="mt-4">Demandes / Services publiés</h4>
+
+        <?php if (count($demandes) === 0): ?>
+            <p class="text-muted">Aucune demande ou service publié.</p>
+        <?php else: ?>
+            <div class="row g-4 my-3">
+                <?php foreach ($demandes as $demande): ?>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 border-2 border-success-subtle shadow">
+                            <div class="card-body">
+                                <h5 class="card-title"><?= htmlspecialchars($demande['titre']) ?></h5>
+                                <p class="card-text"><?= htmlspecialchars($demande['description']) ?></p>
+                                <p class="text-muted" style="font-size: 0.8rem;">
+                                    Publié le <?= htmlspecialchars(date('d/m/Y', strtotime($demande['date_soumission']))) ?>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+
+     <?php else : ?>
+      <!-- Profile privé -->
     <!-- PHOTO -->
-    <div class="col-md-4 text-center">
+    <div class="col-md-4">
       <img src="../photo_profile/<?= htmlspecialchars($_SESSION['photo']) ?>" class=" mb-3 rounded-circle" width="150px" height="150px" alt="Photo de profil">
+
       <form action="" method="post" enctype="multipart/form-data">
         <input type="file" name="photo" class="form-control mb-2" accept="image/*">
         <p> <small class="text-danger"> <?php echo isset($message)? htmlspecialchars($message): "" ; 
@@ -60,6 +114,7 @@ $_SESSION['photo'] = $user['photo'];
         </small></p>
         <button type="submit" name ="changer" class="btn btn-primary btn-sm">Changer la photo</button>
       </form>
+      
     </div>
 
     <!-- INFOS -->
@@ -80,8 +135,30 @@ $_SESSION['photo'] = $user['photo'];
             <p> <strong> Compétences </strong></p>
             <p><?= htmlspecialchars($freelancer['competences']) ?></p>
           
-        
         <?php endif; ?>
+
+        <h4 class="mt-4">Demandes / Services publiés</h4>
+
+        <?php if (count($demandes) === 0): ?>
+            <p class="text-muted">Aucune demande ou service publié.</p>
+        <?php else: ?>
+            <div class="row g-4 my-3">
+                <?php foreach ($demandes as $demande): ?>
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 border-2 border-primary-subtle shadow">
+                            <div class="card-body">
+                                <h5 class="card-title"><?= htmlspecialchars($demande['titre']) ?></h5>
+                                <p class="card-text"><?= htmlspecialchars($demande['description']) ?></p>
+                                <p class="text-muted" style="font-size: 0.8rem;">
+                                    Publié le <?= htmlspecialchars(date('d/m/Y', strtotime($demande['date_soumission']))) ?>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+        
         <button class="btn btn-outline-primary" onclick="afficherFormulaire()">Modifier mes informations</button>
         <?php if ($user['role'] === 'client') : ?>
           <div class="alert alert-info mt-4">
@@ -93,13 +170,11 @@ $_SESSION['photo'] = $user['photo'];
             </form>
           </div>
         <?php else : ?>
-          <div class="alert alert-success mt-4">
-            Vous êtes en mode <strong>Freelancer</strong>
+          <div class=" my-2 ">
+            <strong> Statut : </strong> Freelancer
           </div>
           <p><a href="profile_freelance.php" class="btn btn-info"> Complèter mon profile </a></p>
-        <?php endif; ?>
-
-       
+        <?php endif; ?> 
         
       </div>
 
@@ -137,6 +212,7 @@ $_SESSION['photo'] = $user['photo'];
       </div>
     </div>
   </div>
+  <?php endif ;?>
 </div>
 
 <script>

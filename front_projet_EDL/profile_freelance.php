@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <form method="POST">
     <div class="mb-3">
       <label for="bio" class="form-text text-black fs-6">Présentation</label>
-      <textarea name="bio" class="form-control" rows="4" class="form-control"><?= htmlspecialchars($freelancer['bio'] ?? '') ?></textarea>
+      <textarea name="bio" class="form-control" rows="2" class="form-control"><?= htmlspecialchars($freelancer['bio'] ?? '') ?></textarea>
     </div>
 
     <div class="mb-3">
@@ -73,9 +73,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <?php if ($freelancer) : ?>
     <hr class="my-5">
 
-    <h4 class=" text-info">Aperçu du profil</h4>
+    <h4 class=" text-info fw-bolder">Aperçu du profil</h4>
 
-    <div class="card mt-3 border-1 border-secondary">
+    <div class="card mt-3 border-3 border-primary-subtle shadow">
       <div class="card-body">
         <h5 class="card-title">Biographie</h5>
         <p class="card-text"><?= nl2br(htmlspecialchars($freelancer['bio'])) ?></p>
