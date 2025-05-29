@@ -62,6 +62,7 @@ try {
         date_soumission DATE ,
         date_attribution DATE NULL,
         date_fin DATE NULL,
+        statut ENUM('en attente', 'attribué') DEFAULT 'en attente',
         FOREIGN KEY (user_id) REFERENCES inscription(id) ON DELETE CASCADE ,
         FOREIGN KEY (freelancer_id) REFERENCES freelancers(id) ON DELETE CASCADE  
         );

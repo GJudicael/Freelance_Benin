@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
      if (isset($_POST['switch_role']) && $_POST['switch_role'] === 'freelancer') {
-        $update = $bdd->prepare("UPDATE inscription SET role = 'freelancer' WHERE id = ?");
+        $update = $bdd->prepare("UPDATE inscription SET role = 'freelance' WHERE id = ?");
         $update->execute([$user_id]);
     
     }
