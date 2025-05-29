@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($freelancer) {
         $update = $bdd->prepare("UPDATE freelancers SET bio = ?, competences = ? WHERE user_id = ?");
         $update->execute([$bio, $competences, $user_id]);
-    } else {
+    } else { 
         $insert = $bdd->prepare("INSERT INTO freelancers (user_id, bio, competences) VALUES (?, ?, ?)");
         $insert->execute([$user_id, $bio, $competences]);
     }

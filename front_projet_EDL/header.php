@@ -18,6 +18,9 @@
       <li class="nav-item">
         <a class="nav-link" href="Demande.php">Effectuer une demande</a>
       </li>
+       <li class="nav-item">
+        <a class="nav-link" href="../PHP/Mesdemandes.php">Mes demandes</a>
+      </li>
     </ul>
 
     <!-- Barre de recherche -->

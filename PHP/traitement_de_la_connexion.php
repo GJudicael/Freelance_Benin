@@ -1,4 +1,3 @@
-
     <?php
     session_start();
     require_once(__DIR__."/../bdd/creation_bdd.php");
@@ -19,7 +18,7 @@
             
             $requete = $bdd->prepare('SELECT motDePasse, id FROM inscription WHERE nomDUtilisateur = :nomDUtilisateur');
             $requete->execute([
-                'nomDUtilisateur' => $nom_utilisateur
+                'nomDUtilisateur' => $nom_utilisateur 
             ]);
             $user = $requete->fetch();
             var_dump($user);
