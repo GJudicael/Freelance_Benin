@@ -61,8 +61,9 @@ try {
         description TEXT(1000) NOT NULL,
         date_soumission DATE ,
         date_attribution DATE NULL,
+        avancement INT DEFAULT 0,
         date_fin DATE NULL,
-        statut ENUM('en attente', 'attribué' , 'terminé') DEFAULT 'en attente',
+        statut ENUM('en attente', 'attribué', 'en cours', 'terminé', 'annulé') DEFAULT 'en attente',
         FOREIGN KEY (user_id) REFERENCES inscription(id) ON DELETE CASCADE ,
         FOREIGN KEY (freelancer_id) REFERENCES freelancers(id) ON DELETE CASCADE  
         );
@@ -91,6 +92,16 @@ try {
         FOREIGN KEY (user_id) REFERENCES inscription(id) ON DELETE CASCADE,
         FOREIGN KEY (order_id) REFERENCES demande(id) ON DELETE CASCADE
         );
+
+        CREATE TABLE IF NOT EXISTS suivi_projet (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        demande_id INT NOT NULL,
+        etape VARCHAR(100) NOT NULL,
+        pourcentage INT DEFAULT 0,
+        date_mise_a_jour DATETIME DEFAULT CURRENT_TIMESTAMP,
+        commentaire TEXT,
+        FOREIGN KEY (demande_id) REFERENCES demande(id) ON DELETE CASCADE
+);
 
         
     ";
