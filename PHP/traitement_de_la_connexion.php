@@ -21,7 +21,7 @@
                 'nomDUtilisateur' => $nom_utilisateur 
             ]);
             $user = $requete->fetch();
-            var_dump($user);
+            
 
             if(!$user){
                 $error["user_name"] = "Nom d'utilisateur incorrect";

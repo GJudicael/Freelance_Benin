@@ -59,8 +59,8 @@
                 <input id="nom_d_utilisateur" type="text" name="nom_d_utilisateur" class="form-control
                 <?php if (isset($error["user_name"])) {
                             echo "is-invalid";
-                        } ?>" placeholder="Entrer votre nom d'utilisateur" value= <?php echo isset($error["user_name"])? htmlspecialchars($nom_utilisateur) : ""?> >
-                <p> <small class="text-danger"> <?php if(isset($error["user_name"])) { echo htmlspecialchars($error); 
+                        } ?>" placeholder="Entrer votre nom d'utilisateur" value= <?php echo isset($error)? htmlspecialchars($nom_utilisateur) : ""?> >
+                <p> <small class="text-danger"> <?php if(isset($error["user_name"])) { echo htmlspecialchars($error['user_name']); 
                     unset($error["user_name"]) ; } ?> </small></p>
             
             </div>

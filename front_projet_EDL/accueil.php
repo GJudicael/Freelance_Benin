@@ -1,4 +1,12 @@
 <?php session_start();
+require_once(__DIR__."/../bdd/creation_bdd.php");
+
+$smt = $bdd->prepare("SELECT i.nom, i.prenom, i.photo, f.bio, f.user_id FROM inscription i 
+INNER JOIN freelancers f 
+ON i.id = f.user_id ");
+$smt->execute();
+$freelancers = $smt->fetchALl(PDO::FETCH_ASSOC);
+
  ?>
 
 <!DOCTYPE html>
@@ -30,10 +38,52 @@
             et de recevoir des offres de missions, tandis que les clients pourront publier des projets et entrer en contact avec des prestataires qualifiés. 
         </p>
     </section>
-    
-    <section class="my-3 p-5 shadow">
 
-        <h4 class="mt-4 text-center text-primary historique"> HISTORIQUE DES DEMANDES </h4>
+    <section class=" my-4 py-3 bg-light">
+        <h4 class="mb-2 text-center text-warning p-2 historique"> NOS FREELANCEURS </h4>
+
+        <div id="freelancerCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <!-- Slides ici -->
+            <?php
+            $count = count($freelancers);
+            $perSlide = 3;
+            $chunked = array_chunk($freelancers,$perSlide);
+            $active = true;
+            foreach ($chunked as $group): ?>
+                <div class="carousel-item <?= $active ? 'active' : '' ?>">
+                    <div class="row justify-content-center px-3">
+                        <?php foreach ($group as $freelancer): ?> 
+                            <div class="col-lg-3 col-md-6">
+                                <div class="card text-center p-3 border-0 bg-light">
+                                    <img src="../photo_profile/<?= htmlspecialchars($freelancer['photo']) ?>" class="rounded-circle mx-auto d-block" alt="Freelancer" width="100">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><?= htmlspecialchars($freelancer['nom']) ?> <?= htmlspecialchars($freelancer['prenom']) ?></h5>
+                                        <p class="card-text"><?= htmlspecialchars($freelancer['bio']) ?></p>
+                                        <a href="info_profile.php?id=<?= $freelancer['user_id'] ?>" class="btn btn-outline-warning">Voir Profil</a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php $active = false; endforeach; ?>
+        </div>
+
+        <!-- Contrôles -->
+        <button class="carousel-control-prev px-3" type="button" data-bs-target="#freelancerCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon bg-black opacity-50"></span>
+        </button>
+        <button class="carousel-control-next px-3" type="button" data-bs-target="#freelancerCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon bg-black opacity-50"></span>
+        </button>
+        </div>
+
+    </section>
+    
+    <section class="mb-3 p-5 shadow">
+
+        <h4 class="mt-4 text-center text-primary historique"> DEMANDES  PUBLIÉES </h4>
         <?php require_once(__DIR__."/historique.php"); ?> 
     </section>
 </main>

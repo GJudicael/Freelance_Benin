@@ -69,7 +69,7 @@ $demandes = $result->fetchAll(PDO::FETCH_ASSOC);
                 <a href="Demande.php" class="btn btn-primary mt-3">Créer une demande</a>
             </div>
         <?php else: ?>
-            <div class="row g-4">
+            <div class="row g-4 justify-content-center">
               <?php foreach($demandes as $demande): ?>
 <div class="col-lg-8 col-md-12 mb-4">
     <div class="card h-100 p-2 shadow border-primary-subtle border-3 rounded-4">

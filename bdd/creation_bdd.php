@@ -38,7 +38,7 @@ try {
         numero VARCHAR(100) NOT NULL,
         email VARCHAR(100) NOT NULL,
         motDePasse VARCHAR(100) NOT NULL,
-        nomDUtilisateur VARCHAR(100) NOT NULL PRIMARY KEY ,
+        nomDUtilisateur VARCHAR(100) NOT NULL UNIQUE ,
         photo VARCHAR(200) DEFAULT 'photo_profile.jpg',
         role ENUM('client','freelance') DEFAULT 'client'
         );
@@ -58,7 +58,7 @@ try {
         freelancer_id INT NULL ,
         categorie VARCHAR(100) NOT NULL,
         titre VARCHAR(100) NOT NULL,
-        description TEXT(1000) NOT NULL,
+        description TEXT NOT NULL,
         date_soumission DATE ,
         date_attribution DATE NULL,
         date_fin DATE NULL,
