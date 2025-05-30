@@ -62,16 +62,16 @@ $demandes = $result->fetchAll(PDO::FETCH_ASSOC);
         <?php endif; ?>
 
         <?php if (empty($demandes)): ?>
-            <div class="alert alert-info text-center py-4">
-                <i class="bi bi-info-circle-fill fs-4"></i>
+            <div class="alert alert-info text-center py-5">
+                <i class="bi bi-info-circle" style="font-size: 2rem;"></i>
                 <h4 class="mt-3">Vous n'avez aucune demande en cours</h4>
                 <p class="mb-0">Créez votre première demande pour trouver le freelanceur idéal</p>
-                <a href="Demande.php" class="btn btn-primary mt-3">Créer une demande</a>
+                <a href="Demande.php" class="btn btn-outline-primary mt-3">Créer une demande</a>
             </div>
         <?php else: ?>
             <div class="row g-4 justify-content-center">
               <?php foreach($demandes as $demande): ?>
-<div class="col-lg-8 col-md-12 mb-4">
+<div class="col-lg-12 col-md-12 mb-4">
     <div class="card h-100 p-2 shadow border-primary-subtle border-3 rounded-4">
         <div class="card-body">
             <!-- En-tête avec statut -->
@@ -128,7 +128,7 @@ $demandes = $result->fetchAll(PDO::FETCH_ASSOC);
             <?php else: ?>
                 <div class="alert alert-success mt-3 p-2">
                     <i class="bi bi-check-circle"></i> Attribué à: 
-                    <strong><?= htmlspecialchars($demande['freelance_username'] ?? 'Inconnu') ?></strong>
+                    <strong><a class="text-dark text-decoration-none" href="info_profile.php?id=<?= htmlspecialchars($demande['freelancer_id'])?>"><?= htmlspecialchars($demande['freelance_nom'].'  '.$demande['freelance_prenom']  ?? 'Inconnu') ?></a></strong>
                     (le <?= date('d/m/Y', strtotime($demande['date_attribution'])) ?>)
                 </div>
             <?php endif; ?>

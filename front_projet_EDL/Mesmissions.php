@@ -3,6 +3,7 @@ session_start();
 require_once(__DIR__."/../bdd/creation_bdd.php");
 
 $user_id = $_SESSION["user_id"];
+$bool = false;
 
 // Vérification du rôle
 $stmt = $bdd->prepare("SELECT i.role FROM inscription i WHERE i.id=:user_id");
@@ -11,9 +12,7 @@ $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($result['role'] !== 'freelance') {
-    $_SESSION['error'] = "Accès réservé aux freelancers";
-    header("Location: info_profile.php?id=".$user_id);
-    exit();
+    $bool = true;
 }
 
 // Récupération des missions
@@ -22,6 +21,7 @@ $stmt = $bdd->prepare("SELECT
     d.date_soumission, d.date_attribution,
     d.freelancer_id,
     c.nomDUtilisateur AS client_username,
+    c.id AS client_id,
     c.nom AS client_nom,
     c.prenom AS client_prenom,
     (SELECT MAX(pourcentage) FROM suivi_projet WHERE demande_id = d.id) AS avancement
@@ -70,6 +70,17 @@ $missions = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php require_once(__DIR__."/header.php") ?>
     
     <div class="container py-5">
+
+    <?php if ($bool): ?>
+            <div class="alert alert-info text-center py-5">
+                <i class="bi bi-info-circle" style="font-size: 2rem;"></i>
+                <h3 class="mt-3">Vous n'êtes pas freelancer</h3>
+                <p class="lead">Accédez à votre profil pour passer en mode freelance</p>
+                <a href="info_profile.php" class="btn btn-outline-primary mt-3">
+                    <i class="bi bi-person-gear"></i> Switcher en mode freelance
+                </a>
+            </div>
+    <?php else: ?>    
         <h1 class="mb-4"><i class="bi bi-briefcase"></i> Mes Missions</h1>
 
         <?php if (empty($missions)): ?>
@@ -77,10 +88,13 @@ $missions = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <i class="bi bi-info-circle" style="font-size: 2rem;"></i>
                 <h3 class="mt-3">Aucune mission pour le moment</h3>
                 <p class="lead">Les missions qui vous sont attribuées apparaîtront ici</p>
-                <a href="" class="btn btn-outline-primary mt-3">
+                <a href="info_profile.php" class="btn btn-outline-primary mt-3">
                     <i class="bi bi-person-gear"></i> Compléter mon profil
                 </a>
             </div>
+        
+            
+
         <?php else: ?>
             <div class="row g-4">
                 <?php foreach ($missions as $mission): ?>
@@ -106,10 +120,10 @@ $missions = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <p class="card-text"><?= htmlspecialchars($mission['description']) ?></p>
                             
                             <!-- Client -->
-                            <div class="client-info mb-3">
+                            <div class="alert alert-success mt-3 p-2">
                                 <i class="bi bi-person"></i> Client : 
-                                <strong><?= htmlspecialchars($mission['client_prenom'] . ' ' . $mission['client_nom']) ?></strong>
-                                (@<?= htmlspecialchars($mission['client_username']) ?>)
+                                <a class="text-dark text-decoration-none" href="info_profile.php?id=<?= htmlspecialchars($mission['client_id'])?>"><strong><?= htmlspecialchars($mission['client_prenom'] . ' ' . $mission['client_nom']) ?></strong></a>
+                                (<?= htmlspecialchars($mission['client_username']) ?>)
                             </div>
                             
                             <!-- Progression -->
@@ -147,6 +161,7 @@ $missions = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <?php endforeach; ?>
             </div>
+        <?php endif; ?>
         <?php endif; ?>
     </div>
 
