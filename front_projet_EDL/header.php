@@ -19,7 +19,10 @@
         <a class="nav-link" href="Demande.php">Effectuer une demande</a>
       </li>
        <li class="nav-item">
-        <a class="nav-link" href="Mesdemandes.php">Mes demandes</a>
+        <a class="nav-link" href="Mesdemandes.php">Mes Demandes</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="Mesmissions.php">Mes Missions</a>
       </li>
     </ul>
 
