@@ -1,0 +1,79 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.left {
+    width: 30%;
+    /* background: #f0f0f0; */
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.right {
+    flex-grow: 1;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.conv {
+    /* padding: 10px; */
+    /* margin-bottom: 5px; */
+    /* background: #ddd; */
+    /* border-radius: 5px; */
+    /* background-color: rgba(0, 0, 0, 0.1); */
+}
+
+.conv:hover {
+    background: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.message {
+    margin-bottom: 10px;
+}
+
+.from-me {
+    text-align: right;
+    margin-left: auto;
+}
+
+.from-other {
+    text-align: left;
+    margin-right: auto;
+    flex-direction: row-reverse;
+}
+
+form textarea {
+    width: 100%;
+    height: 60px;
+}
+
+p{
+    color: #333;
+}
+
+#wrapper{
+    height: 100vh;
+}
+
+#message{
+    position: relative;
+}
+#message span{
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8rem!important;
+}
+
+textarea{
+    resize: none;
+}

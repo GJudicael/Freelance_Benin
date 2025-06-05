@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="textBox"></div>
+    <button id="btn">Clique sur moi</button>
+    <script>
+        const textBox = document.getElementById('textBox')
+        const btn = document.getElementById('btn')
+
+        textBox.addEventListener('keyup', (event) => {
+            textBox.textContent = `J'ai cliqué sur la touche "${event.key}"`
+        })
+
+        btn.addEventListener('click', (event) => {
+            console.log("J'ai cliqué")
+        })
+    </script>
+</body>
+
+</html>
