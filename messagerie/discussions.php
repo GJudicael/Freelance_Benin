@@ -185,7 +185,7 @@ $conversations = $resultat->fetchAll(PDO::FETCH_ASSOC);
             <h6 class="mt-2">Conversations</h6>
             <hr class="mb-4">
             <?php if (empty($conversations)) : ?>
-                <p><i>Aucune conversation entamée...</i></p>
+                <p>Aucune conversation entamée...</p>
             <?php else: ?>
                 <?php foreach ($conversations as $conv) : ?>
                     <a href="discussions.php?user_id=<?= $conv['id'] ?>" class="text-decoration-none">

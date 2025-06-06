@@ -100,7 +100,17 @@ try {
         pourcentage INT DEFAULT 0,
         date_mise_a_jour DATETIME DEFAULT CURRENT_TIMESTAMP,
         commentaire TEXT,
-        FOREIGN KEY (demande_id) REFERENCES demande(id) ON DELETE CASCADE );        
+        FOREIGN KEY (demande_id) REFERENCES demande(id) ON DELETE CASCADE );
+        
+        CREATE TABLE IF NOT EXISTS messages (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        sender_id INT NOT NULL,
+        receiver_id INT NOT NULL,
+        message TEXT NOT NULL,
+        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (sender_id) REFERENCES inscription(id),
+        FOREIGN KEY (receiver_id) REFERENCES inscription(id)
+        );
     ";
 
    $bdd->exec($sqlTables);
