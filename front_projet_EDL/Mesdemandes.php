@@ -5,25 +5,29 @@ require_once(__DIR__."/../bdd/creation_bdd.php");
 $user_id = $_SESSION['user_id'];
 
 $result = $bdd->prepare("SELECT 
-    d.id, d.titre, d.description, d.categorie, d.statut,
-    d.date_soumission, d.date_attribution,
-    d.freelancer_id,
+    d.id, 
+    d.titre, 
+    d.description, 
+    d.categorie, 
+    d.statut,
+    d.date_soumission, 
+    d.date_attribution,
+    f.user_id,
     u.nomDUtilisateur AS freelance_username,
     u.nom AS freelance_nom,
-    u.prenom AS freelance_prenom,
-    -- Infos du client (optionnel)
-    c.nomDUtilisateur AS client_username
+    u.prenom AS freelance_prenom
 FROM demande d
-LEFT JOIN inscription u ON d.freelancer_id = u.id AND u.role = 'freelance'
-LEFT JOIN inscription c ON d.user_id = c.id
+LEFT JOIN freelancers f ON d.freelancer_id = f.id
+LEFT JOIN inscription u ON f.user_id = u.id
 WHERE d.user_id = :user_id
 ORDER BY 
     CASE WHEN d.statut = 'en attente' THEN 0 ELSE 1 END,
     d.date_soumission DESC");
 
-$result->bindParam(':user_id', $user_id);
+$result->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 $result->execute();
 $demandes = $result->fetchAll(PDO::FETCH_ASSOC);
+
 ?> 
 
 <!DOCTYPE html>
@@ -91,7 +95,7 @@ $demandes = $result->fetchAll(PDO::FETCH_ASSOC);
             
             <!-- Section attribution -->
             <?php if ($demande['statut'] === 'en attente'): ?>
-                <!-- Remplacer le formulaire existant par : -->
+                <!-- Remplacer le formulaire  par : -->
                     <form action="../PHP/attribuer_demande.php" method="post" class="mt-4">
                         <input type="hidden" name="demande_id" value="<?= $demande['id'] ?>">
 
@@ -128,9 +132,12 @@ $demandes = $result->fetchAll(PDO::FETCH_ASSOC);
             <?php else: ?>
                 <div class="alert alert-success mt-3 p-2">
                     <i class="bi bi-check-circle"></i> Attribué à: 
-                    <strong><a class="text-dark text-decoration-none" href="info_profile.php?id=<?= htmlspecialchars($demande['freelancer_id'])?>"><?= htmlspecialchars($demande['freelance_nom'].'  '.$demande['freelance_prenom']  ?? 'Inconnu') ?></a></strong>
+                    <strong><a class="text-dark text-decoration-none" href="info_profile.php?id=<?= htmlspecialchars($demande['user_id'])?>"><?= htmlspecialchars($demande['freelance_nom'].'  '.$demande['freelance_prenom']  ?? 'Inconnu') ?></a></strong>
                     (le <?= date('d/m/Y', strtotime($demande['date_attribution'])) ?>)
                 </div>
+                <a href="suivi_notation_projet_client.php?id=<?= $demande['id'] ?>" class="btn btn-sm btn-info mt-2">
+                        <i class="bi bi-eye"></i> Voir le suivi
+                </a>
             <?php endif; ?>
         </div>
     </div>

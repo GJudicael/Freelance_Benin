@@ -14,7 +14,13 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' || $result['role'] !== 'freelance') {
 }
 
 // Vérification que la mission appartient bien au freelance
-$stmt = $bdd->prepare("SELECT id FROM demande WHERE id = ? AND freelancer_id = ?");
+$stmt = $bdd->prepare("SELECT 
+d.id ,
+f.user_id
+FROM demande d 
+LEFT JOIN freelancers f ON f.id = d.freelancer_id 
+WHERE d.id = ? AND f.user_id = ?");
+
 $stmt->execute([$_POST['mission_id'], $user_id]);
 
 if ($stmt->fetch()) {

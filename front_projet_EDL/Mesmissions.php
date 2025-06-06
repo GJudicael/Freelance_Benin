@@ -17,17 +17,23 @@ if ($result['role'] !== 'freelance') {
 
 // Récupération des missions
 $stmt = $bdd->prepare("SELECT 
-    d.id, d.titre, d.description, d.categorie, d.statut,
-    d.date_soumission, d.date_attribution,
-    d.freelancer_id,
+    d.id, 
+    d.titre, 
+    d.description, 
+    d.categorie, 
+    d.statut,
+    d.date_soumission, 
+    d.date_attribution,
     c.nomDUtilisateur AS client_username,
     c.id AS client_id,
     c.nom AS client_nom,
     c.prenom AS client_prenom,
+    f.id AS freelancer_id,
     (SELECT MAX(pourcentage) FROM suivi_projet WHERE demande_id = d.id) AS avancement
 FROM demande d
 JOIN inscription c ON d.user_id = c.id
-WHERE d.freelancer_id = :freelancer_id
+JOIN freelancers f ON d.freelancer_id = f.id
+WHERE f.user_id = :freelancer_id
 ORDER BY 
     CASE WHEN d.statut = 'en cours' THEN 0 
          WHEN d.statut = 'attribué' THEN 1
