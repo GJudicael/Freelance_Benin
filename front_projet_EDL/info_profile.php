@@ -103,11 +103,10 @@ $_SESSION['photo'] = $user['photo'];
                 <?php endfor; ?>
                 <span>(<?= $total_ratings ?> avis)</span>
             </div>
+          </div>
+          <?php endif; ?>
         </div>
-        </div>
-        <?php endif; ?>
-                 
-
+        
         <div class="col-md-8">
           <div id="infos-affichage">
             <?php if (isset($succes)) {
@@ -171,7 +170,7 @@ $_SESSION['photo'] = $user['photo'];
 
                <?php if ($user['role'] === 'freelance') : ?>
                  
-              <div class="mb-3">
+              <div class="my-3">
                 <h5>Note moyenne:</h5>
                 <div class="rating">
                     <?php
@@ -192,11 +191,10 @@ $_SESSION['photo'] = $user['photo'];
                     <span>(<?= $total_ratings ?> avis)</span>
                 </div>
             </div>
-            </div>
             <?php endif; ?>
-                 
             </div>
-
+            
+                             
             <!-- INFOS -->
             <div class="col-md-8">
               <!-- Affichage simple -->
