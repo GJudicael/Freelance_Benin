@@ -26,16 +26,20 @@
             if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
                 $error["email"] = "Cet email est invalid";
             }else{
-                $requete = $bdd->prepare('SELECT * FROM inscription WHERE email = :email');
-                $requete->execute([
-                    'email' => $email
-                ]);
-                $user = $requete->fetch();
+                $requete = $bdd->prepare('SELECT * FROM inscription');
+                $requete->execute();
+                $users = $requete->fetchAll();
 
-            if ($user) {
-                $error["email"] = "Cet email existe déjà.";
+                foreach($users as $user){
+                    if ($user["email"] == $email) {
+                        $error["email"] = "Cet email existe déjà.";
 
-            }else if ($motDepasse != $motDepasseConfirmation){
+                    }elseif($user["nomDUtilisateur"] == $nomUtilisateur){
+                        $error["nomDUtilisateur"] = "Ce nom d'utilisateur existe déjà";
+
+                    }
+                }
+            if ($motDepasse != $motDepasseConfirmation){
                 $error["pass_confirm"] = "Mot de passe incorrecte veuiller entrer le même mot de passe dans les deux champs";
             }
             else

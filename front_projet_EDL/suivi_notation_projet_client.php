@@ -56,42 +56,7 @@ $notation = $stmtNotation->fetch(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="../assets/bootstrap-5.3.6-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/style.css">
     <link rel="stylesheet" href="../assets/bootstrap-icons-1.13.1/bootstrap-icons.min.css">
-    <style>
-        .timeline {
-            position: relative;
-            padding-left: 50px;
-        }
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 20px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: #dee2e6;
-        }
-        .timeline-item {
-            position: relative;
-            margin-bottom: 30px;
-        }
-        .timeline-dot {
-            position: absolute;
-            left: -40px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background:#87CEEB
-        }
-        .rating .bi-star, .rating .bi-star-fill {
-            cursor: pointer;
-            font-size: 1.5rem;
-            color: #ddd;
-            transition: color 0.2s;
-        }
-        .rating .bi-star-fill {
-            color: #ffc107;
-        }
-    </style>
+    
 </head>
 <body>
     <?php require_once(__DIR__."/header.php") ?>
@@ -100,14 +65,14 @@ $notation = $stmtNotation->fetch(PDO::FETCH_ASSOC);
         <div class="row">
             <div class="col-md-12 mx-auto">
                 <div class="card shadow">
-                    <div class="card-header bg-primary text-white">
-                        <h3>Suivi du projet : <?= htmlspecialchars($demande['titre']) ?></h3>
+                    <div class="card-header bg-info-subtle text-secondary">
+                        <h4>Suivi du projet : <?= htmlspecialchars($demande['titre']) ?></h4>
                     </div>
                     <div class="card-body">
                         <div class="d-flex justify-content-between mb-4">
                             <div>
-                                <h5>Freelanceur :</h5>
-                                <p><?= htmlspecialchars($freelance['prenom'].' '.$freelance['nom']) ?></p>
+                                <h5>Freelanceur : <?= htmlspecialchars($freelance['prenom'].' '.$freelance['nom']) ?> </h5>
+                                
                             </div>
                             <div class="text-end">
                                 <h5>Avancement:</h5>

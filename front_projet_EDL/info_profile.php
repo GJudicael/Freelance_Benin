@@ -20,6 +20,27 @@ $stmt2 = $bdd->prepare("SELECT description, categorie, titre, date_soumission FR
 $stmt2->execute([$user_id]);
 $demandes = $stmt2->fetchAll(PDO::FETCH_ASSOC);
 
+
+// Récupération des notes pour les demandes terminées
+$stmtRatings = $bdd->prepare("SELECT n.stars
+                             FROM notation n
+                             JOIN demande d ON n.order_id = d.id
+                             JOIN freelancers f ON f.id = n.freelancer_id
+                             WHERE f.user_id = :user_id
+                             AND d.statut = 'terminé'");
+$stmtRatings->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+$stmtRatings->execute();
+$ratings = $stmtRatings->fetchAll(PDO::FETCH_ASSOC);
+
+// Calcul de la moyenne des notes et du nombre de votants
+$total_ratings = count($ratings);
+$average_rating = 0;
+if ($total_ratings > 0) {
+    $sum = array_sum(array_column($ratings, 'stars'));
+    $average_rating = round($sum / $total_ratings, 1);
+}
+
+
 $_SESSION['photo'] = $user['photo'];
 
 ?>
@@ -60,7 +81,32 @@ $_SESSION['photo'] = $user['photo'];
       <?php if (isset($_GET['id'])): ?>
         <div class="col-md-4">
           <img src="../photo_profile/<?= htmlspecialchars($_SESSION['photo']) ?>" class=" mb-3 rounded-circle" width="150px" height="150px" alt="Photo de profil">
+          <?php if ($user['role'] === 'freelance') : ?>
+                 
+          <div class="mb-3">
+            <h5>Note moyenne:</h5>
+            <div class="rating">
+                <?php
+                $full_stars = floor($average_rating);
+                $has_half_star = ($average_rating - $full_stars) >= 0.5;
+                for ($i = 1; $i <= 5; $i++):
+                ?>
+                    <i class="bi <?php
+                        if ($i <= $full_stars) {
+                            echo 'bi-star-fill text-warning';
+                        } elseif ($has_half_star && $i == $full_stars + 1) {
+                            echo 'bi-star-half text-warning';
+                        } else {
+                            echo 'bi-star';
+                        }
+                    ?>"></i>
+                <?php endfor; ?>
+                <span>(<?= $total_ratings ?> avis)</span>
+            </div>
         </div>
+        </div>
+        <?php endif; ?>
+                 
 
         <div class="col-md-8">
           <div id="infos-affichage">
@@ -123,6 +169,32 @@ $_SESSION['photo'] = $user['photo'];
                 <button type="submit" name="changer" class="btn btn-primary btn-sm">Changer la photo</button>
               </form>
 
+               <?php if ($user['role'] === 'freelance') : ?>
+                 
+              <div class="mb-3">
+                <h5>Note moyenne:</h5>
+                <div class="rating">
+                    <?php
+                    $full_stars = floor($average_rating);
+                    $has_half_star = ($average_rating - $full_stars) >= 0.5;
+                    for ($i = 1; $i <= 5; $i++):
+                    ?>
+                        <i class="bi <?php
+                            if ($i <= $full_stars) {
+                                echo 'bi-star-fill text-warning';
+                            } elseif ($has_half_star && $i == $full_stars + 1) {
+                                echo 'bi-star-half text-warning';
+                            } else {
+                                echo 'bi-star';
+                            }
+                        ?>"></i>
+                    <?php endfor; ?>
+                    <span>(<?= $total_ratings ?> avis)</span>
+                </div>
+            </div>
+            </div>
+            <?php endif; ?>
+                 
             </div>
 
             <!-- INFOS -->

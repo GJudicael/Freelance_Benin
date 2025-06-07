@@ -22,7 +22,7 @@
         <a class="nav-link" href="Mesdemandes.php">Mes Demandes</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="Mesmissions.php">Mes Missions</a>
+        <a class="nav-link" href="../front_projet_EDL/Mesmissions.php">Mes Missions</a>
       </li>
     </ul>
 
