@@ -39,7 +39,7 @@ $freelancers = $smt->fetchALl(PDO::FETCH_ASSOC);
         </p>
     </section>
 
-    <section class=" my-4 py-3 bg-light">
+    <section class=" my-4 py-4 bg-light">
         <h4 class="mb-2 text-center text-warning p-2 historique"> NOS FREELANCEURS </h4>
 
         <div id="freelancerCarousel" class="carousel slide" data-bs-ride="carousel">
