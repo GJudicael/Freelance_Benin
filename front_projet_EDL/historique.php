@@ -5,7 +5,7 @@ require_once(__DIR__."/../PHP/update_profile.php");
 $result = $bdd->query("SELECT i.id, i.nom ,i.prenom, d.description, d.titre, d.date_soumission
 FROM demande d
 INNER JOIN  inscription i 
-ON i.id = d.user_id
+ON i.id = d.user_id WHERE d.statut = 'en attente'
 ORDER BY date_soumission DESC");
 
 $demandes = $result->fetchAll(PDO::FETCH_ASSOC);
