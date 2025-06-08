@@ -13,13 +13,13 @@
     <!-- Liens -->
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="accueil.php">Accueil</a>
+        <a class="nav-link" href="../front_projet_EDL/accueil.php">Accueil</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="Demande.php">Effectuer une demande</a>
+        <a class="nav-link" href="../front_projet_EDL/Demande.php">Effectuer une demande</a>
       </li>
        <li class="nav-item">
-        <a class="nav-link" href="Mesdemandes.php">Mes Demandes</a>
+        <a class="nav-link" href="../front_projet_EDL/Mesdemandes.php">Mes Demandes</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="../front_projet_EDL/Mesmissions.php">Mes Missions</a>

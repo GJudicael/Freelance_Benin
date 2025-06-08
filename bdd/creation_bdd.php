@@ -128,7 +128,7 @@ try {
         FROM suivi_projet 
         WHERE demande_id = NEW.demande_id;
         
-        IF max_pourcentage >= 100 THEN
+        IF max_pourcentage = 100 THEN
             UPDATE demande 
             SET statut = 'terminé', 
                 avancement = 100,
