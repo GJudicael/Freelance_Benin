@@ -45,6 +45,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
+    // Empêcher les pourcentages > 100
+    if ($_POST['pourcentage'] > 100) {
+        $_SESSION['error'] = "Ce projet est déjà terminé , vous ne pouvez plus ajouter une étape";
+        header("Location: traitement_suivi_projet.php?id=".$mission['id']);
+        exit();
+}
+
     // Insertion de la nouvelle étape
     $stmt = $bdd->prepare("INSERT INTO suivi_projet 
                           (demande_id, etape, pourcentage, commentaire)
@@ -76,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     // Après avoir inséré une nouvelle étape
-    if ($_POST['pourcentage'] >= 100) {
+    if ($_POST['pourcentage'] == 100) {
     // Marquer la mission comme terminée
     $stmt = $bdd->prepare("UPDATE demande 
                           SET statut = 'terminé', 
