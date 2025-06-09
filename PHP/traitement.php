@@ -21,9 +21,6 @@ if (isset($_POST['envoyer'])) {
     if(empty($categorie)){
         $erreur['categorie'] = "Ce champ est requis";
     }
-     if(empty($nom_utilisateur)){
-        $erreur['nom_utilisateur'] = "Ce champ est requis";
-    }
 
     $user_id = $_SESSION["user_id"];
     if(empty($erreur)){
