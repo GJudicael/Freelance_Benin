@@ -2,11 +2,13 @@
 require_once(__DIR__."/../bdd/creation_bdd.php");
 require_once(__DIR__."/../PHP/update_profile.php");
 
-$result = $bdd->query("SELECT i.id, i.nom ,i.prenom, d.description, d.titre, d.date_soumission
+$user_id = $_SESSION["user_id"];
+$result = $bdd->prepare("SELECT i.id, i.nom ,i.prenom, d.description, d.titre, d.date_soumission
 FROM demande d
 INNER JOIN  inscription i 
-ON i.id = d.user_id WHERE d.statut = 'en attente'
+ON i.id = d.user_id WHERE d.statut = 'en attente' AND d.user_id != :id
 ORDER BY date_soumission DESC");
+$result->execute(['id' => $user_id]);
 
 $demandes = $result->fetchAll(PDO::FETCH_ASSOC);
 
@@ -29,6 +31,11 @@ foreach($demandes as $demande){
         </div>
     </div>
 </div>  
+<?php
+}
+if(!$demandes){ ?>
+    <p class="text-center mt-3"> Aucune demande disponible </p>
+
 <?php
 }
 ?>

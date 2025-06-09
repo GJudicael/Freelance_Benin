@@ -1,10 +1,14 @@
 <?php session_start();
 require_once(__DIR__."/../bdd/creation_bdd.php");
 
+$user_id = $_SESSION["user_id"];
+
 $smt = $bdd->prepare("SELECT i.nom, i.prenom, i.photo, f.bio, f.user_id FROM inscription i 
 INNER JOIN freelancers f 
-ON i.id = f.user_id ");
-$smt->execute();
+ON i.id = f.user_id 
+WHERE f.user_id != ?");
+
+$smt->execute([$user_id]);
 $freelancers = $smt->fetchALl(PDO::FETCH_ASSOC);
 
  ?>

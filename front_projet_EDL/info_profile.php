@@ -16,9 +16,17 @@ $check = $bdd->prepare("SELECT * FROM freelancers WHERE user_id = ?");
 $check->execute([$user_id]);
 $freelancer = $check->fetch();
 
-$stmt2 = $bdd->prepare("SELECT description, categorie, titre, date_soumission FROM demande WHERE user_id = ?");
-$stmt2->execute([$user_id]);
-$demandes = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+if($freelancer && isset($freelancer['id'])){  
+  $stmt2 = $bdd->prepare("SELECT d.description, d.categorie, d.titre, d.date_fin, n.comment FROM demande d
+    INNER JOIN notation n 
+    ON d.freelancer_id = n.freelancer_id
+    WHERE d.freelancer_id = ? AND statut = 'terminé' ");
+
+  $stmt2->execute([$freelancer['id']]);
+  $projets = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
 
 
 // Récupération des notes pour les demandes terminées
@@ -40,9 +48,7 @@ if ($total_ratings > 0) {
     $average_rating = round($sum / $total_ratings, 1);
 }
 
-
 $_SESSION['photo'] = $user['photo'];
-
 ?>
 
 <!DOCTYPE html>
@@ -74,7 +80,7 @@ $_SESSION['photo'] = $user['photo'];
   <?php require_once(__DIR__ . "/header.php") ?>
 
   <div class="container py-5">
-    <h2 class="mb-4">Mon profil</h2>
+    <h2 class="mb-4">Profil</h2>
 
     <div class="row">
       <!-- Profile public -->
@@ -125,31 +131,62 @@ $_SESSION['photo'] = $user['photo'];
               <p> <strong> Compétences </strong></p>
               <p><?= htmlspecialchars($freelancer['competences']) ?></p>
 
-            <?php endif; ?>
+           
+            <?php if (!empty($projets)) : ?>
+              <hr class="my-3">
+              <h3 class=" text-center">Projets réalisés</h3>
 
-            <h4 class="mt-4">Demandes / Services publiés</h4>
-
-            <?php if (count($demandes) === 0): ?>
-              <p class="text-muted">Aucune demande ou service publié.</p>
-            <?php else: ?>
-              <div class="row g-4 my-3">
-                <?php foreach ($demandes as $demande): ?>
-                  <div class="col-md-6 col-lg-4">
-                    <div class="card h-100 border-2 border-success-subtle shadow">
-                      <div class="card-body">
-                        <h5 class="card-title"><?= htmlspecialchars($demande['titre']) ?></h5>
-                        <p class="card-text"><?= htmlspecialchars($demande['description']) ?></p>
-                        <p class="text-muted" style="font-size: 0.8rem;">
-                          Publié le <?= htmlspecialchars(date('d/m/Y', strtotime($demande['date_soumission']))) ?>
-                        </p>
+               <div id="freelancerCarousel" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+              <!-- Slides ici -->
+              <?php
+              $count = count($projets);
+              $perSlide = 2;
+              $chunked = array_chunk($projets,$perSlide);
+              $active = true;
+              foreach ($chunked as $group): ?>
+                  <div class="carousel-item <?= $active ? 'active' : '' ?>">
+                  <div class="row justify-content-center row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-3 ">
+                
+                  <?php foreach ($group as $projet) : ?>
+                    
+                    <div class="col">
+                      <div class="card h-100">
+                        
+                        <div class="card-body">
+                          <h5 class="card-title"><?= htmlspecialchars($projet['titre']) ?></h5>
+                          <p class="card-text"><?= nl2br(htmlspecialchars($projet['description'])) ?></p>
+                          <p class="card-text mt-3" > Commentaire : <?= nl2br(htmlspecialchars($projet['comment'])) ?> </p>
+                          
+                        </div>
+                        <div class="card-footer text-muted">
+                          Réalisé le : <?= htmlspecialchars($projet['date_fin']) ?>
+                        </div>
                       </div>
                     </div>
+                    
+                  <?php endforeach; ?>
                   </div>
-                <?php endforeach; ?>
-              </div>
-            <?php endif; ?>
+                </div>
+              <?php $active = false; endforeach; ?>
+          </div>
 
-            <div class="pt-2">
+        <!-- Contrôles -->
+        <button class="carousel-control-prev px-3" type="button" data-bs-target="#freelancerCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon bg-black opacity-50"></span>
+        </button>
+        <button class="carousel-control-next px-3" type="button" data-bs-target="#freelancerCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon bg-black opacity-50"></span>
+        </button>
+        </div>
+
+
+            <?php else : ?>
+              <p class="mt-4 text-muted">Aucun projet ajouté pour le moment.</p>
+            <?php endif; ?>
+        <?php endif; ?> 
+
+            <div class="pt-3">
               <a href="../messagerie/discussions.php?user_id=<?= $user_id ?>" class="btn btn-primary"> Me contacter </a>
             </div>
 
@@ -217,27 +254,7 @@ $_SESSION['photo'] = $user['photo'];
 
                 <?php endif; ?>
 
-                <h4 class="mt-4">Demandes / Services publiés</h4>
-
-                <?php if (count($demandes) === 0): ?>
-                  <p class="text-muted">Aucune demande ou service publié.</p>
-                <?php else: ?>
-                  <div class="row g-4 my-3">
-                    <?php foreach ($demandes as $demande): ?>
-                      <div class="col-md-6 col-lg-4">
-                        <div class="card h-100 border-2 border-primary-subtle shadow">
-                          <div class="card-body">
-                            <h5 class="card-title"><?= htmlspecialchars($demande['titre']) ?></h5>
-                            <p class="card-text"><?= htmlspecialchars($demande['description']) ?></p>
-                            <p class="text-muted" style="font-size: 0.8rem;">
-                              Publié le <?= htmlspecialchars(date('d/m/Y', strtotime($demande['date_soumission']))) ?>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    <?php endforeach; ?>
-                  </div>
-                <?php endif; ?>
+                
 
                 <button class="btn btn-outline-primary" onclick="afficherFormulaire()">Modifier mes informations</button>
                 <?php if ($user['role'] === 'client') : ?>

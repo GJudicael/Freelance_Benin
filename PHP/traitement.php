@@ -22,10 +22,20 @@ if (isset($_POST['envoyer'])) {
         $erreur['categorie'] = "Ce champ est requis";
     }
      if(empty($nom_utilisateur)){
-        $erreur['nom_utilisateur'] = "Ce champ est requis";
+        $erreur['nomDUtilisateur'] = "Ce champ est requis";
     }
 
     $user_id = $_SESSION["user_id"];
+    $nomDutilisateur = $bdd->prepare('SELECT nomDUtilisateur FROM inscription WHERE id = :id');
+    $nomDutilisateur->execute([
+        'id' => $user_id
+    ]);
+    $user = $nomDutilisateur->fetch(PDO::FETCH_ASSOC);
+
+    if($user['nomDUtilisateur'] !== $nom_utilisateur){
+        $erreur['nomDUtilisateur'] = "Nom d'utilisateur incorrect";
+    }
+
     if(empty($erreur)){
         $requete = $bdd->prepare('INSERT INTO demande (description, categorie,titre, user_id, date_soumission) VALUES (:description, :categorie,:titre, :user_id, :date)');
         $requete->execute([
