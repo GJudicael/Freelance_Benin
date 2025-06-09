@@ -107,7 +107,7 @@ if ($selected_user_id) {
             die(-1);
         }
     } else {
-        header('location:/../messagerie/discussions.php');
+        header('location:../messagerie/discussions.php');
         exit;
     }
 } else {
