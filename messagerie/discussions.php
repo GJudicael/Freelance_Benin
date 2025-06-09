@@ -174,7 +174,7 @@ $conversations = $resultat->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messagerie</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="/assets/bootstrap-5.3.6-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/../assets/bootstrap-5.3.6-dist/css/bootstrap.min.css">
 </head>
 
 <body>
