@@ -175,6 +175,7 @@ $conversations = $resultat->fetchAll(PDO::FETCH_ASSOC);
     <title>Messagerie</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="./../assets/bootstrap-5.3.6-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./../assets/bootstrap-icons-1.13.1/bootstrap-icons.min.css">
 </head>
 
 <body>
