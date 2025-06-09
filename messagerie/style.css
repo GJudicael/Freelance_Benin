@@ -3,24 +3,29 @@ body {
     font-family: sans-serif;
 }
 
+p {
+    /* color: #333; */
+}
+
+#wrapper {
+    height: 100vh;
+}
+
 .container {
     display: flex;
     height: 100vh;
 }
 
+/* Bloc de gauche */
+
 .left {
-    width: 30%;
+    width: 28%;
     /* background: #f0f0f0; */
     padding: 10px;
     overflow-y: auto;
 }
 
-.right {
-    flex-grow: 1;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-}
+.message {}
 
 .conv {
     /* padding: 10px; */
@@ -30,13 +35,45 @@ body {
     /* background-color: rgba(0, 0, 0, 0.1); */
 }
 
-.conv:hover {
+#conv:hover {
     background: rgba(0, 0, 0, 0.1);
     cursor: pointer;
 }
 
-.message {
+div.infos_conv {
     margin-bottom: 10px;
+}
+
+div.infos_conv {
+    position: relative;
+}
+
+div.infos_conv span {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.8rem !important;
+}
+
+/* Bloc de droite */
+
+.right {
+    flex-grow: 1;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+#messagesCont::-webkit-scrollbar {
+    display: none;
+}
+
+.from-me,
+.from-other {
+    width: auto;
+    max-width: calc(50% - 10px);
+    border-radius: 10px;
 }
 
 .from-me {
@@ -47,33 +84,8 @@ body {
 .from-other {
     text-align: left;
     margin-right: auto;
-    flex-direction: row-reverse;
 }
 
-form textarea {
-    width: 100%;
-    height: 60px;
-}
-
-p{
-    color: #333;
-}
-
-#wrapper{
-    height: 100vh;
-}
-
-#message{
-    position: relative;
-}
-#message span{
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 0.8rem!important;
-}
-
-textarea{
+.right textarea {
     resize: none;
 }

@@ -2,7 +2,7 @@
 session_start();
 
 // Inclusion du fichier de la base de données
-require_once('bdd/creation_bdd.php');
+require_once(__DIR__ . '/../bdd/creation_bdd.php');
 $current_user_id = $_SESSION['user_id'];
 
 // Gestion du timezone pour qu'il s'adapte au Bénin
@@ -188,10 +188,10 @@ $conversations = $resultat->fetchAll(PDO::FETCH_ASSOC);
                 <p>Aucune conversation entamée...</p>
             <?php else: ?>
                 <?php foreach ($conversations as $conv) : ?>
-                    <a href="discussions.php?user_id=<?= $conv['id'] ?>" class="text-decoration-none">
-                        <div class="conv d-flex align-items-center p-2 rounded-3">
-                            <img src="/photo_profile/<?= $conv['photo'] ?>" alt="Photo de profil de <?= $conv['nom'] . ' ' . $conv['prenom'] ?>" class="rounded-circle" width="50" height="50">
-                            <div class="ms-3 w-100" id="message">
+                    <a href="discussions.php?user_id=<?= $conv['id'] ?>" class="text-decoration-none text-black" id="conv">
+                        <div class="d-flex align-items-center p-2 rounded-3" id="conv">
+                            <img src=" /photo_profile/<?= $conv['photo'] ?>" alt="Photo de profil de <?= $conv['nom'] . ' ' . $conv['prenom'] ?>" class="rounded-circle" width="50" height="50">
+                            <div class="ms-3 w-100 infos_conv">
                                 <p class="mb-0 fs-6 fw-bolder"><?= $conv['nom'] . ' ' . $conv['prenom'] ?></p>
                                 <p class="mb-0"><?= formatterChaine($conv['message'], LONGUEUR_MESSAGE) ?></p>
                                 <span id="date" class="fs-6 text-black fw-light"><?= afficherDate($conv['created_at']) ?></span>
@@ -207,17 +207,17 @@ $conversations = $resultat->fetchAll(PDO::FETCH_ASSOC);
 
             <?php if ($receiver_id) : ?>
                 <!-- Header -->
-                <div class="pb-2 <?= empty($discussion) ? 'text-center mb-3' : 'd-flex align-items-center border-bottom border-3' ?>">
-                    <img src="/photo_profile/<?= $infos_destinataire['photo'] ?>" alt="Photo de <?= $infos_destinataire['nom'] . ' ' . $infos_destinataire['prenom'] ?>" class="rounded-circle <?= empty($discussion) ? 'mb-3" width="200px" height="200px' : '" width="40" height="40' ?>">
-                    <p class="<?= empty($discussion) ? 'mb-2' : 'mx-2 mb-0' ?>"><strong><?= $infos_destinataire['nom'] . ' ' . $infos_destinataire['prenom'] ?></strong> (<i><?= $infos_destinataire['nomDUtilisateur'] ?></i>)</p>
-                    <?php if (empty($discussion)) : ?>
-                        <a href="bref">Voir le profil</a>
-                    <?php endif; ?>
+                <div class="pb-2 d-flex align-items-center border-bottom border-3">
+                    <img src="/photo_profile/<?= $infos_destinataire['photo'] ?>" alt="Photo de <?= $infos_destinataire['nom'] . ' ' . $infos_destinataire['prenom'] ?>" class="rounded-circle" width="40" height="40">
+                    <p class="mx-2 mb-0"><strong><?= $infos_destinataire['nom'] . ' ' . $infos_destinataire['prenom'] ?></strong> (<i><?= $infos_destinataire['nomDUtilisateur'] ?></i>)</p>
+                    <!-- <?php if (empty($discussion)) : ?>
+                        <a href="../front_projet_EDL/info_profile.php?id=<?= $selected_user_id ?>">Voir le profil</a>
+                    <?php endif; ?> -->
                 </div>
 
                 <!-- Messages proprements dits -->
 
-                <div class="d-flex flex-column h-75 py-2 mb-3 overflow-y-scroll">
+                <div class="d-flex flex-column h-75 py-2 mb-3 overflow-y-scroll" id="messagesCont">
                     <?php if (empty($discussion)) : ?>
                         <!-- Rien à afficher -->
                     <?php else: ?>
@@ -230,8 +230,8 @@ $conversations = $resultat->fetchAll(PDO::FETCH_ASSOC);
                             $from_current_user = $msg['sender_id'] == $current_user_id;
                             ?>
 
-                            <div class="mb-1 <?= $from_current_user ? 'from-me' : 'from-other' ?> d-flex">
-                                <p class="<?= $from_current_user ? 'bg-primary text-white' : 'bg-light' ?> rounded-pill py-2 px-4 mb-0 me-[20px]"><?= nl2br(htmlspecialchars($msg['message'])) ?></p>
+                            <div class="mb-1 <?= $from_current_user ? 'from-me bg-primary text-white' : 'from-other bg-light' ?> message">
+                                <p class="py-2 px-4 mb-0 me-[20px]"><?= nl2br(htmlspecialchars($msg['message'])) ?></p>
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
@@ -240,7 +240,7 @@ $conversations = $resultat->fetchAll(PDO::FETCH_ASSOC);
                 <!-- Formulaire d'envoi -->
                 <form action="traitements/send_message.php" method="post" class="mb-3">
                     <div class="d-flex">
-                        <textarea name="message" id="message" class="form-control" placeholder="Saissisez votre message" rows="1"></textarea>
+                        <textarea name="message" id="messageCont" class="form-control" placeholder="Saissisez votre message" rows="1"></textarea>
                         <!-- <input type="text" name="message" id="message" class="form-control form-control-sm" placeholder="Saisissez votre message"> -->
                         <button type="submit" class="btn btn-primary mx-2">Envoyer</button>
                     </div>
