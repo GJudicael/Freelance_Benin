@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page de création de compte</title>
-
+   
     <link rel="stylesheet" href="../assets/bootstrap-5.3.6-dist/css/bootstrap.min.css">
     
     <link rel="stylesheet" href="../assets/style.css">
@@ -19,12 +19,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baumans&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../assets/bootstrap-icons-1.13.1/bootstrap-icons.min.css">
+     <link rel="stylesheet" href="../assets/bootstrap-icons-1.13.1/bootstrap-icons.min.css">
 </head>
 <body>
 
 <main class="container w-50 shadow my-5 p-5">
-
+   
     <h3 class="text-center text-primary">Créez votre compte</h3>
     <form method="post" action="">
         <?php 
@@ -33,7 +33,7 @@
                 unset($message);
             }
         ?>
-        
+       
             <div class="p-2">
                 <label for="nom" class="form-text fs-6 p-1">Nom</label>
                 <input id="nom" type="text" name="nom" class="form-control" placeholder="Entrer votre nom" value="<?php echo isset($error)? htmlspecialchars($nom): '' ?>">
@@ -42,9 +42,11 @@
                 <label for="prenom" class="form-text  fs-6 p-1">Prénom(s)</label>
                 <input id="prenom" type="text" name="prenom" class="form-control" placeholder="Entrer votre prenom" value="<?php echo isset($error)? htmlspecialchars($prenom): '' ?>">
             </div>
-            <div class="p-2">
+             <div class="p-2">
                 <label for="nom_d_utilisateur" class="form-text  fs-6 p-1">Nom d'utilisateur</label>
                 <input id="nom_d_utilisateur" type="text" name="nom_d_utilisateur" class="form-control" placeholder="Entrer un nom d'utilisateur" value="<?php echo isset($error)? htmlspecialchars($nomUtilisateur): '' ?>">
+                <p> <small class="text-danger"> <?php if(isset($error["nomDUtilisateur"])) { echo htmlspecialchars($error["nomDUtilisateur"]); 
+                    unset($error["nomDUtilisateur"]) ; } ?> </small></p>
             </div>
             <div class="p-2">
                 <label for="numero" class="form-text  fs-6 p-1">Numéro de téléphone</label>
@@ -86,7 +88,7 @@
                         unset($error["pass_confirm"]) ; } ?> </small></p>
                 
             </div>
-        
+           
             <div class="text-center">
                 <button type="submit" name="envoyer" class="btn btn-outline-primary mt-2"> Créer un compte </button>
             </div>

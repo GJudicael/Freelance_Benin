@@ -11,41 +11,10 @@
     <link rel="stylesheet" href="../assets/style.css">
     <link rel="stylesheet" href="../assets/bootstrap-icons-1.13.1/bootstrap-icons.min.css">
 
-    <style>
-        .timeline {
-            position: relative;
-            padding-left: 2rem;
-        }
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 7px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: #dee2e6;
-        }
-        .timeline-item {
-            position: relative;
-            padding-bottom: 1.5rem;
-        }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -2rem;
-            top: 0;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: #0d6efd;
-        }
-        .progress {
-            height: 20px;
-        }
-    </style>
+   
 </head>
 <body>
-    <?php require_once(__DIR__."/../front_projet_EDL/header.php")?>
+    <?php require_once(__DIR__."/header.php")?>
     <div class="container py-5">
         <!-- Affichage des messages -->
         <?php if ($viewData['error']): ?>
@@ -170,7 +139,7 @@
         </div>
     </div>
 
-   <?php require_once(__DIR__."/../front_projet_EDL/footer.php")?>
+   <?php require_once(__DIR__."/footer.php")?>
 <script src="../assets/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js" ></script>
 </body>
 </html>

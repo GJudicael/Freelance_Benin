@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page de connexion</title>
-
+   
     <link rel="stylesheet" href="../assets/bootstrap-5.3.6-dist/css/bootstrap.min.css">
     
     <link rel="stylesheet" href="../assets/style.css">
@@ -40,7 +40,7 @@
                     
                     echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($message_error). '</div>';
                     unset($message_error);
-        
+           
                 }
             ?>
 
@@ -50,7 +50,7 @@
                     
                     echo '<div class="alert alert-success" role="alert">' . htmlspecialchars($_SESSION["succes"]). '</div>';
                     unset($_SESSION["succes"]);
-            
+           
                 }
             ?>
 
@@ -86,7 +86,7 @@
         <p class=" text-center"> Êtes-vous nouveau sur le site ?  
             <a href="Creation_d_un_compte.php" class=" text-decoration-none">Créez un compte</a>
         </p>
-    
+      
         </section>
     </main>
 
@@ -95,3 +95,4 @@
     <script src="../assets/js/scripts.js"></script>
 </body>
 </html>
+ 

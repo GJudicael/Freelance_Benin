@@ -3,6 +3,7 @@
 
         session_start();
         require_once(__DIR__."/../bdd/creation_bdd.php");
+
         require_once("sendmail.php");
     
     if(isset($_POST['envoyer']))
@@ -43,6 +44,9 @@
             {
                 if (isset($_POST["email"]) && filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
                     $requete = $bdd->prepare('INSERT INTO inscription(nom , prenom, numero, email, motDePasse, nomDUtilisateur) VALUES(:nom, :prenom, :numero, :email, :motDePasse, :nomDUtilisateur)');
+
+                $requete = $bdd->prepare('INSERT INTO inscription(nom , prenom, numero, email, motDePasse, nomDUtilisateur) VALUES(:nom, :prenom, :numero, :email, :motDePasse, :nomDUtilisateur)');
+
                 $requete->execute([
                     'nom' => $nom,
                     'prenom' => $prenom,
@@ -64,7 +68,3 @@
             }
         }
     }
-
-    ?>
-</body>
-</html>

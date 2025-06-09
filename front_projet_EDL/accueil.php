@@ -2,12 +2,13 @@
 require_once(__DIR__."/../bdd/creation_bdd.php");
 
 $smt = $bdd->prepare("SELECT i.nom, i.prenom, i.photo, f.bio, f.user_id FROM inscription i 
-INNER JOIN freelancers f
+INNER JOIN freelancers f 
 ON i.id = f.user_id ");
 $smt->execute();
 $freelancers = $smt->fetchALl(PDO::FETCH_ASSOC);
 
-?>
+ ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,8 +37,7 @@ $freelancers = $smt->fetchALl(PDO::FETCH_ASSOC);
             et de recevoir des offres de missions, tandis que les clients pourront publier des projets et entrer en contact avec des prestataires qualifiés.
         </p>
     </section>
-
-    <section class=" my-4 py-3 bg-light">
+    <section class=" my-4 py-4 bg-light">
         <h4 class="mb-2 text-center text-warning p-2 historique"> NOS FREELANCEURS </h4>
 
         <div id="freelancerCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -115,9 +115,11 @@ $freelancers = $smt->fetchALl(PDO::FETCH_ASSOC);
         <p>Aucun résultat trouvé.</p>
     <?php endif; ?>
 <?php endif; ?>
+    <section class="mb-3 p-5 shadow">
 
-
-    
+        <h4 class="mt-4 text-center text-primary historique"> DEMANDES  PUBLIÉES </h4>
+        <?php require_once(__DIR__."/historique.php"); ?> 
+    </section>
 </main>
 
 <?php require_once(__DIR__."/footer.php")?>

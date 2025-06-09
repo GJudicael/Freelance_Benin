@@ -100,19 +100,51 @@ try {
         pourcentage INT DEFAULT 0,
         date_mise_a_jour DATETIME DEFAULT CURRENT_TIMESTAMP,
         commentaire TEXT,
-        FOREIGN KEY (demande_id) REFERENCES demande(id) ON DELETE CASCADE
-);
-
+        FOREIGN KEY (demande_id) REFERENCES demande(id) ON DELETE CASCADE );
         
+        CREATE TABLE IF NOT EXISTS messages (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        sender_id INT NOT NULL,
+        receiver_id INT NOT NULL,
+        message TEXT NOT NULL,
+        created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (sender_id) REFERENCES inscription(id),
+        FOREIGN KEY (receiver_id) REFERENCES inscription(id)
+        );
     ";
 
-    $bdd->exec($sqlTables);
+   $bdd->exec($sqlTables);
+   
+    $bdd->exec("DROP TRIGGER IF EXISTS after_suivi_insert");
 
-    //echo "Tables créées avec succès.";
+    $triggerSql = "
+    CREATE TRIGGER after_suivi_insert
+    AFTER INSERT ON suivi_projet
+    FOR EACH ROW
+    BEGIN
+        DECLARE max_pourcentage INT;
+        
+        SELECT MAX(pourcentage) INTO max_pourcentage 
+        FROM suivi_projet 
+        WHERE demande_id = NEW.demande_id;
+        
+        IF max_pourcentage = 100 THEN
+            UPDATE demande 
+            SET statut = 'terminé', 
+                avancement = 100,
+                date_fin = NOW()
+            WHERE id = NEW.demande_id;
+        END IF;
+    END";
+
+     //echo "Tables créées avec succès.";
+
+    $bdd->exec($triggerSql);
 
 } catch (PDOException $e) {
     echo "Echec lors de la connexion : " . $e->getMessage();
 }
 
+    //echo "Tables créées avec succès.";
 
 ?>

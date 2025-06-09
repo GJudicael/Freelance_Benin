@@ -18,10 +18,12 @@ if ($result['role'] !== 'freelance') {
 $stmt = $bdd->prepare("SELECT d.*, 
                       c.nom AS client_nom, 
                       c.prenom AS client_prenom,
+                      f.user_id,
                       (SELECT MAX(pourcentage) FROM suivi_projet WHERE demande_id = d.id) AS avancement
                       FROM demande d
                       JOIN inscription c ON d.user_id = c.id
-                      WHERE d.id = ? AND d.freelancer_id = ?");
+                      JOIN freelancers f ON f.id = d.freelancer_id
+                      WHERE d.id = ? AND f.user_id = ?");
 $stmt->execute([$_GET['id'], $_SESSION['user_id']]);
 $mission = $stmt->fetch();
 
@@ -42,6 +44,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: traitement_suivi_projet.php?id=".$mission['id']);
         exit();
     }
+
+    // Empêcher les pourcentages > 100
+    if ($_POST['pourcentage'] > 100) {
+        $_SESSION['error'] = "Ce projet est déjà terminé , vous ne pouvez plus ajouter une étape";
+        header("Location: traitement_suivi_projet.php?id=".$mission['id']);
+        exit();
+}
 
     // Insertion de la nouvelle étape
     $stmt = $bdd->prepare("INSERT INTO suivi_projet 
@@ -71,6 +80,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_SESSION['success'] = "Étape ajoutée avec succès";
     header("Location: traitement_suivi_projet.php?id=".$mission['id']);
     exit();
+
+
+    // Après avoir inséré une nouvelle étape
+    if ($_POST['pourcentage'] == 100) {
+    // Marquer la mission comme terminée
+    $stmt = $bdd->prepare("UPDATE demande 
+                          SET statut = 'terminé', 
+                              avancement = 100,
+                              date_fin = NOW() 
+                          WHERE id = ?");
+    $stmt->execute([$mission['id']]);
+    
+    $_SESSION['success'] = "Félicitations ! Le projet est marqué comme terminé.";
+     }
 }
 
 // Récupération des étapes existantes pour affichage
