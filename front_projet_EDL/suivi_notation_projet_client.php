@@ -52,10 +52,10 @@ $notation = $stmtNotation->fetch(PDO::FETCH_ASSOC);
     <title>Suivi du projet</title>
     <link href="../assets/bootstrap-5.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-     <link href="https://fonts.googleapis.com/css2?family=Ancizar+Serif:ital,wght@0,300..900;1,300..900&family=Baumans&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ancizar+Serif:ital,wght@0,300..900;1,300..900&family=Baumans&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/bootstrap-5.3.6-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/style.css">
-    <link rel="stylesheet" href="../assets/bootstrap-icons-1.13.1/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../assets/bootstrap-icons-1.13.1/bootstrap-icons.min.css"> <link href="https://fonts.googleapis.com/css2?family=Ancizar+Serif:ital,wght@0,300..900;1,300..900&family=Baumans&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="../assets/style.css">
     
 </head>
 <body>
@@ -91,7 +91,7 @@ $notation = $stmtNotation->fetch(PDO::FETCH_ASSOC);
                             <div class="timeline-item">
                                 <div class="timeline-dot"></div>
                                 <div class="card mb-3">
-                                    <div class="card-header">
+                                    <div class="card-header bg-info-subtle">
                                         <strong><?= htmlspecialchars($etape['etape']) ?></strong>
                                         <span class="float-end">
                                             <?= date('d/m/Y H:i', strtotime($etape['date_mise_a_jour'])) ?>
