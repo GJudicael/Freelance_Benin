@@ -174,7 +174,7 @@ $conversations = $resultat->fetchAll(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messagerie</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="/../assets/bootstrap-5.3.6-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./../assets/bootstrap-5.3.6-dist/css/bootstrap.min.css">
 </head>
 
 <body>
@@ -190,7 +190,7 @@ $conversations = $resultat->fetchAll(PDO::FETCH_ASSOC);
                 <?php foreach ($conversations as $conv) : ?>
                     <a href="discussions.php?user_id=<?= $conv['id'] ?>" class="text-decoration-none text-black" id="conv">
                         <div class="d-flex align-items-center p-2 rounded-3" id="conv">
-                            <img src=" /photo_profile/<?= $conv['photo'] ?>" alt="Photo de profil de <?= $conv['nom'] . ' ' . $conv['prenom'] ?>" class="rounded-circle" width="50" height="50">
+                            <img src="./../photo_profile/<?= $conv['photo'] ?>" alt="Photo de profil de <?= $conv['nom'] . ' ' . $conv['prenom'] ?>" class="rounded-circle" width="50" height="50">
                             <div class="ms-3 w-100 infos_conv">
                                 <p class="mb-0 fs-6 fw-bolder"><?= $conv['nom'] . ' ' . $conv['prenom'] ?></p>
                                 <p class="mb-0"><?= formatterChaine($conv['message'], LONGUEUR_MESSAGE) ?></p>
@@ -208,7 +208,7 @@ $conversations = $resultat->fetchAll(PDO::FETCH_ASSOC);
             <?php if ($receiver_id) : ?>
                 <!-- Header -->
                 <div class="pb-2 d-flex align-items-center border-bottom border-3">
-                    <img src="/photo_profile/<?= $infos_destinataire['photo'] ?>" alt="Photo de <?= $infos_destinataire['nom'] . ' ' . $infos_destinataire['prenom'] ?>" class="rounded-circle" width="40" height="40">
+                    <img src="./../photo_profile/<?= $infos_destinataire['photo'] ?>" alt="Photo de <?= $infos_destinataire['nom'] . ' ' . $infos_destinataire['prenom'] ?>" class="rounded-circle" width="40" height="40">
                     <p class="mx-2 mb-0"><strong><?= $infos_destinataire['nom'] . ' ' . $infos_destinataire['prenom'] ?></strong> (<i><?= $infos_destinataire['nomDUtilisateur'] ?></i>)</p>
                     <!-- <?php if (empty($discussion)) : ?>
                         <a href="../front_projet_EDL/info_profile.php?id=<?= $selected_user_id ?>">Voir le profil</a>
