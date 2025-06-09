@@ -255,7 +255,7 @@ $conversations = $resultat->fetchAll(PDO::FETCH_ASSOC);
     <script>
         window.addEventListener('keydown', (event) => {
             if (event.key == "Escape") {
-                document.location.href = "/messagerie/discussions.php";
+                document.location.href = "./../messagerie/discussions.php";
             }
         })
     </script>
