@@ -58,7 +58,7 @@ $freelancers = $smt->fetchALl(PDO::FETCH_ASSOC);
                         <?php foreach ($group as $freelancer): ?> 
                             <div class="col-lg-3 col-md-6">
                                 <div class="card text-center p-3 border-0 bg-light">
-                                    <img src="../photo_profile/<?= htmlspecialchars($freelancer['photo']) ?>" class="rounded-circle mx-auto d-block" alt="Freelancer" width="100">
+                                    <img src="../photo_profile/<?= htmlspecialchars($freelancer['photo']) ?>" class="rounded-circle mx-auto d-block" alt="Freelancer" height="100" width="100">
                                     <div class="card-body">
                                         <h5 class="card-title"><?= htmlspecialchars($freelancer['nom']) ?> <?= htmlspecialchars($freelancer['prenom']) ?></h5>
                                         <p class="card-text"><?= htmlspecialchars($freelancer['bio']) ?></p>
