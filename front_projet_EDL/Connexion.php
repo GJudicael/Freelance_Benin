@@ -39,7 +39,7 @@
                 if(isset($message_error)){
                     
                     echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($message_error). '</div>';
-                     unset($message_error);
+                    unset($message_error);
            
                 }
             ?>
@@ -49,7 +49,7 @@
                 if(isset($_SESSION["succes"])){
                     
                     echo '<div class="alert alert-success" role="alert">' . htmlspecialchars($_SESSION["succes"]). '</div>';
-                     unset($_SESSION["succes"]);
+                    unset($_SESSION["succes"]);
            
                 }
             ?>

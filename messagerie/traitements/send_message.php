@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once('bdd/creation_bdd.php');
+require_once(__DIR__.'/../../bdd/creation_bdd.php');
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $message = $_POST['message'];
         if(empty($message)){
             $erreur = true;
+            // Est ce qu'il y aura une autre validation à appliquer ? Question pour un champion
         }
 
         if(!isset($erreur)){
@@ -27,6 +28,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->bindParam('message', $_POST['message']);
             $stmt->execute();
 
+            header('location:../discussions.php?user_id=' . $receiver_id);
+            exit;
+        }else{
             header('location:../discussions.php?user_id=' . $receiver_id);
             exit;
         }

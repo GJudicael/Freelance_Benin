@@ -21,9 +21,12 @@ if (isset($_POST['envoyer'])) {
     if(empty($categorie)){
         $erreur['categorie'] = "Ce champ est requis";
     }
+<<<<<<< HEAD
      if(empty($nom_utilisateur)){
         $erreur['nomDUtilisateur'] = "Ce champ est requis";
     }
+=======
+>>>>>>> 660380d9405d989d635c3099e728cf4dce17fcff
 
     $user_id = $_SESSION["user_id"];
     $nomDutilisateur = $bdd->prepare('SELECT nomDUtilisateur FROM inscription WHERE id = :id');
