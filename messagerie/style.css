@@ -1,3 +1,7 @@
+* {
+    font-family: "Fraunces", serif;
+}
+
 body {
     margin: 0;
     font-family: sans-serif;
@@ -20,7 +24,7 @@ p {
 
 .left {
     width: 40%;
-    max-width : 360px;
+    max-width: 360px;
     /* background: #f0f0f0; */
     padding: 10px;
     overflow-y: auto;
