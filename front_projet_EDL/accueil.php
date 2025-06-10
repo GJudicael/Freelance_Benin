@@ -83,42 +83,7 @@ $freelancers = $smt->fetchALl(PDO::FETCH_ASSOC);
 
     </section>
     
-    <?php if (!empty($keywords)): ?>
-    <h3>Résultats :</h3>
-    <?php if (count($searchResults) > 0): ?>
-        <?php foreach ($searchResults as $result): ?>
-            <div class="container py-4 ">
-                <div class="row justify-content-center ">
-                    <div class="col-lg-8 col-md-12">
-                        <div class="card h-100 p-2 shadow border-primary-subtle border-3 rounded-4">
-                            <div class="card-body  overflow-auto">
-                                <?php if (isset($result['titre']) && isset($result['description'])): ?>
-                                    <div class="user-info pb-3">
-                                        <i class="bi bi-person-fill"></i> Posté par :
-                                        <a href="info_profile.php?id=<?= htmlspecialchars($result['user_id']) ?>" class="text-decoration-none text-tertiary">
-                                            <strong><?= htmlspecialchars($result['nom']) . ' ' . htmlspecialchars($result['prenom']) ?></strong>
-                                        </a>
-                                    </div>
-                                    <h5 class="card-title text-secondaryg"> <?= htmlspecialchars($result["titre"]) ?></h5>
-                                    <p class="card-text text-muted"> <?= htmlspecialchars($result["description"]) ?></p>
-                                <?php else: ?>
-                                    <div class="user-info pb-3">
-                                        <i class="bi bi-person-fill"></i> Profile :
-                                        <a href="info_profile.php?id=<?= htmlspecialchars($result['id']) ?>" class="text-decoration-none text-tertiary">
-                                            <strong><?= htmlspecialchars($result['nom']) . ' ' . htmlspecialchars($result['prenom']) ?></strong>
-                                        </a>
-                                    </div>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <p>Aucun résultat trouvé.</p>
-    <?php endif; ?>
-<?php endif; ?>
+   
     <section class="mb-3 p-5 shadow">
 
         <h4 class="mt-4 text-center text-primary historique"> DEMANDES  PUBLIÉES </h4>

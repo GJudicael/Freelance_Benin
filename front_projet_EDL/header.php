@@ -1,5 +1,7 @@
  <?php 
   require_once(__DIR__."/../bdd/creation_bdd.php");
+  require_once(__DIR__ . "/../PHP/update_profile.php");
+
   
   $user_id = $_SESSION['user_id'];
 
@@ -9,55 +11,8 @@
 
   $photo = $users["photo"];
   
-  ?>
+  $type = $_POST['type'] ?? '';
 
-<?php
-require_once(__DIR__ . "/../bdd/creation_bdd.php");
-require_once(__DIR__ . "/../PHP/update_profile.php");
-
-$searchResults = [];
-$type = $_GET['type'] ?? '';
-$keywords = $_GET['keywords'] ?? '';
-$keyword = "%$keywords%";
-
-if (!empty($keywords)) {
-    switch ($type) {
-        case 'inscription':
-            $stmt = $bdd->prepare("SELECT * FROM inscription WHERE nom LIKE ? OR prenom LIKE ? OR email LIKE ? OR numero LIKE ? OR nomDUtilisateur LIKE ?");
-            $stmt->execute([$keyword, $keyword, $keyword, $keyword, $keyword]);
-            $searchResults = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            break;
-
-        case 'freelancer':
-            $stmt = $bdd->prepare("SELECT f.*, i.nom, i.prenom, i.id AS user_id FROM freelancers f JOIN inscription i ON f.user_id = i.id WHERE bio LIKE ? OR competences LIKE ?");
-            $stmt->execute([$keyword, $keyword]);
-            $searchResults = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            break;
-
-        case 'demande':
-            $stmt = $bdd->prepare("SELECT d.*, i.nom, i.prenom, i.id AS user_id FROM demande d JOIN inscription i ON d.user_id = i.id WHERE titre LIKE ? OR description LIKE ? OR categorie LIKE ?");
-            $stmt->execute([$keyword, $keyword, $keyword]);
-            $searchResults = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            break;
-
-        default:
-            // Recherche globale sur les 3 tables
-            $stmt1 = $bdd->prepare("SELECT * FROM inscription WHERE nom LIKE ? OR prenom LIKE ? OR email LIKE ? OR numero LIKE ? OR nomDUtilisateur LIKE ?");
-            $stmt1->execute([$keyword, $keyword, $keyword, $keyword, $keyword]);
-            $res1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
-
-            $stmt2 = $bdd->prepare("SELECT f.*, i.nom, i.prenom, i.id AS user_id FROM freelancers f JOIN inscription i ON f.user_id = i.id WHERE bio LIKE ? OR competences LIKE ?");
-            $stmt2->execute([$keyword, $keyword]);
-            $res2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
-
-            $stmt3 = $bdd->prepare("SELECT d.*, i.nom, i.prenom, i.id AS user_id FROM demande d JOIN inscription i ON d.user_id = i.id WHERE titre LIKE ? OR description LIKE ? OR categorie LIKE ?");
-            $stmt3->execute([$keyword, $keyword, $keyword]);
-            $res3 = $stmt3->fetchAll(PDO::FETCH_ASSOC);
-
-            $searchResults = array_merge($res1, $res2, $res3);
-            break;
-    }
-}
 ?>
 <header>
 <!-- Barre de navigation -->
@@ -90,16 +45,19 @@ if (!empty($keywords)) {
     </ul>
 
     <!-- Barre de recherche -->
-    <form class="d-flex mb-4" method="get" action="">
-    <input class="form-control me-2" type="search" name="keywords" value="<?= htmlspecialchars($keywords) ?>" placeholder="Recherche">
-    <select name="type" class="form-select me-2">
-        <option value="">Toutes catégories</option>
-        <option value="inscription" <?= $type === 'inscription' ? 'selected' : '' ?>>Inscription</option>
-        <option value="freelancer" <?= $type === 'freelancer' ? 'selected' : '' ?>>Freelancer</option>
-        <option value="demande" <?= $type === 'demande' ? 'selected' : '' ?>>Demande</option>
-    </select>
-    <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
-</form>
+    
+      <form class="d-flex" method="POST" action="">
+      <a href="recherche.php" class="btn btn-outline-light border-0"><i class="bi bi-search" style="color:black"></i></a>
+      <select name="type" class="form-select bg-info-subtle  shadow-none">
+          <option value="">Toutes catégories</option>
+          <option value="client" <?= $type === 'client' ? 'selected' : '' ?>>Client</option>
+          <option value="freelancer" <?= $type === 'freelancer' ? 'selected' : '' ?>>Freelancer</option>
+          <option value="demande" <?= $type === 'demande' ? 'selected' : '' ?>>Demande</option>
+      </select> 
+      
+      </form>
+ 
+
     <!-- Profil avec dropdown -->
     <div class="dropdown ms-3">
       <a class="d-flex align-items-center text-decoration-none dropdown-toggle" href="#" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
