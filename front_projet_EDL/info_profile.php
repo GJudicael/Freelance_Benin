@@ -132,62 +132,10 @@ $_SESSION['photo'] = $user['photo'];
               <p><?= htmlspecialchars($freelancer['competences']) ?></p>
 
            
-            <?php if (!empty($projets)) : ?>
-              <hr class="my-3">
-              <h3 class=" text-center">Projets réalisés</h3>
-
-               <div id="freelancerCarousel" class="carousel slide" data-bs-ride="carousel">
-              <div class="carousel-inner">
-              <!-- Slides ici -->
-              <?php
-              $count = count($projets);
-              $perSlide = 2;
-              $chunked = array_chunk($projets,$perSlide);
-              $active = true;
-              foreach ($chunked as $group): ?>
-                  <div class="carousel-item <?= $active ? 'active' : '' ?>">
-                  <div class="row justify-content-center row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-3 ">
-                
-                  <?php foreach ($group as $projet) : ?>
-                    
-                    <div class="col">
-                      <div class="card h-100">
-                        
-                        <div class="card-body">
-                          <h5 class="card-title"><?= htmlspecialchars($projet['titre']) ?></h5>
-                          <p class="card-text"><?= nl2br(htmlspecialchars($projet['description'])) ?></p>
-                          <p class="card-text mt-3" > Commentaire : <?= nl2br(htmlspecialchars($projet['comment'])) ?> </p>
-                          
-                        </div>
-                        <div class="card-footer text-muted">
-                          Réalisé le : <?= htmlspecialchars($projet['date_fin']) ?>
-                        </div>
-                      </div>
-                    </div>
-                    
-                  <?php endforeach; ?>
-                  </div>
-                </div>
-              <?php $active = false; endforeach; ?>
-          </div>
-
-        <!-- Contrôles -->
-        <button class="carousel-control-prev px-3" type="button" data-bs-target="#freelancerCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon bg-black opacity-50"></span>
-        </button>
-        <button class="carousel-control-next px-3" type="button" data-bs-target="#freelancerCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon bg-black opacity-50"></span>
-        </button>
-        </div>
-
-
-            <?php else : ?>
-              <p class="mt-4 text-muted">Aucun projet ajouté pour le moment.</p>
-            <?php endif; ?>
         <?php endif; ?> 
 
             <div class="pt-3">
-              <a href="../messagerie/discussions.php?user_id=<?= $user_id ?>" class="btn btn-primary"> Me contacter </a>
+              <a href="../messagerie/discussions.php?user_id=<?= $user_id ?>" class="btn btn-info"> Me contacter </a>
             </div>
 
           <?php else : ?>
@@ -310,7 +258,64 @@ $_SESSION['photo'] = $user['photo'];
             </div>
           </div>
         <?php endif; ?>
-        </div>
+    </div>
+ </div>
+        <div>
+          <?php if(isset($_GET['id']) && $freelancer) :?>
+         <?php if (!empty($projets)) : ?>
+              <hr class="my-3">
+              <h4 class=" text-center text-warning">Projets réalisés</h4>
+
+              <div id="freelancerCarousel" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+              <!-- Slides ici -->
+              <?php
+              $count = count($projets);
+              $perSlide = 3;
+              $chunked = array_chunk($projets,$perSlide);
+              $active = true;
+              foreach ($chunked as $group): ?>
+                  <div class="carousel-item <?= $active ? 'active' : '' ?>">
+                  <div class="row justify-content-center row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-3 ">
+                
+                  <?php foreach ($group as $projet) : ?>
+                    
+                    <div class="col">
+                      <div class="card h-100">
+                        
+                        <div class="card-body">
+                          <h5 class="card-title"><?= htmlspecialchars($projet['titre']) ?></h5>
+                          <p class="card-text"><?= nl2br(htmlspecialchars($projet['description'])) ?></p>
+                          <p class="card-text mt-3" > Commentaire : <?= nl2br(htmlspecialchars($projet['comment'])) ?> </p>
+                          
+                        </div>
+                      <div class="card-footer text-dark bg-warning">
+                          Réalisé le : <?= htmlspecialchars($projet['date_fin']) ?>
+                    </div>
+                  </div>
+                  </div>
+                    
+                  <?php endforeach; ?>
+              </div>
+              </div>
+              <?php $active = false; endforeach; ?>
+          
+
+        <!-- Contrôles -->
+        <button class="carousel-control-prev px-3" type="button" data-bs-target="#freelancerCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon bg-black opacity-50"></span>
+        </button>
+        <button class="carousel-control-next px-3" type="button" data-bs-target="#freelancerCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon bg-black opacity-50"></span>
+        </button>
+        
+        <?php else : ?>
+          <p class="mt-4 text-muted">Aucun projet ajouté pour le moment.</p>
+        <?php endif; ?>
+        <?php endif; ?>
+        
+    </div>
+   
 
         <script>
           function afficherFormulaire() {

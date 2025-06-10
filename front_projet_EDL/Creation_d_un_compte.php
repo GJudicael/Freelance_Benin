@@ -45,8 +45,8 @@
              <div class="p-2">
                 <label for="nom_d_utilisateur" class="form-text  fs-6 p-1">Nom d'utilisateur</label>
                 <input id="nom_d_utilisateur" type="text" name="nom_d_utilisateur" class="form-control" placeholder="Entrer un nom d'utilisateur" value="<?php echo isset($error)? htmlspecialchars($nomUtilisateur): '' ?>">
-                <p> <small class="text-danger"> <?php if(isset($error["nomDUtilisateur"])) { echo htmlspecialchars($error["nomDUtilisateur"]); 
-                    unset($error["nomDUtilisateur"]) ; } ?> </small></p>
+                <p> <small class="text-danger"> <?php if(isset($error["nomDutilisateur"])) { echo htmlspecialchars($error["nomDutilisateur"]); 
+                    unset($error["nomDutilisateur"]) ; } ?> </small></p>
             </div>
             <div class="p-2">
                 <label for="numero" class="form-text  fs-6 p-1">Numéro de téléphone</label>

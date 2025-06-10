@@ -58,19 +58,7 @@ $missions = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="../assets/style.css">
     <link rel="stylesheet" href="../assets/bootstrap-icons-1.13.1/bootstrap-icons.min.css">
 
-    <style>
-        .mission-card {
-            transition: all 0.3s;
-            border-left: 4px solid var(--bs-primary);
-        }
-        .mission-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .progress {
-            height: 10px;
-        }
-    </style>
+    
 </head>
 <body>
     <?php require_once(__DIR__."/header.php") ?>

@@ -4,7 +4,7 @@
         session_start();
         require_once(__DIR__."/../bdd/creation_bdd.php");
 
-        require_once("sendmail.php");
+        require_once(__DIR__."/sendmail.php");
     
     if(isset($_POST['envoyer']))
     {
@@ -42,27 +42,34 @@
             }
             else
             {
-                if (isset($_POST["email"]) && filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
+                $smtp = $bdd->prepare("SELECT nomDUtilisateur FROM inscription WHERE nomDUtilisateur = ?");
+                $smtp->execute([$nomUtilisateur]);
+                $nomDutilisateur = $smtp->fetch(PDO::FETCH_ASSOC);
+
+                if($nomDutilisateur){
+                    $error["nomDutilisateur"] = "Ce nom d'utilateur existe déjà";
+
+                }else if (isset($_POST["email"]) && filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)) {
                     $requete = $bdd->prepare('INSERT INTO inscription(nom , prenom, numero, email, motDePasse, nomDUtilisateur) VALUES(:nom, :prenom, :numero, :email, :motDePasse, :nomDUtilisateur)');
 
-                $requete = $bdd->prepare('INSERT INTO inscription(nom , prenom, numero, email, motDePasse, nomDUtilisateur) VALUES(:nom, :prenom, :numero, :email, :motDePasse, :nomDUtilisateur)');
 
-                $requete->execute([
-                    'nom' => $nom,
-                    'prenom' => $prenom,
-                    'numero' => $numero,
-                    'email' => $email,
-                    'motDePasse' => password_hash($motDepasse,PASSWORD_DEFAULT) ,
-                    'nomDUtilisateur' => $nomUtilisateur
-                ]);
-                    traieMail($_POST["email"]);
-                } else {
-                    echo "L'adresse email saisie n'est pas valide.";
-                }
+                    $requete->execute([
+                        'nom' => $nom,
+                        'prenom' => $prenom,
+                        'numero' => $numero,
+                        'email' => $email,
+                        'motDePasse' => password_hash($motDepasse,PASSWORD_DEFAULT) ,
+                        'nomDUtilisateur' => $nomUtilisateur
+                    ]);
+                        traieMail($_POST["email"]);
+
+                        $_SESSION["succes"] = 'Vos informations sont enregistrées avec succès. Vous pouvez à présent vous connecter';
+                        header("Location:../front_projet_EDL/confirmation.php");
+                        exit();
+                    } else {
+                        echo "L'adresse email saisie n'est pas valide.";
+                    }
                     
-                    $_SESSION["succes"] = 'Vos informations sont enregistrées avec succès. Vous pouvez à présent vous connecter';
-                    header("Location:../HTML/confirmation.html");
-                    exit();
             }
             
             }

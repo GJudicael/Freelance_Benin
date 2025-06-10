@@ -1,5 +1,7 @@
 <?php 
-    require_once(__DIR__."/../PHP/traitement_de_la_connexion.php");?>
+    require_once(__DIR__."/../PHP/traitement_de_la_connexion.php");
+    
+    ?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -34,6 +36,7 @@
         <h6 class="text-center text-secondary mb-3"> Connectez-vous à votre compte pour accéder à la page d'accueil </h6>
         <form method="post" action="">
             
+                 
                 <?php 
                 
                 if(isset($message_error)){

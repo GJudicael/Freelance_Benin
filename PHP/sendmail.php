@@ -25,18 +25,13 @@ $mail->addAddress($email,'Site Freelance Bénin');
 $mail->isHTML(true);//Pour activer l'envoi de mail sous forme html
 
 $mail->Subject = 'Confirmation d\'email';
-$mail->Body = "Bonjout, vous venez de recevoir un mail de test ! http://localhost/Freelance_Benin-master/front_projet_EDL/Connexion.php";
+$mail->Body = "Bonjout, vous venez de recevoir un mail de confirmation ! http://localhost/Freelance_Benin/front_projet_EDL/Connexion.php";
 
 $mail->SMTPDebug =0;//Pour desactiver le debug
 
-if(!$mail->send())
+if($mail->send())
 {
-    $message = "Mail non envoye";
-    echo 'Erreurs:' .$mail->ErrorInfo;
-}
-else
-{
-    $message = "Un mail vous a ete envoye!";
-    echo $message;
+    $_SESSION["mail_envoye"]  = "Un mail vous a été envoyé à votre adresse mail! Cliquez sur le lien pour confirmer votre email";
+       
 }
 }
