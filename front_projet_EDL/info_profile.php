@@ -132,10 +132,10 @@ $_SESSION['photo'] = $user['photo'];
               <p><?= htmlspecialchars($freelancer['competences']) ?></p>
 
            
-        <?php endif; ?> 
+          <?php endif; ?> 
 
             <div class="pt-3">
-              <a href="../messagerie/discussions.php?user_id=<?= $user_id ?>" class="btn btn-info"> Me contacter </a>
+              <a href="../messagerie/discussions.php?user_id=<?= $_GET['id'] ?>" class="btn btn-info"> Me contacter </a>
             </div>
 
           <?php else : ?>
