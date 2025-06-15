@@ -87,7 +87,7 @@
         
         
         </form>
-         <?php if (!empty($keywords)): ?>
+        <?php if (!empty($keywords)): ?>
             
             <?php if (count($searchResults) > 0): ?>
                 <?php foreach ($searchResults as $result): ?>
