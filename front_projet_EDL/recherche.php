@@ -76,14 +76,15 @@
 
 
             <form class="d-flex" method="POST" action="">
-        <i class="bi bi-search" style="color:black"></i>
         <input type="search" class="form-control shadow-none border-secondary-subtle" placeholder="Recherche" name="keywords" value="<?= isset($keywords) ? htmlspecialchars($keywords) : '' ?>">
+        <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
         <select name="type" class="form-select bg-info-subtle  shadow-none">
             <option value="">Toutes catégories</option>
             <option value="client" <?= $type === 'client' ? 'selected' : '' ?>>Client</option>
             <option value="freelancer" <?= $type === 'freelancer' ? 'selected' : '' ?>>Freelancer</option>
             <option value="demande" <?= $type === 'demande' ? 'selected' : '' ?>>Demande</option>
         </select>
+        
         
         </form>
          <?php if (!empty($keywords)): ?>
