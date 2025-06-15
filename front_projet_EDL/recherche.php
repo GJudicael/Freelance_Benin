@@ -4,14 +4,14 @@
 
     $searchResults = [];
     $type = $_POST['type'] ?? '';
-    $keywords = $_GET['keywords'] ?? '';
+    $keywords = $_POST['keywords'] ?? '';
     $keyword = "%$keywords%";
 
     if (!empty($keywords)) {
         switch ($type) {
             case 'client':
-                $stmt = $bdd->prepare("SELECT * FROM inscription WHERE nom LIKE ? OR prenom LIKE ? OR email LIKE ? OR numero LIKE ? OR nomDUtilisateur LIKE ?");
-                $stmt->execute([$keyword, $keyword, $keyword, $keyword, $keyword]);
+                $stmt = $bdd->prepare("SELECT * FROM inscription WHERE nom LIKE ? OR prenom LIKE ? OR nomDUtilisateur LIKE ?");
+                $stmt->execute([$keyword, $keyword, $keyword]);
                 $searchResults = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 break;
 
@@ -22,8 +22,8 @@
                 break;
 
             case 'demande':
-                $stmt = $bdd->prepare("SELECT d.titre, d.description, i.nom, i.prenom, i.id AS id FROM demande d JOIN inscription i ON d.user_id = i.id WHERE titre LIKE ? OR description LIKE ? OR categorie LIKE ?");
-                $stmt->execute([$keyword, $keyword, $keyword]);
+                $stmt = $bdd->prepare("SELECT d.*, i.nom, i.prenom, i.id FROM demande d INNER JOIN inscription i ON d.user_id = i.id WHERE titre LIKE ? OR description LIKE ? OR categorie LIKE ? OR nom LIKE ? OR prenom LIKE ?");
+                $stmt->execute([$keyword, $keyword, $keyword , $keyword, $keyword]);
                 $searchResults = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 break;
 
@@ -41,7 +41,7 @@
                 $stmt3->execute([$keyword, $keyword, $keyword]);
                 $res3 = $stmt3->fetchAll(PDO::FETCH_ASSOC);
 
-                $searchResults = array_merge($res1, $res2, $res3);
+                $searchResults =  array_unique(array_merge($res1, $res2, $res3), SORT_REGULAR);
                 break;
         }
     }
@@ -65,23 +65,31 @@
     <link rel="stylesheet" href="../assets/bootstrap-icons-1.13.1/bootstrap-icons.min.css">
 </head>
 <body>
+    
     <?php require_once(__DIR__."/header.php"); ?>
 
     <main class="container">
 
         <h3 class="my-5 text-secondary"> Recherche</h3>
 
-        <form action="" method="GET" class="d-flex">
-            <button type="submit" class="btn btn-outline-light"> <i class="bi bi-search" style="color:black"></i></button>
-            <input type="search" class="form-control shadow-none border-secondary-subtle" placeholder="Recherche" name="keywords" value="<?= isset($keywords)? htmlspecialchars($keywords):'' ?>" >
-            
-        </form>
+        
 
+
+            <form class="d-flex" method="POST" action="">
+        <i class="bi bi-search" style="color:black"></i>
+        <input type="search" class="form-control shadow-none border-secondary-subtle" placeholder="Recherche" name="keywords" value="<?= isset($keywords) ? htmlspecialchars($keywords) : '' ?>">
+        <select name="type" class="form-select bg-info-subtle  shadow-none">
+            <option value="">Toutes catégories</option>
+            <option value="client" <?= $type === 'client' ? 'selected' : '' ?>>Client</option>
+            <option value="freelancer" <?= $type === 'freelancer' ? 'selected' : '' ?>>Freelancer</option>
+            <option value="demande" <?= $type === 'demande' ? 'selected' : '' ?>>Demande</option>
+        </select>
+        
+        </form>
          <?php if (!empty($keywords)): ?>
             
             <?php if (count($searchResults) > 0): ?>
-                <?php foreach ($searchResults as $result):
-                    var_dump($result); ?>
+                <?php foreach ($searchResults as $result): ?>
                     <div class="container py-4 ">
                         <div class="row justify-content-center ">
                             <div class="col-lg-8 col-md-12">

@@ -46,18 +46,9 @@
 
     <!-- Barre de recherche -->
     
-      <form class="d-flex" method="POST" action="">
-      <a href="recherche.php" class="btn btn-outline-light border-0"><i class="bi bi-search" style="color:black"></i></a>
-      <select name="type" class="form-select bg-info-subtle  shadow-none">
-          <option value="">Toutes catégories</option>
-          <option value="client" <?= $type === 'client' ? 'selected' : '' ?>>Client</option>
-          <option value="freelancer" <?= $type === 'freelancer' ? 'selected' : '' ?>>Freelancer</option>
-          <option value="demande" <?= $type === 'demande' ? 'selected' : '' ?>>Demande</option>
-      </select> 
       
-      </form>
- 
-
+      <a href="recherche.php" class="btn btn-outline-light border-0"><i class="bi bi-search" style="color:black"></i></a>
+      
     <!-- Profil avec dropdown -->
     <div class="dropdown ms-3">
       <a class="d-flex align-items-center text-decoration-none dropdown-toggle" href="#" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
