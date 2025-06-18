@@ -181,6 +181,7 @@ $conversations = $resultat->fetchAll(PDO::FETCH_ASSOC);
 <body>
 
     <?php require_once(__DIR__ . "/../front_projet_EDL/header.php") ?>
+
     <main>
         <div class="container-fluid d-flex px-0 mt-2" id="wrapper">
             <!-- Colonne de gauche : Liste des conversations -->
@@ -193,7 +194,7 @@ $conversations = $resultat->fetchAll(PDO::FETCH_ASSOC);
                 <?php else: ?>
                     <?php foreach ($conversations as $conv) : ?>
                         <a href="discussions.php?user_id=<?= $conv['id'] ?>" class="text-decoration-none text-black" id="conv">
-                            <div class="d-flex align-items-center p-2 rounded-3" id="conv">
+                            <div class="d-flex align-items-center p-3 rounded-3 <?= $conv['id'] == $selected_user_id ? 'selected' : '' ?>" id="conv">
                                 <img src="./../photo_profile/<?= $conv['photo'] ?>" alt="Photo de profil de <?= $conv['nom'] . ' ' . $conv['prenom'] ?>" class="rounded-circle" width="50" height="50">
                                 <div class="ms-3 w-100 infos_conv">
                                     <p class="mb-0 fs-6 fw-bolder"><?= $conv['nom'] . ' ' . $conv['prenom'] ?></p>
@@ -211,12 +212,25 @@ $conversations = $resultat->fetchAll(PDO::FETCH_ASSOC);
 
                 <?php if ($receiver_id) : ?>
                     <!-- Header -->
-                    <div class="pb-2 d-flex align-items-center border-bottom border-3">
-                        <img src="./../photo_profile/<?= $infos_destinataire['photo'] ?>" alt="Photo de <?= $infos_destinataire['nom'] . ' ' . $infos_destinataire['prenom'] ?>" class="rounded-circle" width="40" height="40">
-                        <p class="mx-2 mb-0"><strong><?= $infos_destinataire['nom'] . ' ' . $infos_destinataire['prenom'] ?></strong> (<i><?= $infos_destinataire['nomDUtilisateur'] ?></i>)</p>
-                        <!-- <?php if (empty($discussion)) : ?>
-                        <a href="../front_projet_EDL/info_profile.php?id=<?= $selected_user_id ?>">Voir le profil</a>
-                    <?php endif; ?> -->
+                    <div class="pb-2 border-bottom border-3 row" id="header">
+                        <!-- Photo de profil et nom de l'utilisateur -->
+
+                        <div class="col-11">
+                            <img src="./../photo_profile/<?= $infos_destinataire['photo'] ?>" alt="Photo de <?= $infos_destinataire['nom'] . ' ' . $infos_destinataire['prenom'] ?>" class="rounded-circle" width="40" height="40">
+                            <p class="mx-2 mb-0 d-inline-block"><strong><?= $infos_destinataire['nom'] . ' ' . $infos_destinataire['prenom'] ?></strong> (<i><?= $infos_destinataire['nomDUtilisateur'] ?></i>)</p>
+                        </div>
+
+                        <!-- Dropdown -->
+
+                        <div class="dropdown col-1">
+                            <button class="btn dropdown-toggle text-end" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-three-dots"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a href="../front_projet_EDL/info_profile.php?id=<?= $selected_user_id ?>" class="dropdown-item">Voir le profil</a></li>
+
+                            </ul>
+                        </div>
                     </div>
 
                     <!-- Messages proprements dits -->
@@ -257,13 +271,18 @@ $conversations = $resultat->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </main>
 
-    <script>
-        window.addEventListener('keydown', (event) => {
-            if (event.key == "Escape") {
-                document.location.href = "./../messagerie/discussions.php";
-            }
-        })
-    </script>
+    <div id="menu-container">
+        <ul class="menu">
+            <li><a href="#" class="menu-item">Modifier</a></li>
+            <li><a href="#" class="menu-item text-danger">Supprimer</a></li>
+            <!-- <li><a href="#" class="menu-item">Something else</a></li> -->
+        </ul>
+    </div>
+
+
+
+    <!-- <script src="script.js"></script> -->
+    <script src="../assets/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
