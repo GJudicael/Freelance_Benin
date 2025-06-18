@@ -81,7 +81,7 @@
             
             <?php if (count($searchResults) > 0): ?>
                 <?php foreach ($searchResults as $result):
-                    var_dump($result); ?>
+                     ?>
                     <div class="container py-4 ">
                         <div class="row justify-content-center ">
                             <div class="col-lg-8 col-md-12">
