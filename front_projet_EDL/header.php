@@ -56,9 +56,9 @@
         <span> <?php echo isset($_SESSION["user_name"])? htmlspecialchars($_SESSION["user_name"]): "Profile" ?></span>
       </a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-        <li><a class="dropdown-item" href="../front_projet_EDL/info_profile.php">Mon Profil</a></li>
+        <li><a class="dropdown-item" href="info_profile.php">Mon Profil</a></li>
         <li><hr class="dropdown-divider"></li>
-        <li><a class="dropdown-item text-danger" href="../front_projet_EDL/deconnexion.php">Déconnexion</a></li>
+        <li><a class="dropdown-item text-danger" href="deconnexion.php">Déconnexion</a></li>
       </ul>
     </div>
   </div>
