@@ -10,7 +10,9 @@ date_default_timezone_set('Africa/Lagos');
 
 $client_id = isset($_GET['client_id']) ? intval($_GET['client_id']) : null;
 const LONGUEUR_MESSAGE = 30;
-
+?>
+    <pre><?php var_dump($_SESSION);?></pre>
+<?php
 function formatterChaine($string, $longeur)
 {
     // Coupe le message si sa longeur dépasse la longueur indiquée
@@ -281,7 +283,7 @@ $conversations = $resultat->fetchAll(PDO::FETCH_ASSOC);
 
 
 
-    <!-- <script src="script.js"></script> -->
+    <script src="script.js"></script>
     <script src="../assets/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
