@@ -10,9 +10,7 @@ date_default_timezone_set('Africa/Lagos');
 
 $client_id = isset($_GET['client_id']) ? intval($_GET['client_id']) : null;
 const LONGUEUR_MESSAGE = 30;
-?>
-    <pre><?php var_dump($_SESSION);?></pre>
-<?php
+
 function formatterChaine($string, $longeur)
 {
     // Coupe le message si sa longeur dépasse la longueur indiquée
