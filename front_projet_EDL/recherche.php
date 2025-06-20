@@ -21,27 +21,10 @@
                 $searchResults = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 break;
 
-            case 'demande':
+            default:
                 $stmt = $bdd->prepare("SELECT d.*, i.nom, i.prenom, i.id FROM demande d INNER JOIN inscription i ON d.user_id = i.id WHERE titre LIKE ? OR description LIKE ? OR categorie LIKE ? OR nom LIKE ? OR prenom LIKE ?");
                 $stmt->execute([$keyword, $keyword, $keyword , $keyword, $keyword]);
                 $searchResults = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                break;
-
-            default:
-                // Recherche globale sur les 3 tables
-                $stmt1 = $bdd->prepare("SELECT * FROM inscription WHERE nom LIKE ? OR prenom LIKE ? OR email LIKE ? OR numero LIKE ? OR nomDUtilisateur LIKE ?");
-                $stmt1->execute([$keyword, $keyword, $keyword, $keyword, $keyword]);
-                $res1 = $stmt1->fetchAll(PDO::FETCH_ASSOC);
-
-                $stmt2 = $bdd->prepare("SELECT i.nom, i.prenom, i.id AS id FROM freelancers f JOIN inscription i ON f.user_id = i.id WHERE i.nom LIKE ? OR  i.prenom LIKE ?");
-                $stmt2->execute([$keyword, $keyword]);
-                $res2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
-
-                $stmt3 = $bdd->prepare("SELECT d.titre, d.description, i.nom, i.prenom, i.id AS id FROM demande d JOIN inscription i ON d.user_id = i.id WHERE titre LIKE ? OR description LIKE ? OR categorie LIKE ?");
-                $stmt3->execute([$keyword, $keyword, $keyword]);
-                $res3 = $stmt3->fetchAll(PDO::FETCH_ASSOC);
-
-                $searchResults =  array_unique(array_merge($res1, $res2, $res3), SORT_REGULAR);
                 break;
         }
     }
@@ -79,7 +62,7 @@
         <input type="search" class="form-control shadow-none border-secondary-subtle" placeholder="Recherche" name="keywords" value="<?= isset($keywords) ? htmlspecialchars($keywords) : '' ?>">
         <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
         <select name="type" class="form-select bg-info-subtle  shadow-none">
-            <option value="">Toutes catégories</option>
+            <option value="">Filtre</option>
             <option value="client" <?= $type === 'client' ? 'selected' : '' ?>>Client</option>
             <option value="freelancer" <?= $type === 'freelancer' ? 'selected' : '' ?>>Freelancer</option>
             <option value="demande" <?= $type === 'demande' ? 'selected' : '' ?>>Demande</option>
@@ -90,7 +73,10 @@
         <?php if (!empty($keywords)): ?>
             
             <?php if (count($searchResults) > 0): ?>
-                <?php foreach ($searchResults as $result): ?>
+
+                <?php foreach ($searchResults as $result):
+                    ?>
+
                     <div class="container py-4 ">
                         <div class="row justify-content-center ">
                             <div class="col-lg-8 col-md-12">
@@ -119,7 +105,7 @@
                         </div>
                     </div>
                 <?php endforeach; ?>
-            <?php else: ?>
+            <?php else :?>
                 <p class="text-center my-4">Aucun résultat trouvé.</p>
             <?php endif; ?>
         <?php endif; ?>
