@@ -1,10 +1,6 @@
  <?php 
   require_once(__DIR__."/../bdd/creation_bdd.php");
   require_once(__DIR__ . "/../PHP/update_profile.php");
-
-  ?>
-    <pre><?php var_dump($_SESSION);?></pre>
-  <?php
   
   $user_id = $_SESSION['user_id'];
 

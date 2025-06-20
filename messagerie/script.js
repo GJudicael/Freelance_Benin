@@ -36,8 +36,8 @@ messages.forEach(message => {
             menuItems[0].classList.add('d-none');
             menuDivider.classList.add('d-none');
 
-            menuContainer.getElementById('supprimer-pour-moi').classList.remove('d-none');
-            menuContainer.getElementById('supprimer-pour-moi').classList.remove('d-none');
+            // menuContainer.getElementById('supprimer-pour-moi').classList.remove('d-none');
+            menuContainer.querySelector('#supprimer-pour-moi').classList.remove('d-none');
 
             // On ne permet pas non plus qu'il puisse supprimer pour tout le monde
             menuItems.forEach(item => {
