@@ -158,3 +158,12 @@ div.infos_conv span {
         transform: translateY(0);
     }
 }
+
+/* Styles de personnalisation de bootstrap */
+
+.dropdown-toggle.hide-arrow::before,
+.dropdown-toggle.hide-arrow::after,
+.dropdown-toggle-hide-arrow>.dropdown-toggle::before,
+.dropdown-toggle-hide-arrow>.dropdown-toggle::after {
+    display: none;
+}

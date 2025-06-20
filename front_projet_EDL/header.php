@@ -2,6 +2,9 @@
   require_once(__DIR__."/../bdd/creation_bdd.php");
   require_once(__DIR__ . "/../PHP/update_profile.php");
 
+  ?>
+    <pre><?php var_dump($_SESSION);?></pre>
+  <?php
   
   $user_id = $_SESSION['user_id'];
 
@@ -56,7 +59,7 @@
         <span> <?php echo isset($_SESSION["user_name"])? htmlspecialchars($_SESSION["user_name"]): "Profile" ?></span>
       </a>
       <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-        <li><a class="dropdown-item" href="info_profile.php">Mon Profil</a></li>
+        <li><a class="dropdown-item" href="../front_projet_EDL/info_profile.php">Mon Profil</a></li>
         <li><hr class="dropdown-divider"></li>
         <li><a class="dropdown-item text-danger" href="deconnexion.php">Déconnexion</a></li>
       </ul>
