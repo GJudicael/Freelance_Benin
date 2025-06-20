@@ -73,10 +73,7 @@
         <?php if (!empty($keywords)): ?>
             
             <?php if (count($searchResults) > 0): ?>
-
-                <?php foreach ($searchResults as $result):
-                    ?>
-
+                <?php foreach ($searchResults as $result): ?>
                     <div class="container py-4 ">
                         <div class="row justify-content-center ">
                             <div class="col-lg-8 col-md-12">
