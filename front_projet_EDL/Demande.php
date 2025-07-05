@@ -27,7 +27,7 @@ require_once(__DIR__."/../PHP/traitement.php")?>
     <?php require_once(__DIR__."/header.php")?>
 
     <main class="container w-50 container-fluide my-5 p-5 shadow">
-    <h4 class="text-center text-secondary "> Faites vos demandes ici ! </h4> 
+    <h4 class="text-center text-primary "> Faites vos demandes ici ! </h4> 
     
         <form method="post" action="">
 
