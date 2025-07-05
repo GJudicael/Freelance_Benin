@@ -1,7 +1,11 @@
 <?php
+    
 require_once(__DIR__."/../bdd/creation_bdd.php");
 require_once(__DIR__."/../PHP/update_profile.php");
-
+if(!isset($_SESSION["connecte"]) || $_SESSION["connecte"]!== true){
+        header('Location: ../index.php');
+        exit();
+    }
 function freelancers($bdd, $rechercher) {
     
     $stmt = $bdd->prepare("SELECT i.id, i.nom, i.prenom, f.bio, f.competences

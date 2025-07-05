@@ -1,5 +1,11 @@
 <?php 
-require_once(__DIR__."/../PHP/traitement.php")?>
+    
+    require_once(__DIR__."/../PHP/traitement.php");
+    if(!isset($_SESSION["connecte"]) || $_SESSION["connecte"]!== true){
+        header('Location: ../index.php');
+        exit();
+    }
+?>
 
 <!DOCTYPE html>
 
