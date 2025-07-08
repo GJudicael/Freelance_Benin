@@ -1,4 +1,8 @@
 <?php session_start();
+    if(!isset($_SESSION["connecte"]) || $_SESSION["connecte"]!== true){
+        header('Location: ../index.php');
+        exit();
+    }
 require_once(__DIR__ . "/../bdd/creation_bdd.php");
 
 $user_id = $_SESSION["user_id"];
@@ -43,7 +47,7 @@ $freelancers = $smt->fetchALl(PDO::FETCH_ASSOC);
                 et de recevoir des offres de missions, tandis que les clients pourront publier des projets et entrer en contact avec des prestataires qualifiés.
             </p>
         </section>
-        <section class=" my-4 py-4 bg-light">
+        <section class=" my-4 py-4 bg-body-secondary">
             <h4 class="mb-2 text-center text-warning p-2 historique"> NOS FREELANCEURS </h4>
 
             <div id="freelancerCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -59,7 +63,7 @@ $freelancers = $smt->fetchALl(PDO::FETCH_ASSOC);
                             <div class="row justify-content-center px-3">
                                 <?php foreach ($group as $freelancer): ?>
                                     <div class="col-lg-3 col-md-6">
-                                        <div class="card text-center p-3 border-0 bg-light">
+                                        <div class="card text-center p-3 border-0 bg-body-secondary">
                                             <img src="../photo_profile/<?= htmlspecialchars($freelancer['photo']) ?>" class="rounded-circle mx-auto d-block" alt="Freelancer" height="100" width="100">
                                             <div class="card-body">
                                                 <h5 class="card-title"><?= htmlspecialchars($freelancer['nom']) ?> <?= htmlspecialchars($freelancer['prenom']) ?></h5>

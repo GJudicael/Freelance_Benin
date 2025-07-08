@@ -1,5 +1,9 @@
 <?php session_start() ;
 
+    if(!isset($_SESSION["connecte"]) || $_SESSION["connecte"]!== true){
+        header('Location: ../index.php');
+        exit();
+    }
     require_once(__DIR__."/../bdd/creation_bdd.php");
 
     $searchResults = [];
@@ -10,13 +14,13 @@
     if (!empty($keywords)) {
         switch ($type) {
             case 'client':
-                $stmt = $bdd->prepare("SELECT * FROM inscription WHERE nom LIKE ? OR prenom LIKE ? OR nomDUtilisateur LIKE ?");
+                $stmt = $bdd->prepare("SELECT * FROM inscription WHERE (nom LIKE ? OR prenom LIKE ? OR nomDUtilisateur LIKE ?) AND role = 'client'");
                 $stmt->execute([$keyword, $keyword, $keyword]);
                 $searchResults = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 break;
 
             case 'freelancer':
-                $stmt = $bdd->prepare("SELECT i.nom, i.prenom, i.id AS id FROM freelancers f INNER JOIN inscription i ON f.user_id = i.id WHERE i.nom LIKE ? OR i.prenom LIKE ?");
+                $stmt = $bdd->prepare("SELECT i.nom, i.prenom, i.id AS id, i.nomDUtilisateur FROM freelancers f INNER JOIN inscription i ON f.user_id = i.id WHERE i.nom LIKE ? OR i.prenom LIKE ?");
                 $stmt->execute([$keyword, $keyword]);
                 $searchResults = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 break;
@@ -53,20 +57,20 @@
 
     <main class="container">
 
-        <h3 class="my-5 text-secondary"> Recherche</h3>
+        <h3 class="my-5 text-primary"> Recherche</h3>
 
         
 
 
-            <form class="d-flex" method="POST" action="">
-        <input type="search" class="form-control shadow-none border-secondary-subtle" placeholder="Recherche" name="keywords" value="<?= isset($keywords) ? htmlspecialchars($keywords) : '' ?>">
-        <button class="btn btn-outline-secondary" type="submit"><i class="bi bi-search"></i></button>
-        <select name="type" class="form-select bg-info-subtle  shadow-none">
-            <option value="">Filtre</option>
-            <option value="client" <?= $type === 'client' ? 'selected' : '' ?>>Client</option>
-            <option value="freelancer" <?= $type === 'freelancer' ? 'selected' : '' ?>>Freelancer</option>
-            <option value="demande" <?= $type === 'demande' ? 'selected' : '' ?>>Demande</option>
-        </select>
+        <form class="d-flex" method="POST" action="">
+            <input type="search" class="form-control shadow-none border-secondary-subtle" placeholder="Recherche" name="keywords" value="<?= isset($keywords) ? htmlspecialchars($keywords) : '' ?>">
+            <button class="btn btn-outline-secondary me-2" type="submit"><i class="bi bi-search"></i></button>
+            <select name="type" class="form-select bg-info  shadow-none">
+                <option value="">Filtre</option>
+                <option value="client" <?= $type === 'client' ? 'selected' : '' ?>>Client</option>
+                <option value="freelancer" <?= $type === 'freelancer' ? 'selected' : '' ?>>Freelancer</option>
+                <option value="demande" <?= $type === 'demande' ? 'selected' : '' ?>>Demande</option>
+            </select>
         
         
         </form>
@@ -77,7 +81,7 @@
                     <div class="container py-4 ">
                         <div class="row justify-content-center ">
                             <div class="col-lg-8 col-md-12">
-                                <div class="card h-100 p-2 shadow border-primary-subtle border-3 rounded-4">
+                                <div class="card h-100 p-2 shadow border-warning-subtle border-3 rounded-4">
                                     <div class="card-body  overflow-auto">
                                         <?php if (isset($result['titre']) && isset($result['description'])): ?>
                                             <div class="user-info pb-3">
@@ -92,7 +96,9 @@
                                             <div class="user-info pb-3">
                                                 <i class="bi bi-person-fill"></i> Profile :
                                                 <a href="info_profile.php?id=<?= htmlspecialchars($result['id']) ?>" class="text-decoration-none text-tertiary">
-                                                    <strong><?= htmlspecialchars($result['nom']) . ' ' . htmlspecialchars($result['prenom']) ?></strong>
+                                                    <strong><?php echo htmlspecialchars($result['nom']) . ' ' . htmlspecialchars($result['prenom']) .
+                                                         ' <i>('. htmlspecialchars($result['nomDUtilisateur']) . ')</i> ';
+                                                    ?> </strong>
                                                 </a>
                                             </div>
                                         <?php endif; ?>

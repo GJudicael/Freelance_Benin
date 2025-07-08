@@ -29,6 +29,7 @@
                 $_SESSION["user_name"] = $nom_utilisateur;
                 $_SESSION["user_id"] = $user['id'];
 
+                $_SESSION["connecte"] = true;
                 header("Location: accueil.php");
                 exit();
             } else {

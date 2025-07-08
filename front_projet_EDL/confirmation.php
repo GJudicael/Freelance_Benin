@@ -1,4 +1,9 @@
-<?php session_start();?>
+<?php session_start();
+    if(!isset($_SESSION["connecte"]) || $_SESSION["connecte"]!== true){
+        header('Location: ../index.php');
+        exit();
+    }
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
