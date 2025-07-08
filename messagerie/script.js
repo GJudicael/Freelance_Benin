@@ -1,9 +1,22 @@
+// Fonctions utilitaires
+
+function message_modifiable(message) {
+    const created_at = new Date(message.querySelector('.created_at').textContent);
+    const now = new Date();
+    const diffMs = now - created_at; // en ms
+    if (diffMs < delai_modification_messages && message.classList.contains('from-me')) {
+        // Le message est de moi et a été envoyé depuis moins de 5 minutes
+        return true;
+    } else {
+        return false;
+    }
+}
 
 // Quitter la discussion lorsqu'on appuie sur la touche 'Escape'
 
 window.addEventListener('keydown', (event) => {
     if (event.key == "Escape") {
-        document.location.href = "./../messagerie/discussions.php";
+        document.location.href = "discussions.php";
     }
 });
 
@@ -14,44 +27,39 @@ const menu = document.querySelector('.menu');
 const menuContainer = document.getElementById('menu-container');
 const menuItems = document.querySelectorAll('.menu li');
 const menuDivider = document.getElementById('menu-divider');
-
-console.log(menuItems);
+const optionModifier = document.getElementById('modifier');
+const messagesCont = document.getElementById('messagesCont');
+const delai_modification_messages = 5 * 60 * 1000; // 5 minutes en ms
 
 
 const viewportWidth = window.innerWidth;
 const viewportHeight = window.innerHeight;
-const menuWidth = menu.offsetWidth;
-const menuHeight = menu.offsetHeight;
 let top_limit = document.querySelector('#header');
 // console.log(top_limit.clientTop)
 
 
 messages.forEach(message => {
     message.addEventListener('contextmenu', (e) => {
-
         // Gestion du contenu du menu contextuel
 
-        if (message.classList.contains('from-other')) {
-            // Si le message est d'autrui on ne permet pas l'édition
-            menuItems[0].classList.add('d-none');
-            menuDivider.classList.add('d-none');
+        // Complétion des ids appropriés
+        const message_id = message.querySelector('.message_id').textContent;
+        optionModifier.href = optionModifier.href + message_id;
 
-            // menuContainer.getElementById('supprimer-pour-moi').classList.remove('d-none');
-            menuContainer.querySelector('#supprimer-pour-moi').classList.remove('d-none');
+        // Affichage d'options sur conditions
 
-            // On ne permet pas non plus qu'il puisse supprimer pour tout le monde
-            menuItems.forEach(item => {
-                if(item.innerText == "Supprimer pour moi"){
-
-                }
-            });
-        } else {
-            // Le message vient de moi donc on permet l'édition en première apporximation
-            menuItems[0].classList.remove('d-none');
+        if (message_modifiable(message)) {
+            optionModifier.classList.remove('d-none');
             menuDivider.classList.remove('d-none');
+        } else {
+            optionModifier.classList.add('d-none');
+            menuDivider.classList.add('d-none');
         }
 
         // Gestion du positionnement du menu contextuel
+        const menuWidth = menu.offsetWidth;
+        const menuHeight = menu.offsetHeight;
+
         e.preventDefault();
         let left = e.clientX;
         let top = e.clientY;
@@ -65,9 +73,6 @@ messages.forEach(message => {
         if (top + menuHeight > viewportHeight) {
             top = top - menuHeight;
         }
-        // if(e.offsetY)
-
-        // console.log(left, top);
 
         if (menu.classList.contains('show')) {
             // Si le menu a déjà la classe "show" c'est qu'on a cliqué sur un autre message sans cliquer dans un vide pour faire disparaître le menu donc on le fait disparaître et réapparaître automatiquement
@@ -89,19 +94,24 @@ messages.forEach(message => {
             menu.classList.add('show');
         }
 
-
-
-
         document.getElementById('messagesCont').classList.add('no-scroll'); // On empêche le scroll pendant que le menu est actif
     });
 });
 
 // Masquage du menu
 
-document.addEventListener('click', (e) => {
-    if (!menu.contains(e.target)) {
-        menu.classList.remove('show');
-        document.getElementById('messagesCont').classList.remove('no-scroll');
-        // menu.style.display = "none";
-    }
+if (messagesCont) {
+    document.addEventListener('click', (e) => {
+        if (!menu.contains(e.target)) {
+            menu.classList.remove('show');
+            document.getElementById('messagesCont').classList.remove('no-scroll');
+            // menu.style.display = "none";
+        }
+    });
+}
+
+// Au clic sur l'option de modification
+
+optionModifier.addEventListener('click', () => {
+
 });

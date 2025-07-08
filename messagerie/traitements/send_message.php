@@ -3,7 +3,7 @@ session_start();
 require_once(__DIR__.'/../../bdd/creation_bdd.php');
 
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['envoyer'])) {
 
     // On nettoie la session
     $receiver_id = $_SESSION['receiver_id'];

@@ -91,7 +91,7 @@ if ($selected_user_id) {
             // Récupérer la discussion entre l'utilisateur connecté et le destinataire (si discussion il y eu ou non)
 
             $stmt = $bdd->prepare("
-                SELECT sender_id, receiver_id, message
+                SELECT id, sender_id, receiver_id, message, created_at
                 FROM messages
                 WHERE 
                 (sender_id =:me AND receiver_id = :receiver_id)
@@ -102,7 +102,7 @@ if ($selected_user_id) {
             $stmt->bindParam('me', $current_user_id, PDO::PARAM_INT);
             $stmt->bindParam('receiver_id', $receiver_id, PDO::PARAM_INT);
             $stmt->execute();
-            $discussion = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $messages_discussion = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } else {
             echo "L'utilisateur sélectionné n'est pas présent dans la base de données";
             die(-1);
@@ -166,3 +166,14 @@ $conversations = $resultat->fetchAll(PDO::FETCH_ASSOC);
 // Cas de figure 1
 
 // Pour contacter un individu sur la plateforme, je vais devoir à un moment donné passer par un bouton qui m'enverra par get l'id de l'individ visé sous le nom de variable 'receiver_id'. Maintenant il faudra vérifier si j'ai déjà écrit à ce receiver. Si oui son nom dans le panneau latéral gauche sera sélectionné. Autrement aucun nom ne sera sélectionné dans le panneau latéral gauche mais j'aurai quand même la discussion ouverte dans le panneau latéral de droite.
+
+// Modification de messages
+
+if(isset($_SESSION['modifier_message'])){
+    $id_message = $_SESSION['message_id'];
+    
+    foreach ($messages_discussion as $index => $msg) {
+        if($msg['id'] == $id_message)
+            $message_a_modifier = $messages_discussion[$index];
+    }
+}
