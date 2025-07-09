@@ -3,7 +3,7 @@ require_once(__DIR__."/../bdd/creation_bdd.php");
 require_once(__DIR__."/../PHP/update_profile.php");
 
 $user_id = $_SESSION["user_id"];
-$result = $bdd->prepare("SELECT i.id, i.nom ,i.prenom, d.description, d.titre, d.date_soumission
+$result = $bdd->prepare("SELECT i.id, i.nom ,i.prenom, d.description, d.titre, d.date_soumission, d.budget , d.date_souhaitee
 FROM demande d
 INNER JOIN  inscription i 
 ON i.id = d.user_id WHERE d.statut = 'en attente' AND d.user_id != :id
@@ -25,7 +25,8 @@ foreach($demandes as $demande){
                     <div class="user-info pb-3"><i class="bi bi-person-fill"></i> Posté par : <a href="info_profile.php?id=<?= htmlspecialchars($demande['id'])?>" class="text-decoration-none text-tertiary"> <strong> <?php echo htmlspecialchars($demande["nom"]) ; echo ' '. htmlspecialchars($demande["prenom"]) ?></strong> </a></div>
                     <h5 class="card-title text-secondaryg"> <?= htmlspecialchars($demande["titre"]) ?></h5>
                     <p class="card-text text-muted"> <?= htmlspecialchars($demande["description"]) ?></p>
-            
+                    <p class="card-text text-muted"> <strong>Budget</strong> :<?= htmlspecialchars($demande["budget"]) ?></p>
+                    <p class="card-text text-muted"> <strong>Date soujaitée au plus tard pour la finalisation du projet :</strong> <?= htmlspecialchars($demande["date_souhaitee"]) ?></p>
                 </div>
             </div>
         </div>

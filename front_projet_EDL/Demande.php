@@ -59,6 +59,19 @@
                     <input id="titre" type="text" name="titre" class="form-control" placeholder="Entrer le titre de votre demande" value ="<?= isset($erreur)? $_POST['titre']: ''?>">
                     <p> <small class = "text-danger"> <?php echo isset($erreur['titre'])? htmlspecialchars($erreur['titre']): ''?></small></p>
                 </div>
+
+                <div class="p-2">
+                <label for="budget" class="form-text p-1 fs-6">Budget (en FCFA)</label>
+                <input id="budget" type="number" name="budget" class="form-control" placeholder="Entrer votre budget" min="0" step="0.01" value="<?= isset($erreur) ? htmlspecialchars($_POST['budget']) : '' ?>">
+                <p><small class="text-danger"><?php echo isset($erreur['budget']) ? htmlspecialchars($erreur['budget']) : '' ?></small></p>
+                </div>
+
+                 <div class="p-2">
+                <label for="date_souhaitee" class="form-text p-1 fs-6">Date souhaitée de finalisation du projet (facultatf) </label>
+                <input id="date_souhaitee" type="date" name="date_souhaitee" class="form-control" value="<?= isset($erreur) ? htmlspecialchars($_POST['date_souhaitee']) : '' ?>">
+                <p><small class="text-danger"><?php echo isset($erreur['date_souhaitee']) ? htmlspecialchars($erreur['date_souhaitee']) : '' ?></small></p>
+                </div>
+
                 <div class="p-2">
                     <label for="demande" class="form-text p-1 fs-6">Description</label>
                     <textarea name="demande" cols="50" class="form-control" placeholder="Decrivez votre demande ici..."> <?= isset($erreur)? $_POST['demande']: ''?></textarea>
