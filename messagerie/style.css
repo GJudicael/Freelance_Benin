@@ -1,0 +1,169 @@
+* {
+    font-family: "Fraunces", serif;
+}
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+p {
+    /* color: #333; */
+}
+
+#wrapper {
+    height: 100vh;
+}
+
+/* .container {
+    display: flex;
+    height: 100vh;
+} */
+
+/* Bloc de gauche */
+
+.left {
+    width: 40%;
+    max-width: 360px;
+    /* background: #f0f0f0; */
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.message {}
+
+.conv {
+    /* padding: 10px; */
+    /* margin-bottom: 5px; */
+    /* background: #ddd; */
+    /* border-radius: 5px; */
+    /* background-color: rgba(0, 0, 0, 0.1); */
+}
+
+#conv.selected {
+    background: rgba(0, 0, 0, 0.07);
+}
+
+#conv:hover {
+    background: rgba(0, 0, 0, 0.07);
+    cursor: pointer;
+}
+
+div.infos_conv {
+    margin-bottom: 10px;
+}
+
+div.infos_conv {
+    position: relative;
+}
+
+div.infos_conv span {
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 0.8rem !important;
+}
+
+/* Bloc de droite */
+
+.right {
+    flex-grow: 1;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+#messagesCont::-webkit-scrollbar {
+    display: none;
+}
+
+#messagesCont.no-scroll {
+    overflow: hidden !important;
+}
+
+.from-me,
+.from-other {
+    width: auto;
+    max-width: calc(50% - 10px);
+    border-radius: 10px;
+}
+
+.from-me {
+    margin-left: auto;
+}
+
+.from-other {
+    text-align: left;
+    margin-right: auto;
+}
+
+.right textarea {
+    resize: none;
+}
+
+/* Menu contextuel pour messages */
+
+#menu-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #fff;
+    z-index: -1;
+    border: 1px solid rgba(0, 0, 0, 0.175);
+    border-radius: 5px;
+    pointer-events: none;
+
+    opacity: 0;
+    transition: opacity 150ms ease;
+}
+
+.menu {
+    min-width: 10rem;
+    padding: 0.5rem 0;
+    margin: 0;
+    font-size: 1rem;
+    text-align: left;
+    list-style: none;
+}
+
+.menu-item {
+    display: inline-block;
+    width: 100%;
+    padding: 0.25rem 1rem;
+    color: #212529;
+    text-decoration: none;
+}
+
+.menu-item:hover {
+    color: #212529;
+    background-color: #f8f9fa;
+}
+
+#menu-container:has(.menu.show) {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+    z-index: 1000;
+    animation: show-menu 0.2s;
+}
+
+@keyframes show-menu {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Styles de personnalisation de bootstrap */
+
+.dropdown-toggle.hide-arrow::before,
+.dropdown-toggle.hide-arrow::after,
+.dropdown-toggle-hide-arrow>.dropdown-toggle::before,
+.dropdown-toggle-hide-arrow>.dropdown-toggle::after {
+    display: none;
+}
