@@ -1,5 +1,7 @@
 {
     "require": {
-        "tecnickcom/tcpdf": "*"
+        "tecnickcom/tcpdf": "*",
+        "kkiapay/kkiapay-php": "dev-master"
+
     }
 }

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Paiement réel KKiaPay</title>
+  <script src="https://cdn.kkiapay.me/k.js"></script>
+</head>
+<body>
+  <h2>Paiement réel avec KKiaPay</h2>
+
+  <button onclick="openKkiapay()">Payer 15 225 FCFA</button>
+
+  <script>
+    function openKkiapay() {
+      openKkiapayWidget({
+        amount: 15,
+        key: "ea9534dc15c123315069269740eb2c74980ae74f", // remplace par ta vraie clé live
+        sandbox: false, // mode production
+        callback: "https://ton-domaine.com/verifier_paiement.php"
+      });
+    }
+  </script>
+</body>
+</html>
