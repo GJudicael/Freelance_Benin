@@ -3,7 +3,6 @@ session_start();
 require_once(__DIR__."/../bdd/creation_bdd.php");
 
 
-
 if (isset($_POST['envoyer'])) {
     $description = $_POST['demande'];
     $categorie = $_POST['categorie'];
@@ -27,7 +26,6 @@ if (isset($_POST['envoyer'])) {
         $erreur['nomDUtilisateur'] = "Ce champ est requis";
     }
 
-    
 
     $user_id = $_SESSION["user_id"];
     $nomDutilisateur = $bdd->prepare('SELECT nomDUtilisateur FROM inscription WHERE id = :id');
@@ -86,6 +84,7 @@ foreach ($mots_interdits as $mot) {
         die("❌ Contenu refusé : mot interdit détecté (« $mot »). Vous avez reçu un avertissement. ⚠️\nAu bout de 3, votre compte sera supprimé.");
     }
 }
+
 
     if(empty($erreur)){
         $requete = $bdd->prepare('INSERT INTO demande (description, categorie,titre, user_id, date_soumission) VALUES (:description, :categorie,:titre, :user_id, :date)');

@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 require_once(__DIR__."/../bdd/creation_bdd.php");
@@ -41,6 +42,7 @@ if (isset($_POST['envoyer'])) {
                 echo "🚫 Vous ne pouvez pas vous réinscrire. Ce compte a été banni.";
             } else {
                 // Vérifier si le nom d'utilisateur est déjà pris
+
                 $smtp = $bdd->prepare("SELECT nomDUtilisateur FROM inscription WHERE nomDUtilisateur = ?");
                 $smtp->execute([$nomUtilisateur]);
                 $nomDutilisateur = $smtp->fetch(PDO::FETCH_ASSOC);
@@ -60,6 +62,7 @@ if (isset($_POST['envoyer'])) {
                         'prenom' => $prenom,
                         'numero' => $numero,
                         'email' => $email,
+
                         'motDePasse' => password_hash($motDepasse, PASSWORD_DEFAULT),
                         'nomDUtilisateur' => $nomUtilisateur,
                         'token' => $token

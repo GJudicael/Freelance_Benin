@@ -9,6 +9,7 @@ $result = $bdd->prepare("SELECT i.id, i.nom ,i.prenom, d.id AS demande_id, d.des
 FROM demande d
 INNER JOIN inscription i ON i.id = d.user_id
 WHERE d.statut = 'en attente' AND d.user_id != :id
+
 ORDER BY date_soumission DESC");
 $result->execute(['id' => $user_id]);
 
@@ -40,10 +41,12 @@ if ($demandes) {
                         <textarea name="raison" class="form-control mb-2" rows="3" placeholder="Expliquez la raison du signalement..." required></textarea>
                         <button type="submit" class="btn btn-danger btn-sm">Envoyer le signalement</button>
                     </form>
+
                 </div>
             </div>
         </div>
     </div>
+
 </div>
 <?php
     }

@@ -1,9 +1,11 @@
 <?php
 
+
 require_once(__DIR__ . "/../bdd/creation_bdd.php");
 require_once(__DIR__ . "/../PHP/upload_photo.php");
 require_once(__DIR__ . "/../PHP/update_profile.php");
 //require_once(__DIR__ . "/signaler_profil.php");
+
 
 // Simulation d'utilisateur connecté (à remplacer par session et requête réelle)
 
@@ -282,7 +284,7 @@ function toggleSignalement() {
 </script>
 
 
-        <div>
+ <div>
           <?php if(isset($_GET['id']) && $freelancer) :?>
          <?php if (!empty($projets)) : ?>
               <hr class="my-3">
@@ -323,17 +325,16 @@ function toggleSignalement() {
               <?php $active = false; endforeach; ?>
           
 
-              
 
 
-        <!-- Contrôles -->
+
+   <!-- Contrôles -->
         <button class="carousel-control-prev px-3" type="button" data-bs-target="#freelancerCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon bg-black opacity-50"></span>
         </button>
         <button class="carousel-control-next px-3" type="button" data-bs-target="#freelancerCarousel" data-bs-slide="next">
             <span class="carousel-control-next-icon bg-black opacity-50"></span>
-       
-        
+
         <?php else : ?>
           <p class="mt-4 text-muted">Aucun projet ajouté pour le moment.</p>
         <?php endif; ?>
@@ -341,8 +342,6 @@ function toggleSignalement() {
         
     </div>
    
-          
-
         <script>
           function afficherFormulaire() {
             document.getElementById('infos-affichage').style.display = 'none';

@@ -2,5 +2,6 @@
     "require": {
         "tecnickcom/tcpdf": "*",
         "kkiapay/kkiapay-php": "dev-master"
+
     }
 }

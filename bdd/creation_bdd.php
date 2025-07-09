@@ -64,8 +64,7 @@ try {
     FOREIGN KEY (utilisateur_id) REFERENCES inscription(id) ON DELETE CASCADE,
     FOREIGN KEY (signale_par) REFERENCES inscription(id) ON DELETE CASCADE
 );
-
-
+       
         CREATE TABLE IF NOT EXISTS freelancers (
         id INT AUTO_INCREMENT PRIMARY KEY,
         user_id INT UNIQUE,
@@ -87,6 +86,7 @@ try {
         avancement INT DEFAULT 0,
         date_fin DATE NULL,
         statut ENUM('en attente', 'attribué', 'en cours', 'terminé', 'annulé','signalee') DEFAULT 'en attente',
+
         FOREIGN KEY (user_id) REFERENCES inscription(id) ON DELETE CASCADE ,
         FOREIGN KEY (freelancer_id) REFERENCES freelancers(id) ON DELETE CASCADE  
         );
@@ -134,6 +134,7 @@ try {
         FOREIGN KEY (sender_id) REFERENCES inscription(id),
         FOREIGN KEY (receiver_id) REFERENCES inscription(id)
         );
+
         CREATE TABLE IF NOT EXISTS bannis (
         id INT AUTO_INCREMENT PRIMARY KEY,
         nom VARCHAR(100) NOT NULL,
@@ -146,7 +147,7 @@ try {
         date_bannissement DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-    ";
+";
 
    $bdd->exec($sqlTables);
    

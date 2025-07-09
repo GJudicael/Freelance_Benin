@@ -2,6 +2,11 @@
 
 session_start();
 
+if(!isset($_SESSION["connecte"]) || $_SESSION["connecte"]!== true){
+        header('Location: ../index.php');
+        exit();
+    }
+
 // Inclusion du fichier de la base de données
 require_once(__DIR__ . '/../../bdd/creation_bdd.php');
 $current_user_id = $_SESSION['user_id'];
