@@ -103,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
     </div>
     <?php if (!empty($projets)) : ?>
-=======
+
     <?php /*if (!empty($projets)) : ?>
 >>>>>>> 19f2450475f085f52786413a3db6aa0d5cb09704
   <hr class="my-5">

@@ -42,6 +42,7 @@ try {
         photo VARCHAR(200) DEFAULT 'photo_profile.jpg',
         token VARCHAR(255) DEFAULT NULL,
         est_confirme BOOLEAN DEFAULT FALSE,
+        admin ENUM('admin','non_admin') DEFAULT 'non_admin',
         avertissement INT DEFAULT 0,
         role ENUM('client','freelance') DEFAULT 'client'
         );
@@ -54,6 +55,9 @@ try {
         FOREIGN KEY (demande_id) REFERENCES demande(id) ON DELETE CASCADE,
         FOREIGN KEY (signale_par) REFERENCES inscription(id) ON DELETE CASCADE
     );
+
+   
+
 
     CREATE TABLE IF NOT EXISTS signalements_profil (
     id INT AUTO_INCREMENT PRIMARY KEY,

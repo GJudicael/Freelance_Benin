@@ -11,9 +11,10 @@ require_once(__DIR__ . "/../PHP/update_profile.php");
 
 $user_id = isset($_GET['id']) ? (int) $_GET['id'] : $_SESSION['user_id'];
 
-$stmt = $bdd->prepare("SELECT nom, prenom, email, numero, nomDUtilisateur, photo, role FROM inscription WHERE id = ?");
+$stmt = $bdd->prepare("SELECT nom, prenom, email, numero, nomDUtilisateur, photo, role, admin FROM inscription WHERE id = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
 
 $check = $bdd->prepare("SELECT * FROM freelancers WHERE user_id = ?");
 $check->execute([$user_id]);
@@ -262,6 +263,17 @@ $_SESSION['photo'] = $user['photo'];
           </div>
         <?php endif; ?>
     </div>
+
+    <?php if ($user['admin'] === 'admin'): ?>
+    <div class="mt-4 p-3 border border-warning rounded bg-light text-center">
+        <h5 class="text-warning">⚙️ Accès Administrateur</h5>
+        <a href="http://localhost/Freelance_Benin-master/front_projet_EDL/Page_administracteur/admin" class="btn btn-warning">
+    🛡️ Aller au Dashboard
+</a>
+
+    </div>
+<?php endif; ?>
+
              
  </div>
                         <div>
