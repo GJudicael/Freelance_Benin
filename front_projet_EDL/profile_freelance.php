@@ -1,11 +1,9 @@
 <?php
 session_start();
-
 if(!isset($_SESSION["connecte"]) || $_SESSION["connecte"]!== true){
         header('Location: ../index.php');
         exit();
     }
-
 require_once(__DIR__."/../bdd/creation_bdd.php"); // Connexion DB
 
 $user_id = $_SESSION['user_id'];
@@ -65,11 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php require_once(__DIR__."/header.php")?>
     <div class="container mt-5">
 
-<!-- <<<<<<< HEAD
-  <h3 class=" text-center text-dark-emphasis">Compléter votre profil Freelance</h3>
-======= -->
   <h3 class=" text-center text-success">Compléter votre profil Freelance</h3>
-
 
   <form method="POST">
     <div class="mb-3">
@@ -85,8 +79,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <button type="submit" class="btn btn-success">Enregistrer</button>
   </form>
 
-  <a href="ajouter_projet.php" class="btn btn-outline-primary mt-4">Ajouter un projet</a>
 
+  
 
   <?php if ($freelancer) : ?>
     <hr class="my-5">
@@ -102,10 +96,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <p class="card-text"><?= htmlspecialchars($freelancer['competences']) ?></p>
       </div>
     </div>
-    <?php if (!empty($projets)) : ?>
 
     <?php /*if (!empty($projets)) : ?>
->>>>>>> 19f2450475f085f52786413a3db6aa0d5cb09704
   <hr class="my-5">
   <h3>Projets réalisés</h3>
 
@@ -132,9 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </div>
 <?php else : ?>
   <p class="mt-4 text-muted">Aucun projet ajouté pour le moment.</p>
-
 <?php endif; */?>
-
   <?php endif; ?>
 <a href="info_profile.php" class=" mt-3 btn btn-info"> Voir mon profil </a>
 
