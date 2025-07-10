@@ -28,6 +28,8 @@ const menuContainer = document.getElementById('menu-container');
 const menuItems = document.querySelectorAll('.menu li');
 const menuDivider = document.getElementById('menu-divider');
 const optionModifier = document.getElementById('modifier');
+const optionSupprimer = document.getElementById('supprimer');
+const optionSupprimer_pour_moi = document.getElementById('supprimer_pour_moi');
 const messagesCont = document.getElementById('messagesCont');
 const delai_modification_messages = 5 * 60 * 1000; // 5 minutes en ms
 
@@ -35,25 +37,59 @@ const delai_modification_messages = 5 * 60 * 1000; // 5 minutes en ms
 const viewportWidth = window.innerWidth;
 const viewportHeight = window.innerHeight;
 let top_limit = document.querySelector('#header');
+const espacement = 10;
 // console.log(top_limit.clientTop)
 
 
 messages.forEach(message => {
+    // Quelques modifications statiques
+
+    // Ajustement de la longeur du message
+    const infos_supp = message.querySelector('#infos_sup');
+    if (infos_supp) {
+        const width = message.clientWidth + infos_supp.clientWidth + espacement;
+        message.style.width = `${width}px`;
+    }
+
     message.addEventListener('contextmenu', (e) => {
+
+        menuItems.forEach(item => {
+            if (item.classList.contains)
+                item.classList.remove('d-none');
+        });
+
         // Gestion du contenu du menu contextuel
-
-        // Complétion des ids appropriés
         const message_id = message.querySelector('.message_id').textContent;
-        optionModifier.href = optionModifier.href + message_id;
 
-        // Affichage d'options sur conditions
+        if (!message.classList.contains('deleted')) {
 
-        if (message_modifiable(message)) {
-            optionModifier.classList.remove('d-none');
-            menuDivider.classList.remove('d-none');
+            if (!optionSupprimer_pour_moi.classList.contains('d-none')) {
+                optionSupprimer_pour_moi.classList.add('d-none');
+            }
+
+            // Complétion des ids appropriés
+            optionModifier.querySelector('a').href = './traitements/modifier_message.php?message_id=' + message_id;
+
+            // Affichage d'options sur conditions
+
+            if (message_modifiable(message)) {
+                optionModifier.classList.remove('d-none');
+                menuDivider.classList.remove('d-none');
+            } else {
+                optionModifier.classList.add('d-none');
+                menuDivider.classList.add('d-none');
+            }
         } else {
-            optionModifier.classList.add('d-none');
-            menuDivider.classList.add('d-none');
+            // Le message sélectionné est un message du style 'ce message est supprimé'
+            menuItems.forEach(item => {
+                if (!item.classList.contains('#supprimer_pour_moi')) {
+                    item.classList.add('d-none');
+                }
+            });
+
+            optionSupprimer_pour_moi.querySelector('input.message_id').value = message_id;
+            optionSupprimer_pour_moi.classList.remove('d-none');
+
         }
 
         // Gestion du positionnement du menu contextuel
@@ -95,6 +131,11 @@ messages.forEach(message => {
         }
 
         document.getElementById('messagesCont').classList.add('no-scroll'); // On empêche le scroll pendant que le menu est actif
+
+        // Autres actions
+
+        // Mettre dans l'input caché de suppresion l'id du message sur lequel on a cliqué
+        document.getElementById('deletionInput').value = message_id;
     });
 });
 
@@ -108,10 +149,22 @@ if (messagesCont) {
             // menu.style.display = "none";
         }
     });
+    optionSupprimer.addEventListener('click', ()=>{
+        menu.classList.remove('show');
+        document.getElementById('messagesCont').classList.remove('no-scroll');
+    })
 }
 
 // Au clic sur l'option de modification
 
-optionModifier.addEventListener('click', () => {
+// optionModifier.addEventListener('click', () => {
 
-});
+// });
+
+// // Au clic sur l'option de suppression
+
+// optionSupprimer.addEventListener('click', () => {
+//     // console.log('j\'ai cliqué sur le bouton de suppression');
+
+
+// });

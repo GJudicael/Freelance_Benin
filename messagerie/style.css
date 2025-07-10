@@ -114,7 +114,6 @@ div.infos_conv span {
     pointer-events: none;
 
     opacity: 0;
-    transition: opacity 150ms ease;
 }
 
 .menu {

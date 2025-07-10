@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['modifier'])) {
 
     if(!isset($erreur)){
         $id_message = $_SESSION['message_id'];
-        $stmt = $bdd->prepare('UPDATE messages SET message =:message WHERE id ='.$id_message);
+        $stmt = $bdd->prepare('UPDATE messages SET message =:message, modifie=TRUE WHERE id ='.$id_message);
         $stmt->bindParam('message', $_POST['message']);
         $stmt->execute();
 
