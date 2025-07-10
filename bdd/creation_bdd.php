@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 // Définition de constantes
 
@@ -28,7 +28,8 @@ try {
 
     // Création des tables
 
-    $sqlTables = "
+    $sqlTables =
+        "
 
         CREATE TABLE IF NOT EXISTS inscription
         (
@@ -40,9 +41,26 @@ try {
         motDePasse VARCHAR(100) NOT NULL,
         nomDUtilisateur VARCHAR(100) NOT NULL UNIQUE ,
         photo VARCHAR(200) DEFAULT 'photo_profile.jpg',
+        token VARCHAR(255) DEFAULT NULL,
+        est_confirme BOOLEAN DEFAULT FALSE,
+        admin ENUM('admin','non_admin') DEFAULT 'non_admin',
+        avertissement INT DEFAULT 0,
         role ENUM('client','freelance') DEFAULT 'client'
         );
 
+   
+
+
+    CREATE TABLE IF NOT EXISTS signalements_profil (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    utilisateur_id INT NOT NULL,
+    signale_par INT NOT NULL,
+    raison TEXT NOT NULL,
+    date_signalement DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (utilisateur_id) REFERENCES inscription(id) ON DELETE CASCADE,
+    FOREIGN KEY (signale_par) REFERENCES inscription(id) ON DELETE CASCADE
+);
+       
         CREATE TABLE IF NOT EXISTS freelancers (
         id INT AUTO_INCREMENT PRIMARY KEY,
         user_id INT UNIQUE,
@@ -59,15 +77,27 @@ try {
         categorie VARCHAR(100) NOT NULL,
         titre VARCHAR(100) NOT NULL,
         description TEXT NOT NULL,
+        budget DECIMAL (10,2) NOT NULL,
         date_soumission DATE ,
+        date_souhaitee DATE  NULL,
         date_attribution DATE NULL,
         avancement INT DEFAULT 0,
         date_fin DATE NULL,
-        statut ENUM('en attente', 'attribué', 'en cours', 'terminé', 'annulé') DEFAULT 'en attente',
+        statut ENUM('en attente', 'attribué', 'en cours', 'terminé', 'annulé','signalee') DEFAULT 'en attente',
+
         FOREIGN KEY (user_id) REFERENCES inscription(id) ON DELETE CASCADE ,
         FOREIGN KEY (freelancer_id) REFERENCES freelancers(id) ON DELETE CASCADE  
         );
 
+        CREATE TABLE IF NOT EXISTS signalements (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        demande_id INT NOT NULL,
+        signale_par INT NOT NULL,
+        raison TEXT NOT NULL,
+        date_signalement DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (demande_id) REFERENCES demande(id) ON DELETE CASCADE,
+        FOREIGN KEY (signale_par) REFERENCES inscription(id) ON DELETE CASCADE
+        );
         
 
         CREATE TABLE IF NOT EXISTS projets (
@@ -108,13 +138,30 @@ try {
         receiver_id INT NOT NULL,
         message TEXT NOT NULL,
         created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        modifie BOOL DEFAULT FALSE NOT NULL,
+        sup_for_sender BOOL DEFAULT FALSE NOT NULL,
+        sup_for_receiver BOOL DEFAULT FALSE NOT NULL,
+        sup_tout_le_monde BOOL DEFAULT FALSE NOT NULL,
         FOREIGN KEY (sender_id) REFERENCES inscription(id),
         FOREIGN KEY (receiver_id) REFERENCES inscription(id)
         );
-    ";
 
-   $bdd->exec($sqlTables);
-   
+        CREATE TABLE IF NOT EXISTS bannis (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nom VARCHAR(100) NOT NULL,
+        prenom VARCHAR(100) NOT NULL,
+        numero VARCHAR(100) NOT NULL,
+        email VARCHAR(100) NOT NULL,
+        nomDUtilisateur VARCHAR(100) NOT NULL,
+        photo VARCHAR(200) DEFAULT 'photo_profile.jpg',
+        role ENUM('client','freelance') DEFAULT 'client',
+        date_bannissement DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+";
+
+    $bdd->exec($sqlTables);
+
     $bdd->exec("DROP TRIGGER IF EXISTS after_suivi_insert");
 
     $triggerSql = "
@@ -137,14 +184,11 @@ try {
         END IF;
     END";
 
-     //echo "Tables créées avec succès.";
+    //echo "Tables créées avec succès.";
 
     $bdd->exec($triggerSql);
-
 } catch (PDOException $e) {
     echo "Echec lors de la connexion : " . $e->getMessage();
 }
 
-    //echo "Tables créées avec succès.";
-
-?>
+//echo "Tables créées avec succès.";

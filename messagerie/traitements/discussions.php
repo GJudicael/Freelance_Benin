@@ -1,10 +1,6 @@
 <?php
 
 session_start();
-if(!isset($_SESSION["connecte"]) || $_SESSION["connecte"]!== true){
-        header('Location: ../index.php');
-        exit();
-    }
 // Inclusion du fichier de la base de données
 require_once(__DIR__ . '/../../bdd/creation_bdd.php');
 $current_user_id = $_SESSION['user_id'];
@@ -94,7 +90,7 @@ if ($selected_user_id) {
             // Récupérer la discussion entre l'utilisateur connecté et le destinataire (si discussion il y eu ou non)
 
             $stmt = $bdd->prepare("
-                SELECT sender_id, receiver_id, message
+                SELECT id, sender_id, receiver_id, message, created_at, modifie, sup_for_sender, sup_for_receiver, sup_tout_le_monde
                 FROM messages
                 WHERE 
                 (sender_id =:me AND receiver_id = :receiver_id)
@@ -105,7 +101,7 @@ if ($selected_user_id) {
             $stmt->bindParam('me', $current_user_id, PDO::PARAM_INT);
             $stmt->bindParam('receiver_id', $receiver_id, PDO::PARAM_INT);
             $stmt->execute();
-            $discussion = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $messages_discussion = $stmt->fetchAll(PDO::FETCH_ASSOC);
         } else {
             echo "L'utilisateur sélectionné n'est pas présent dans la base de données";
             die(-1);
@@ -169,3 +165,26 @@ $conversations = $resultat->fetchAll(PDO::FETCH_ASSOC);
 // Cas de figure 1
 
 // Pour contacter un individu sur la plateforme, je vais devoir à un moment donné passer par un bouton qui m'enverra par get l'id de l'individ visé sous le nom de variable 'receiver_id'. Maintenant il faudra vérifier si j'ai déjà écrit à ce receiver. Si oui son nom dans le panneau latéral gauche sera sélectionné. Autrement aucun nom ne sera sélectionné dans le panneau latéral gauche mais j'aurai quand même la discussion ouverte dans le panneau latéral de droite.
+
+// Modification de messages
+
+if (isset($_SESSION['modifier_message'])) {
+    $id_message = $_SESSION['message_id'];
+
+    foreach ($messages_discussion as $index => $msg) {
+        if ($msg['id'] == $id_message)
+            $message_a_modifier = $messages_discussion[$index];
+    }
+}
+
+// Suppression d'un message
+
+if (isset($_POST['supprimer'])) {
+    foreach ($messages_discussion as $msg) {
+        if ($msg['id'] == $_POST['message_id']) {
+            $str = $current_user_id == $msg['sender_id'] ? '&sender=1&receiver=0' : '&sender=0&receiver=1'; 
+        }
+    }
+    header('location:traitements/suppression.php?choix_suppression=' . $_POST['choix_suppression'] . '&message_id=' . $_POST['message_id'] . '&user_id=' . $selected_user_id.$str);
+    exit;
+}

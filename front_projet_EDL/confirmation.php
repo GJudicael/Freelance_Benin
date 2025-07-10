@@ -1,11 +1,40 @@
-<?php session_start();
-    if(!isset($_SESSION["connecte"]) || $_SESSION["connecte"]!== true){
-        header('Location: ../index.php');
-        exit();
+<?php
+require_once(__DIR__ . "/../bdd/creation_bdd.php");
+
+if (isset($_GET['token'])) {
+    $token = $_GET['token']; // Récupère le token depuis l'URL
+
+    // Recherche l'utilisateur avec ce token
+    $stmt = $bdd->prepare("SELECT * FROM inscription WHERE token = :token AND est_confirme = FALSE");
+    $stmt->execute(['token' => $token]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($user) {
+        // Si l'utilisateur existe et n'est pas encore confirmé, on confirme le compte
+        $update = $bdd->prepare("UPDATE inscription SET est_confirme = TRUE, token = NULL WHERE id = :id");
+        $update->execute(['id' => $user['id']]);
+
+        // echo "✅ Votre compte a été confirmé avec succès. <p><a href='http://localhost/Freelance_Benin-master/front_projet_EDL/Connexion.php'>Vous pouvez maintenant vous connecter</a></p>.";
+    } else {
+        // echo "❌ Lien invalide ou compte déjà confirmé.";
     }
+} else {
+    // echo "❌ Aucun token fourni dans le lien.";
+}
 ?>
 
-<!DOCTYPE html>
+<?php
+session_start();
+if (!isset($_SESSION["connecte"]) || $_SESSION["connecte"] !== true) {
+    $_SESSION["user_name"] = $user['nomDUtilisateur'];
+    $_SESSION["user_id"] = $user['id'];
+    $_SESSION['connecte'] = true;
+    header('Location: ../index.php');
+    exit();
+}
+?>
+
+<!-- <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -25,22 +54,22 @@
 <body>
     
     <div class="d-flex justify-content-center m-auto align-items-center">
-      <?php 
-                
-            if(isset($_SESSION["mail_envoye"] )){ ?>
+      <?php
+
+        if (isset($_SESSION["mail_envoye"])) { ?>
 
             <div class="container alert alert-info p-5 text-center" role="alert">
                  <i class="bi bi-info-circle" style="font-size: 2rem;"> </i>
                 <p class="py-3"> <?php echo htmlspecialchars($_SESSION["mail_envoye"]);
-                    unset($_SESSION["mail_envoye"] );?> 
+                                    unset($_SESSION["mail_envoye"]); ?> 
                 </p>
             </div>
 
         <?php
-            }
+        }
         ?>  
     </div>
 
     <script src="../assets/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js" ></script>
 </body>
-</html>
+</html> -->

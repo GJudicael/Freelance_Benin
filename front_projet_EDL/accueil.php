@@ -1,8 +1,8 @@
-<?php session_start();
-    if(!isset($_SESSION["connecte"]) || $_SESSION["connecte"]!== true){
-        header('Location: ../index.php');
-        exit();
-    }
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once(__DIR__ . "/../bdd/creation_bdd.php");
 
 $user_id = $_SESSION["user_id"];

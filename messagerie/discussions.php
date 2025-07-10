@@ -1,4 +1,4 @@
-<?php require_once('traitements/discussions.php');?>
+<?php require_once('traitements/discussions.php'); ?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Messagerie</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=<?= time() ?>">
     <link rel="stylesheet" href="./../assets/bootstrap-5.3.6-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./../assets/bootstrap-icons-1.13.1/bootstrap-icons.min.css">
 </head>
@@ -70,33 +70,60 @@
                     <!-- Messages proprements dits -->
 
                     <div class="d-flex flex-column h-75 py-2 mb-3 overflow-y-scroll" id="messagesCont">
-                        <?php if (empty($discussion)) : ?>
+                        <?php if (empty($messages_discussion)) : ?>
                             <!-- Rien à afficher -->
                         <?php else: ?>
-                            <?php foreach ($discussion as $index => $msg) : ?>
+                            <?php foreach ($messages_discussion as $index => $msg) : ?>
                                 <?php
                                 if ($index != 0) {
-                                    $message_precedent = $discussion[$index - 1];
+                                    $message_precedent = $messages_discussion[$index - 1];
                                     $meme_auteur = $message_precedent['sender_id'] == $msg['sender_id'] ? true : false;
                                 }
+                                $msg_deleted_for_me = ($current_user_id == $msg['sender_id'] && $msg['sup_for_sender']) || ($current_user_id == $msg['receiver_id'] && $msg['sup_for_receiver']);
                                 $from_current_user = $msg['sender_id'] == $current_user_id;
                                 ?>
 
-                                <div class="mb-1 <?= $from_current_user ? 'from-me bg-primary text-white' : 'from-other bg-light' ?> message">
-                                    <p class="py-2 px-4 mb-0 me-[20px]"><?= nl2br(htmlspecialchars($msg['message'])) ?></p>
-                                </div>
+                                <?php if (!$msg_deleted_for_me) : ?>
+                                    <div class="mb-1 <?= $from_current_user ? 'from-me bg-primary text-white' : 'from-other bg-light' ?> message py-2 px-4 <?= $msg['sup_tout_le_monde'] ? 'deleted' : '' ?>">
+                                        <?php if ($msg['sup_tout_le_monde']) : ?>
+                                            <span><i class="bi bi-ban me-2"></i><i>Ce message a été supprimé</i></span>
+                                        <?php else: ?>
+                                            <div class=" position-relative">
+                                                <p class="mb-0" style="max-width : 300px"><?= nl2br(htmlspecialchars($msg['message'])) ?></p>
+                                                <div id="infos_sup" class="position-absolute bottom-0 end-0">
+                                                    <?php $date = new DateTime($msg['created_at']); ?>
+                                                    <!-- Informations supplémentaires -->
+                                                    <p class="m-0 text-end text-nowrap" style="font-size : 12px"><small><?= $msg['modifie'] ? 'Modifié ' : '' ?><?= $date->format('H:i') ?></small></p>
+                                                    <span class="d-none created_at"><?= htmlspecialchars($msg['created_at']) ?></span>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                        <span class="message_id d-none"><?= $msg['id'] ?></span>
+                                    </div>
+                                <?php endif; ?>
+
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </div>
 
                     <!-- Formulaire d'envoi -->
-                    <form action="traitements/send_message.php" method="post" class="mb-3">
+                    <form action="traitements/<?= !isset($message_a_modifier) ? 'send_message' : 'modifier_message' ?>.php" method="post" class="mb-3">
+                        <?php if (isset($message_a_modifier)) : ?>
+                            <div class="card mb-2">
+                                <div class="card-header">Edition de message</div>
+                                <div class="card-body"><?= htmlspecialchars($message_a_modifier['message']) ?></div>
+                            </div>
+                        <?php endif; ?>
                         <div class="d-flex">
-                            <textarea name="message" id="messageCont" class="form-control" placeholder="Saissisez votre message" rows="1"></textarea>
+                            <textarea name="message" id="messageCont" class="form-control" placeholder="Saissisez votre message" rows="1" required><?= isset($message_a_modifier) ? $message_a_modifier['message'] : '' ?></textarea>
                             <!-- <input type="text" name="message" id="message" class="form-control form-control-sm" placeholder="Saisissez votre message"> -->
-                            <button type="submit" class="btn btn-primary mx-2">Envoyer</button>
+                            <button type="submit" class="btn btn-primary mx-2" name="<?= isset($message_a_modifier) ? 'modifier' : 'envoyer' ?>"><?= isset($message_a_modifier) ? 'Modifier' : 'Envoyer' ?></button>
+                            <?php if (isset($message_a_modifier)) : ?>
+                                <a href="discussions.php?user_id=<?= $selected_user_id ?>" class="btn btn-primary">Annuler</a>
+                            <?php endif; ?>
                         </div>
                     </form>
+
 
                 <?php else: ?>
                     <p>Aucune discussion n'a été sélectionnée.</p>
@@ -107,17 +134,58 @@
 
     <div id="menu-container">
         <ul class="menu">
-            <li><a href="#" class="menu-item d-flex align-items-center"><i class="bi bi-pen me-2"></i>Modifier</a></li>
-            <li id="menu-divider"><hr class="dopdown-divider"></li>
-            <li id="supprimer-pour-moi"><a href="#" class="menu-item text-danger d-flex align-items-center"><i class="bi bi-trash me-2"></i>Supprimer pour moi</a></li>
-            <li id="supprimer"><a href="#" class="menu-item text-danger d-flex align-items-center"><i class="bi bi-trash me-2"></i>Supprimer</a></li>
+            <li id="modifier"><a class="menu-item d-flex align-items-center"><i class="bi bi-pen me-2"></i>Modifier</a></li>
+            <li id="menu-divider">
+                <hr class="dopdown-divider">
+            </li>
+            <!-- <li id="supprimer-pour-moi"><a href="#" class="menu-item text-danger d-flex align-items-center"><i class="bi bi-trash me-2"></i>Supprimer pour moi</a></li> -->
+            <li id="supprimer_pour_moi" class="d-none">
+                <form action="" method="post">
+                    <input type="hidden" name="message_id" class="message_id">
+                    <input type="hidden" name="choix_suppression" value="moi">
+                    <button class="menu-item d-flex align-items-center text-danger btn" name="supprimer"><i class="bi bi-trash me-2"></i>Supprimer pour moi</button>
+                </form>
+            </li>
+
+            <li id="supprimer">
+                <!-- Button trigger modal -->
+                <button href="#" class="menu-item text-danger d-flex align-items-center btn" data-bs-toggle="modal" data-bs-target="#deletionModal" id="supprimer"><i class="bi bi-trash me-2"></i>Supprimer</button>
+            </li>
             <!-- <li><a href="#" class="menu-item">Something else</a></li> -->
         </ul>
     </div>
 
+    <!-- Modal -->
+    <div class="modal modal-top fade" id="deletionModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deletionModalTitle">Supprimer le message ?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <form action="" method="post" id="suppresion_form">
+                    <div class="modal-body">
+                        Vous pouvez supprimer le message juste pour vous ou pour tout le monde.
+                        <input type="hidden" name="message_id" id='deletionInput'>
+                        <div class="form-check mt-3">
+                            <input name="choix_suppression" class="form-check-input" type="radio" value="moi" id="moi" checked>
+                            <label class="form-check-label" for="moi"> Supprimer pour moi </label>
+                        </div>
+                        <div class="form-check mt-3">
+                            <input name="choix_suppression" class="form-check-input" type="radio" value="tout_le_monde" id="tout_le_monde">
+                            <label class="form-check-label" for="tout_le_monde"> Supprimer pour tout le monde </label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" name="supprimer" class="btn btn-danger">Supprimer</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
-
-    <script src="script.js"></script>
+    <script src="script.js?v=<?= time() ?>"></script>
     <script src="../assets/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
