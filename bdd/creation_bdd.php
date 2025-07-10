@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 // Définition de constantes
 
@@ -28,7 +28,8 @@ try {
 
     // Création des tables
 
-    $sqlTables = "
+    $sqlTables =
+        "
 
         CREATE TABLE IF NOT EXISTS inscription
         (
@@ -46,15 +47,6 @@ try {
         avertissement INT DEFAULT 0,
         role ENUM('client','freelance') DEFAULT 'client'
         );
-        CREATE TABLE IF NOT EXISTS signalements (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        demande_id INT NOT NULL,
-        signale_par INT NOT NULL,
-        raison TEXT NOT NULL,
-        date_signalement DATETIME DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (demande_id) REFERENCES demande(id) ON DELETE CASCADE,
-        FOREIGN KEY (signale_par) REFERENCES inscription(id) ON DELETE CASCADE
-    );
 
    
 
@@ -97,6 +89,15 @@ try {
         FOREIGN KEY (freelancer_id) REFERENCES freelancers(id) ON DELETE CASCADE  
         );
 
+        CREATE TABLE IF NOT EXISTS signalements (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        demande_id INT NOT NULL,
+        signale_par INT NOT NULL,
+        raison TEXT NOT NULL,
+        date_signalement DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (demande_id) REFERENCES demande(id) ON DELETE CASCADE,
+        FOREIGN KEY (signale_par) REFERENCES inscription(id) ON DELETE CASCADE
+        );
         
 
         CREATE TABLE IF NOT EXISTS projets (
@@ -159,8 +160,8 @@ try {
 
 ";
 
-   $bdd->exec($sqlTables);
-   
+    $bdd->exec($sqlTables);
+
     $bdd->exec("DROP TRIGGER IF EXISTS after_suivi_insert");
 
     $triggerSql = "
@@ -183,14 +184,11 @@ try {
         END IF;
     END";
 
-     //echo "Tables créées avec succès.";
+    //echo "Tables créées avec succès.";
 
     $bdd->exec($triggerSql);
-
 } catch (PDOException $e) {
     echo "Echec lors de la connexion : " . $e->getMessage();
 }
 
-    //echo "Tables créées avec succès.";
-
-?>
+//echo "Tables créées avec succès.";
