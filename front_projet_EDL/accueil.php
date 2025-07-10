@@ -47,7 +47,7 @@ $freelancers = $smt->fetchALl(PDO::FETCH_ASSOC);
                 et de recevoir des offres de missions, tandis que les clients pourront publier des projets et entrer en contact avec des prestataires qualifiés.
             </p>
         </section>
-        <section class=" my-4 py-4 bg-body-secondary">
+        <section class=" my-4 py-4 bg-black bg-opacity-75  ">
             <h4 class="mb-2 text-center text-warning p-2 historique"> NOS FREELANCEURS </h4>
 
             <div id="freelancerCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -62,8 +62,8 @@ $freelancers = $smt->fetchALl(PDO::FETCH_ASSOC);
                         <div class="carousel-item <?= $active ? 'active' : '' ?>">
                             <div class="row justify-content-center px-3">
                                 <?php foreach ($group as $freelancer): ?>
-                                    <div class="col-lg-3 col-md-6">
-                                        <div class="card text-center p-3 border-0 bg-body-secondary">
+                                    <div class="col-lg-3 col-md-6 ">
+                                        <div class="card text-center p-3 border-0 text-warning bg-transparent ">
                                             <img src="../photo_profile/<?= htmlspecialchars($freelancer['photo']) ?>" class="rounded-circle mx-auto d-block" alt="Freelancer" height="100" width="100">
                                             <div class="card-body">
                                                 <h5 class="card-title"><?= htmlspecialchars($freelancer['nom']) ?> <?= htmlspecialchars($freelancer['prenom']) ?></h5>
@@ -80,11 +80,11 @@ $freelancers = $smt->fetchALl(PDO::FETCH_ASSOC);
                 </div>
 
                 <!-- Contrôles -->
-                <button class="carousel-control-prev px-3" type="button" data-bs-target="#freelancerCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon bg-black opacity-50"></span>
+                <button class="carousel-control-prev px-3"  type="button" data-bs-target="#freelancerCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon "></span>
                 </button>
                 <button class="carousel-control-next px-3" type="button" data-bs-target="#freelancerCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon bg-black opacity-50"></span>
+                    <span class="carousel-control-next-icon "></span>
                 </button>
             </div>
 
