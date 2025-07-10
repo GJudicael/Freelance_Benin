@@ -6,8 +6,8 @@ use PHPMailer\PHPMailer\SMTP;
 require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
+function traieMail($email,$token)
 
-function traieMail($email)
 {
 
 $mail = new PHPMailer(true);
@@ -24,8 +24,16 @@ $mail->setFrom('sitefreelancebenin@gmail.com', 'Site Freelance Bénin');
 $mail->addAddress($email,'Site Freelance Bénin');
 $mail->isHTML(true);//Pour activer l'envoi de mail sous forme html
 
-$mail->Subject = 'Confirmation d\'email';
-$mail->Body = "Bonjout, vous venez de recevoir un mail de confirmation ! http://localhost/Freelance_Benin/front_projet_EDL/Connexion.php";
+$lienConfirmation = "http://localhost/Freelance_Benin-master/front_projet_EDL/confirmation.php?token=$token";
+
+$mail->Subject = "Confirmation de votre inscription";
+$mail->Body = "
+    <p>Bonjour,</p>
+    <p>Merci pour votre inscription sur <strong>Freelance Bénin</strong>.</p>
+    <p>Veuillez confirmer votre compte en cliquant sur le lien suivant :</p>
+    <p><a href='$lienConfirmation'>Confirmer mon compte</a></p>
+    <p>Si vous n'avez pas demandé cette inscription, ignorez ce message.</p>
+";
 
 $mail->SMTPDebug =0;//Pour desactiver le debug
 

@@ -1,20 +1,20 @@
 <?php
-  
+
+
 require_once(__DIR__ . "/../bdd/creation_bdd.php");
 require_once(__DIR__ . "/../PHP/upload_photo.php");
 require_once(__DIR__ . "/../PHP/update_profile.php");
-if(!isset($_SESSION["connecte"]) || $_SESSION["connecte"]!== true){
-        header('Location: ../index.php');
-        exit();
-}
+//require_once(__DIR__ . "/signaler_profil.php");
+
 
 // Simulation d'utilisateur connecté (à remplacer par session et requête réelle)
 
 $user_id = isset($_GET['id']) ? (int) $_GET['id'] : $_SESSION['user_id'];
 
-$stmt = $bdd->prepare("SELECT nom, prenom, email, numero, nomDUtilisateur, photo, role FROM inscription WHERE id = ?");
+$stmt = $bdd->prepare("SELECT nom, prenom, email, numero, nomDUtilisateur, photo, role, admin FROM inscription WHERE id = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
 
 $check = $bdd->prepare("SELECT * FROM freelancers WHERE user_id = ?");
 $check->execute([$user_id]);
@@ -263,8 +263,40 @@ $_SESSION['photo'] = $user['photo'];
           </div>
         <?php endif; ?>
     </div>
+
+    <?php if ($user['admin'] === 'admin'): ?>
+    <div class="mt-4 p-3 border border-warning rounded bg-light text-center">
+        <h5 class="text-warning">⚙️ Accès Administrateur</h5>
+        <a href="http://localhost/Freelance_Benin-master/front_projet_EDL/Page_administracteur/admin" class="btn btn-warning">
+    🛡️ Aller au Dashboard
+</a>
+
+    </div>
+<?php endif; ?>
+
+             
  </div>
-        <div>
+                        <div>
+    <!-- Bouton Signaler -->
+    <button class="btn btn-outline-danger btn-sm" onclick="toggleSignalement()">🚩 Signaler le profil</button>
+
+    <!-- Formulaire de signalement -->
+    <form action="signaler_profil.php" method="POST" class="mt-3 d-none" id="form-signalement">
+        <input type="hidden" name="utilisateur_id" value="<?= htmlspecialchars($user_id) ?>"> <!-- à adapter -->
+        <textarea name="raison" class="form-control mb-2" rows="3" placeholder="Expliquez la raison du signalement..." required></textarea>
+        <button type="submit" class="btn btn-danger btn-sm">Envoyer le signalement</button>
+    </form>
+</div>
+
+<script>
+function toggleSignalement() {
+    const form = document.getElementById('form-signalement');
+    form.classList.toggle('d-none');
+}
+</script>
+
+
+ <div>
           <?php if(isset($_GET['id']) && $freelancer) :?>
          <?php if (!empty($projets)) : ?>
               <hr class="my-3">
@@ -305,14 +337,16 @@ $_SESSION['photo'] = $user['photo'];
               <?php $active = false; endforeach; ?>
           
 
-        <!-- Contrôles -->
+
+
+
+   <!-- Contrôles -->
         <button class="carousel-control-prev px-3" type="button" data-bs-target="#freelancerCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon bg-black opacity-50"></span>
         </button>
         <button class="carousel-control-next px-3" type="button" data-bs-target="#freelancerCarousel" data-bs-slide="next">
             <span class="carousel-control-next-icon bg-black opacity-50"></span>
-        </button>
-        
+
         <?php else : ?>
           <p class="mt-4 text-muted">Aucun projet ajouté pour le moment.</p>
         <?php endif; ?>
@@ -320,7 +354,6 @@ $_SESSION['photo'] = $user['photo'];
         
     </div>
    
-
         <script>
           function afficherFormulaire() {
             document.getElementById('infos-affichage').style.display = 'none';
