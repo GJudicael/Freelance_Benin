@@ -5,7 +5,7 @@ require_once(__DIR__."/../PHP/update_profile.php");
     
 
 $user_id = $_SESSION["user_id"];
-$result = $bdd->prepare("SELECT i.id, i.nom ,i.prenom, d.id AS demande_id, d.description, d.titre, d.date_soumission
+$result = $bdd->prepare("SELECT i.id, i.nom ,i.prenom, d.description, d.titre, d.date_soumission, d.budget , d.date_souhaitee
 FROM demande d
 INNER JOIN inscription i ON i.id = d.user_id
 WHERE d.statut = 'en attente' AND d.user_id != :id
@@ -31,9 +31,11 @@ if ($demandes) {
                     </div>
                     <h5 class="card-title text-secondaryg"><?= htmlspecialchars($demande["titre"]) ?></h5>
                     <p class="card-text text-muted"><?= htmlspecialchars($demande["description"]) ?></p>
+                    <p class="card-text text-muted"><strong> Budget :</strong><?= htmlspecialchars($demande["budget"]) ?></p>
+                    <p class="card-text text-muted"><strong> Date de soumission au plus tard du projet :</strong><?= htmlspecialchars($demande["date_souhaitee"]) ?></p>
 
                     <!-- Bouton Signaler -->
-                    <button class="btn btn-outline-danger btn-sm" onclick="toggleSignalement(<?= $index ?>)">🚩 Signaler</button>
+                    <button class="btn btn-outline-danger btn-sm" onclick="toggleSignalement(<?= $index ?>)"> Signaler</button>
 
                     <!-- Formulaire de signalement -->
                     <form action="signaler_demande.php" method="POST" class="mt-3 d-none" id="form-signalement-<?= $index ?>">
