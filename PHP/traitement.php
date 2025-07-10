@@ -103,8 +103,8 @@ foreach ($mots_interdits as $mot) {
             'date_souhaitee' => !empty($date_souhaitee) ? $date_souhaitee : null
         ]);
 
-        header("Location: accueil.php");
-        exit();
+        //header("Location: accueil.php");
+        //exit();
     }
 }
 ?>

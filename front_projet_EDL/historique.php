@@ -39,7 +39,7 @@ if ($demandes) {
 
                     <!-- Formulaire de signalement -->
                     <form action="signaler_demande.php" method="POST" class="mt-3 d-none" id="form-signalement-<?= $index ?>">
-                        <input type="hidden" name="demande_id" value="<?= htmlspecialchars($demande['demande_id']) ?>">
+                        <input type="hidden" name="demande_id" value="<?= htmlspecialchars($demande['id']) ?>">
                         <textarea name="raison" class="form-control mb-2" rows="3" placeholder="Expliquez la raison du signalement..." required></textarea>
                         <button type="submit" class="btn btn-danger btn-sm">Envoyer le signalement</button>
                     </form>

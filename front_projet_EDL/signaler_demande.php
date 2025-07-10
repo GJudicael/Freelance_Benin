@@ -43,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $update->execute(['id' => $demande_id]);
 
             // Redirection ou message de succès
-            header("Location: ../front_projet_EDL/demandes.php?signalement=ok");
+            header("Location: accueil.php");
             exit();
 
     } else {

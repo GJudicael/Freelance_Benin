@@ -267,7 +267,7 @@ $_SESSION['photo'] = $user['photo'];
     <?php if ($user['admin'] === 'admin'): ?>
     <div class="mt-4 p-3 border border-warning rounded bg-light text-center">
         <h5 class="text-warning">⚙️ Accès Administrateur</h5>
-        <a href="http://localhost/Freelance_Benin-master/front_projet_EDL/Page_administracteur/admin" class="btn btn-warning">
+        <a href="http://localhost/freelance_benin/front_projet_EDL/Page_administracteur/admin.php" class="btn btn-warning">
     🛡️ Aller au Dashboard
 </a>
 
