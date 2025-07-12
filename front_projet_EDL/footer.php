@@ -1,6 +1,6 @@
 
     <!-- Footer -->
-<footer class=" mt-auto py-4">
+<footer class="sticky-footer bg-white mt-4 p-4 bottom-0">
   <div class="container text-center">
     <p class="mb-1">&copy; 2025 FeeBenin. Tous droits réservés.</p>
     <p class="mb-0">

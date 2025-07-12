@@ -23,9 +23,9 @@
 </head>
 <body>
 
-<main class="container w-50 shadow my-5 p-5">
+<main class="container w-75 shadow my-5 p-5">
    
-    <h3 class="text-center text-primary">Créez votre compte</h3>
+    <h3 class="text-center text-primary"> Créez votre compte</h3>
     <form method="post" action="">
         <?php 
             if(isset($message)){

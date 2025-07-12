@@ -1,6 +1,7 @@
 <?php
 // Connexion à la base de données
-require_once(__DIR__ . "/../../bdd/creation_bdd.php");
+session_start();
+require_once(__DIR__ . "/../bdd/creation_bdd.php");
 
 // Requête SQL pour récupérer tous les signalements de demandes
 $requete = $bdd->prepare("
@@ -30,20 +31,30 @@ $signalements = $requete->fetchAll(PDO::FETCH_ASSOC);
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>📝 Signalements de Demandes</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title> Signalements de Demandes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ancizar+Serif:ital,wght@0,300..900;1,300..900&family=Baumans&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../assets/bootstrap-5.3.6-dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="../assets/style.css">
+
+
+    <link rel="stylesheet" href="../assets/bootstrap-icons-1.13.1/bootstrap-icons.min.css">
 </head>
-<body class="bg-light">
-    <div class="container py-4">
-        <h2 class="text-center mb-5">📝 Signalements de Demandes</h2>
+
+<body class="bg-light d-flex flex-column min-vh-100">
+    <?php require_once(__DIR__."/../front_projet_EDL/header.php") ?>
+
+    <main class="container py-4 flex-fill">
+        <h4 class="text-center my-5 text-danger">📝 Demandes signalées</h4>
 
         <?php if ($signalements): ?>
             <?php foreach ($signalements as $signalement): ?>
                 <div class="card shadow-sm mb-4 border-start border-4 border-danger-subtle">
                     <div class="card-body">
-                        <h5 class="card-title text-primary"><?= htmlspecialchars($signalement['titre_demande']) ?></h5>
+                        <h5 class="card-title text-primary"><?= ($signalement['titre_demande']) ?></h5>
                         <p class="mb-2">
-                            <strong>Description :</strong> <?= nl2br(htmlspecialchars($signalement['description_demande'])) ?>
+                            <strong>Description :</strong> <?= ($signalement['description_demande']) ?>
                         </p>
                         <p class="mb-2">
                             <strong>Posté par :</strong> 
@@ -79,10 +90,13 @@ $signalements = $requete->fetchAll(PDO::FETCH_ASSOC);
                 </div>
             <?php endforeach; ?>
         <?php else: ?>
-            <div class="alert alert-info text-center">
+            <div class="alert alert-info text-center p-4">
                 Aucun signalement n’a été enregistré pour le moment.
             </div>
         <?php endif; ?>
-    </div>
+        </main>
+
+    <?php require_once(__DIR__."/../front_projet_EDL/footer.php") ?>
+    <script src="../assets/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

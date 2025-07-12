@@ -94,9 +94,10 @@ $demandes = $result->fetchAll(PDO::FETCH_ASSOC);
             </div>
             
             <!-- Contenu de la demande -->
-            <h3 class="card-title text-secondary"><?= htmlspecialchars($demande['categorie']) ?></h3>
-            <h5 class="card-title text-secondary"><?= htmlspecialchars($demande['titre']) ?></h5>
-            <p class="card-text text-muted"><?= htmlspecialchars($demande['description']) ?></p>
+
+            <h3 class="card-title text-secondary"><?= ($demande['categorie']) ?></h3>
+            <h5 class="card-title text-secondary"><?= ($demande['titre']) ?></h5>
+            <p class="card-text text-muted"><?= ($demande['description']) ?></p>
             
             <!-- Section attribution -->
             <?php if ($demande['statut'] === 'en attente'): ?>

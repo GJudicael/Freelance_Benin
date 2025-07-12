@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__ . "/../../bdd/creation_bdd.php");
+require_once(__DIR__ . "/../bdd/creation_bdd.php");
 
 $action = $_POST['action_type'] ?? null;
 $signalement_id = $_POST['demande_id'] ?? null;
