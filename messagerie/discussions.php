@@ -31,7 +31,13 @@
                                 <img src="./../photo_profile/<?= $conv['photo'] ?>" alt="Photo de profil de <?= $conv['nom'] . ' ' . $conv['prenom'] ?>" class="rounded-circle" width="50" height="50">
                                 <div class="ms-3 w-100 infos_conv">
                                     <p class="mb-0 fs-6 fw-bolder"><?= $conv['nom'] . ' ' . $conv['prenom'] ?></p>
-                                    <p class="mb-0"><?= formatterChaine($conv['message'], LONGUEUR_MESSAGE) ?></p>
+                                    <p class="mb-0 contenu_message">
+                                        <?php if (!$conv['sup_tout_le_monde']) : ?>
+                                            <?= formatterChaine($conv['message'], LONGUEUR_MESSAGE) ?>
+                                        <?php else: ?>
+                                            <i class="bi bi-ban me-2"></i><i> Ce message a été supprimé</i>
+                                        <?php endif; ?>
+                                    </p>
                                     <span id="date" class="fs-6 text-black fw-light"><?= afficherDate($conv['created_at']) ?></span>
                                 </div>
                             </div>
@@ -70,8 +76,9 @@
                     <!-- Messages proprements dits -->
 
                     <div class="d-flex flex-column h-75 py-2 mb-3 overflow-y-scroll" id="messagesCont">
-                        <?php if (empty($messages_discussion)) : ?>
+                        <?php if (empty($messages_discussion) || $toute_la_discussion_supprimee) : ?>
                             <!-- Rien à afficher -->
+                             <!-- <p>Il semble que vous n'ayiez pas eu de conversation avec cet individu</p> -->
                         <?php else: ?>
                             <?php foreach ($messages_discussion as $index => $msg) : ?>
                                 <?php
@@ -86,7 +93,7 @@
                                 <?php if (!$msg_deleted_for_me) : ?>
                                     <div class="mb-1 <?= $from_current_user ? 'from-me bg-primary text-white' : 'from-other bg-light' ?> message py-2 px-4 <?= $msg['sup_tout_le_monde'] ? 'deleted' : '' ?>">
                                         <?php if ($msg['sup_tout_le_monde']) : ?>
-                                            <span><i class="bi bi-ban me-2"></i><i>Ce message a été supprimé</i></span>
+                                            <span><i class="bi bi-ban me-2"></i> <i>Ce message a été supprimé</i></span>
                                         <?php else: ?>
                                             <div class=" position-relative">
                                                 <p class="mb-0" style="max-width : 300px"><?= nl2br(htmlspecialchars($msg['message'])) ?></p>

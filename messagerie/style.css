@@ -49,12 +49,16 @@ body {
     cursor: pointer;
 }
 
-div.infos_conv {
+/* div.infos_conv {
     margin-bottom: 10px;
-}
+} */
 
 div.infos_conv {
     position: relative;
+}
+
+.contenu_message{
+    margin-top: 10px;
 }
 
 div.infos_conv span {

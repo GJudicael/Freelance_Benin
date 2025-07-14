@@ -102,6 +102,14 @@ if ($selected_user_id) {
             $stmt->bindParam('receiver_id', $receiver_id, PDO::PARAM_INT);
             $stmt->execute();
             $messages_discussion = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $toute_la_discussion_supprimee = true;
+
+            foreach ($messages_discussion as $msg) {
+                if($msg['sup_tout_le_monde'] == 0 && (($msg['sender_id'] == $current_user_id && $msg['sup_for_sender'] == 0) || ($msg['receiver_id'] == $current_user_id && $msg['sup_for_receiver'] == 0))){
+                    $toute_la_discussion_supprimee = false;
+                }
+            }
         } else {
             echo "L'utilisateur sélectionné n'est pas présent dans la base de données";
             die(-1);
@@ -128,7 +136,7 @@ if ($selected_user_id) {
 // limit 1
 
 $stmt = "
-SELECT u.id, nom, prenom, photo, message, created_at
+SELECT u.id, nom, prenom, photo, message, created_at, sup_tout_le_monde
 FROM
 (
     SELECT *
@@ -138,7 +146,7 @@ FROM
 		FROM
 		inscription u
 		INNER join messages m on (m.receiver_id = u.id or m.sender_id = u.id)
-		where (m.receiver_id = $current_user_id or m.sender_id = $current_user_id) and u.id != $current_user_id
+		where (m.receiver_id = $current_user_id or m.sender_id = $current_user_id) and u.id != $current_user_id and ((m.receiver_id = $current_user_id and m.sup_for_receiver = 0) or (m.sender_id = $current_user_id and m.sup_for_sender = 0))
 		GROUP BY u.id
     ) table_inter_1
     INNER JOIN messages m ON table_inter_1.id_dernier_message = m.id

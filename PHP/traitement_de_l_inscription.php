@@ -68,7 +68,6 @@ if (isset($_POST['envoyer'])) {
                         'token' => $token
                     ]);
 
-
                     traieMail($email,$token);
 
                     $_SESSION["succes"] = 'Vos informations sont enregistrées avec succès. Vous pouvez à présent vous connecter';
