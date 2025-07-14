@@ -66,6 +66,10 @@ if ($selected_user_id) {
             $receiver_id = $selected_user_id;
             $_SESSION['receiver_id'] = $receiver_id;
 
+            // On change le statut lu des messages entre cet utilisateur et celui connecté
+
+            $stmt = $bdd->query("UPDATE messages SET lu=1 WHERE receiver_id=$current_user_id AND sender_id=$receiver_id");
+
             // Récupérer les informations sur le destinateur
             $stmt = "
                 SELECT nom, prenom, nomDUtilisateur, email, photo

@@ -142,6 +142,7 @@ try {
         sup_for_sender BOOL DEFAULT FALSE NOT NULL,
         sup_for_receiver BOOL DEFAULT FALSE NOT NULL,
         sup_tout_le_monde BOOL DEFAULT FALSE NOT NULL,
+        lu BOOL DEFAULT FALSE NOT NULL,
         FOREIGN KEY (sender_id) REFERENCES inscription(id),
         FOREIGN KEY (receiver_id) REFERENCES inscription(id)
         );
