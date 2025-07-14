@@ -20,14 +20,14 @@
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/style.css">
 </head>
-<body>
+<body class=" d-flex flex-column min-vh-100">
      <nav class="navbar navbar-light bg-light static-top">
             <div class="container">
                 <a class="navbar-brand text-secondary site fs-4 fw-bolder" href="#!">FreeBenin</a>
                 <a class="btn btn-primary" href="front_projet_EDL/Connexion.php">Connexion</a>
             </div>
     </nav>
-    <header class="masthead">
+    <header class="masthead flex-fill">
     <div class="container position-relative">
                     <div class="row justify-content-center">
                         <div class="col-xl-6">

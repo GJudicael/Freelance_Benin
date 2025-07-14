@@ -1,7 +1,8 @@
 <?php 
     require_once(__DIR__."/../PHP/traitement_de_la_connexion.php");
     
-    ?>
+?>
+   
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -26,11 +27,11 @@
     
 </head>
 
-<body >
+<body class=" d-flex flex-column min-vh-100" >
 
     <!-- Profil utilisateur -->
         
-    <main class="d-flex justify-content-center align-items-center vh-100">
+    <main class="d-flex justify-content-center align-items-center  flex-fill">
         <section  class="container w-50 shadow p-5 my-5">
         <h3 class="text-center text-success mb-3">Content de vous revoir!</h3>
         <h6 class="text-center text-secondary mb-3"> Connectez-vous à votre compte pour accéder à la page d'accueil </h6>
@@ -41,7 +42,7 @@
                 
                 if(isset($message_error)){
                     
-                    echo '<div class="alert alert-danger" role="alert">' . htmlspecialchars($message_error). '</div>';
+                    echo '<div class="alert alert-danger d-flex" role="alert"> <p>' . htmlspecialchars($message_error). '</p> <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>';
                     unset($message_error);
            
                 }
@@ -51,7 +52,7 @@
                 
                 if(isset($_SESSION["succes"])){
                     
-                    echo '<div class="alert alert-success" role="alert">' . htmlspecialchars($_SESSION["succes"]). '</div>';
+                    echo '<div class="alert alert-success d-flex" role="alert"> <p>' . htmlspecialchars($_SESSION["succes"]). '</p> <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>';
                     unset($_SESSION["succes"]);
            
                 }

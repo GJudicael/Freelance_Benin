@@ -39,7 +39,7 @@ if (isset($_POST['envoyer'])) {
             $banni = $checkBan->fetch(PDO::FETCH_ASSOC);
 
             if ($banni) {
-                echo "🚫 Vous ne pouvez pas vous réinscrire. Ce compte a été banni.";
+                echo '<div class="text-center">🚫 Vous ne pouvez pas vous réinscrire. Ce compte a été banni.</div>';
             } else {
                 // Vérifier si le nom d'utilisateur est déjà pris
 

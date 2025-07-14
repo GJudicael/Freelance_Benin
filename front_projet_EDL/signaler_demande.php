@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $check = $bdd->prepare("SELECT id FROM demande WHERE id = :id");
         $check->execute(['id' => $demande_id]);
         if (!$check->fetch()) {
-            echo "❌ Demande introuvable.";
+            $erreur["introuvable"] = "❌ Demande introuvable.";
             exit();
         }
 
@@ -26,8 +26,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             'signale_par' => $signale_par
         ]);
         if ($doublon->fetch()) {
-            echo "⚠️ Vous avez déjà signalé cette demande.";
-            exit();
+            $erreur["deja_signale"] = "⚠️ Vous avez déjà signalé cette demande.";
+           
         }
 
         // Insertion du signalement
@@ -47,7 +47,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exit();
 
     } else {
-        echo "❌ Données invalides ou incomplètes.";
+        $erreur["raison"] = " Veillez entrer la raison du signalement";
+        
+
     }
 }
 ?>

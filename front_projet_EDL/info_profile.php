@@ -196,17 +196,14 @@ $_SESSION['photo'] = $user['photo'];
                 <p><strong>Nom d'utilisateur :</strong> <?= htmlspecialchars($user['nomDUtilisateur']) ?></p>
                 <p><strong>Email :</strong> <?= htmlspecialchars($user['email']) ?></p>
                 <p><strong>Numéro de téléphone :</strong> <?= htmlspecialchars($user['numero']) ?></p>
+                
                 <?php if ($freelancer) : ?>
-
                   <p> <strong> Biographie</strong></p>
                   <p><?= nl2br(htmlspecialchars($freelancer['bio'])) ?></p>
 
                   <p> <strong> Compétences </strong></p>
                   <p><?= htmlspecialchars($freelancer['competences']) ?></p>
-
                 <?php endif; ?>
-
-                
 
                 <button class="btn btn-outline-primary" onclick="afficherFormulaire()">Modifier mes informations</button>
                 <?php if ($user['role'] === 'client') : ?>
@@ -261,41 +258,22 @@ $_SESSION['photo'] = $user['photo'];
               </div>
             </div>
           </div>
+          <hr>
+          <?php if ($user['admin'] === 'admin'): ?>
+            <div class="mt-4 p-3  bg-light text-center">
+                <h5 class="text-warning pb-2">⚙️ Accès Administrateur</h5>
+                <a href="http://localhost/freelance_benin/Page_administracteur/admin.php" class="btn btn-warning">
+                🛡️Aller au Dashboard
+                </a>
+
+            </div>
+          <?php endif; ?>
         <?php endif; ?>
     </div>
 
-    <?php if ($user['admin'] === 'admin'): ?>
-    <div class="mt-4 p-3 border border-warning rounded bg-light text-center">
-        <h5 class="text-warning">⚙️ Accès Administrateur</h5>
-        <a href="http://localhost/freelance_benin/front_projet_EDL/Page_administracteur/admin.php" class="btn btn-warning">
-    🛡️ Aller au Dashboard
-</a>
+    
 
-    </div>
-<?php endif; ?>
-
-             
  </div>
-                        <div>
-    <!-- Bouton Signaler -->
-    <button class="btn btn-outline-danger btn-sm" onclick="toggleSignalement()">🚩 Signaler le profil</button>
-
-    <!-- Formulaire de signalement -->
-    <form action="signaler_profil.php" method="POST" class="mt-3 d-none" id="form-signalement">
-        <input type="hidden" name="utilisateur_id" value="<?= htmlspecialchars($user_id) ?>"> <!-- à adapter -->
-        <textarea name="raison" class="form-control mb-2" rows="3" placeholder="Expliquez la raison du signalement..." required></textarea>
-        <button type="submit" class="btn btn-danger btn-sm">Envoyer le signalement</button>
-    </form>
-</div>
-
-<script>
-function toggleSignalement() {
-    const form = document.getElementById('form-signalement');
-    form.classList.toggle('d-none');
-}
-</script>
-
-
  <div>
           <?php if(isset($_GET['id']) && $freelancer) :?>
          <?php if (!empty($projets)) : ?>
@@ -336,10 +314,6 @@ function toggleSignalement() {
               </div>
               <?php $active = false; endforeach; ?>
           
-
-
-
-
    <!-- Contrôles -->
         <button class="carousel-control-prev px-3" type="button" data-bs-target="#freelancerCarousel" data-bs-slide="prev">
             <span class="carousel-control-prev-icon bg-black opacity-50"></span>
@@ -352,8 +326,25 @@ function toggleSignalement() {
         <?php endif; ?>
         <?php endif; ?>
         
+        <?php if(isset($_GET['id']) && $user["admin"]!== "admin") :?>
+          <div class=" container">
+            <!-- Bouton Signaler -->
+            <button class="btn btn-outline-danger btn-sm" onclick="toggleSignalement()">🚩 Signaler le profil</button>
+
+            <!-- Formulaire de signalement -->
+            <form action="signaler_profil.php" method="POST" class="mt-3 d-none" id="form-signalement">
+                <input type="hidden" name="utilisateur_id" value="<?= htmlspecialchars($user_id) ?>"> <!-- à adapter -->
+                <textarea name="raison" class="form-control mb-2" rows="3" placeholder="Expliquez la raison du signalement..." required></textarea>
+                <button type="submit" class="btn btn-danger btn-sm">Envoyer le signalement</button>
+            </form>
+          </div>
+        <?php endif; ?>
+
+        
     </div>
    
+
+
         <script>
           function afficherFormulaire() {
             document.getElementById('infos-affichage').style.display = 'none';
@@ -364,6 +355,12 @@ function toggleSignalement() {
             document.getElementById('infos-formulaire').style.display = 'none';
             document.getElementById('infos-affichage').style.display = 'block';
           }
+          
+          function toggleSignalement() {
+              const form = document.getElementById('form-signalement');
+              form.classList.toggle('d-none');
+          }
+
         </script>
         <script src="../assets/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>
 

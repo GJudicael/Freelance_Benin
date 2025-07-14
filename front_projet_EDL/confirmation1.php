@@ -17,25 +17,32 @@
 
     <link rel="stylesheet" href="../assets/bootstrap-icons-1.13.1/bootstrap-icons.min.css">
 </head>
-<body>
+<body class="bg-light d-flex flex-column min-vh-100">
+    <?php require_once(__DIR__."/header.php") ?>
+
     
-    <div class="d-flex justify-content-center m-auto align-items-center">
-      <?php 
-                
-            if(isset($_SESSION["mail_envoye"] )){ ?>
+    <main class="d-flex justify-content-center m-auto mt-5 align-items-center flex-fill">
+      
+        <div class="container alert alert-info p-5 text-center" role="alert">
+            
+            <?php   
+                if(isset($_SESSION["mail_envoye"] )){ ?>
 
-            <div class="container alert alert-info p-5 text-center" role="alert">
-                 <i class="bi bi-info-circle" style="font-size: 2rem;"> </i>
-                <p class="py-3"> <?php echo htmlspecialchars($_SESSION["mail_envoye"]);
-                    unset($_SESSION["mail_envoye"] );?> 
-                </p>
-            </div>
-
-        <?php
-            }
-        ?>  
-    </div>
-
+                    <i class="bi bi-info-circle" style="font-size: 2rem;"> </i> 
+                    <p class="py-3"> <?php echo htmlspecialchars($_SESSION["mail_envoye"]);
+                        unset($_SESSION["mail_envoye"] );?> 
+                    </p>
+            <?php
+                }elseif (isset($_SESSION["erreur"] )) {?>
+                    <i class="bi bi-x-circle" style="font-size: 2rem; color:red"> </i> 
+                    <p  class="py-3"> <?php echo htmlspecialchars($_SESSION["erreur"]); unset ($_SESSION['erreur'] ) ?> </p> 
+                    
+            <?php } ?>
+        </div>
+         
+    </main>
+    
+    <?php require_once(__DIR__."/footer.php")?>
     <script src="../assets/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js" ></script>
 </body>
 </html>
