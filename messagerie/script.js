@@ -149,10 +149,10 @@ if (messagesCont) {
             // menu.style.display = "none";
         }
     });
-    optionSupprimer.addEventListener('click', ()=>{
+    optionSupprimer.addEventListener('click', () => {
         menu.classList.remove('show');
         document.getElementById('messagesCont').classList.remove('no-scroll');
-    })
+    });
 }
 
 // Au clic sur l'option de modification
@@ -168,3 +168,14 @@ if (messagesCont) {
 
 
 // });
+
+// Envoi du message quand on appuie sur 'Entrée'
+
+document.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter'){        
+        if(!(document.getElementById('messageCont').value.trim() === "")){            
+            // Il y a un message à envoyer
+            document.getElementById('formEnvoi').querySelector('button[type="submit"]').click();
+        }
+    }
+});

@@ -108,13 +108,12 @@
                                         <span class="message_id d-none"><?= $msg['id'] ?></span>
                                     </div>
                                 <?php endif; ?>
-
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </div>
 
                     <!-- Formulaire d'envoi -->
-                    <form action="traitements/<?= !isset($message_a_modifier) ? 'send_message' : 'modifier_message' ?>.php" method="post" class="mb-3">
+                    <form action="traitements/<?= !isset($message_a_modifier) ? 'send_message' : 'modifier_message' ?>.php" method="post" class="mb-3" id="formEnvoi">
                         <?php if (isset($message_a_modifier)) : ?>
                             <div class="card mb-2">
                                 <div class="card-header">Edition de message</div>
@@ -130,7 +129,6 @@
                             <?php endif; ?>
                         </div>
                     </form>
-
 
                 <?php else: ?>
                     <p>Aucune discussion n'a été sélectionnée.</p>
