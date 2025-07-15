@@ -15,7 +15,7 @@
   ?>
  <header>
    <!-- Barre de navigation -->
-   <nav class="navbar navbar-expand-lg navbar-light px-5 shadow bg-primary">
+   <nav class="navbar navbar-expand-xl navbar-light px-5 shadow bg-primary">
      <a class="navbar-brand site text-light fs-4 fw-bolder" href="#">FreeBenin</a>
 
 
