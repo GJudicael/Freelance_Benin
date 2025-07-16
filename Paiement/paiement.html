@@ -2,23 +2,41 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Paiement réel KKiaPay</title>
-  <script src="https://cdn.kkiapay.me/k.js"></script>
+  <title>Paiement personnalisé avec FedaPay</title>
+  <script src="https://cdn.fedapay.com/checkout.js?v=1.1.7"></script>
 </head>
 <body>
-  <h2>Paiement réel avec KKiaPay</h2>
-
-  <button onclick="openKkiapay()">Payer 15 225 FCFA</button>
+  <h2>Formulaire de paiement</h2>
+  <form id="paymentForm">
+    <input type="text" id="lastname" placeholder="Nom" required><br>
+    <input type="email" id="email" placeholder="Email" required><br>
+    <input type="number" id="amount" placeholder="Montant en FCFA" required><br>
+    <button type="submit">Payer maintenant</button>
+  </form>
 
   <script>
-    function openKkiapay() {
-      openKkiapayWidget({
-        amount: 15,
-        key: "ea9534dc15c123315069269740eb2c74980ae74f", // remplace par ta vraie clé live
-        sandbox: false, // mode production
-        callback: "https://ton-domaine.com/verifier_paiement.php"
+    const widget = FedaPay.init({
+      public_key: 'pk_live_bmmv8cm21X7OMwrYhGShiSnb'
+    });
+
+    document.getElementById('paymentForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const lastname = document.getElementById('lastname').value;
+      const email = document.getElementById('email').value;
+      const amount = document.getElementById('amount').value;
+
+      widget.open({
+        transaction: {
+          amount: amount,
+          description: 'Paiement personnalisé'
+        },
+        customer: {
+          lastname: lastname,
+          email: email
+        }
       });
-    }
+    });
   </script>
 </body>
 </html>

@@ -159,21 +159,27 @@ try {
         date_bannissement DATETIME DEFAULT CURRENT_TIMESTAMP
         );
 
-        CREATE TABLE IF NOT EXISTS entreprise (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        nom VARCHAR(100) NOT NULL,
-        user_name VARCHAR(100) NOT NULL,
-        description TEXT,
-        activity_sector VARCHAR(100) NOT NULL,
-        web_site VARCHAR(100) NOT NULL,
-        facebook_url VARCHAR(100) NOT NULL,
-        linkdin_url VARCHAR(100) NOT NULL,
-        nombre_employes INT NOT NULL,
-        legal_id INT NOT NULL,
-        adresse VARCHAR(200) NOT NULL,
-        annee DATE,
-        logo VARCHAR(255) NOT NULL
-        );
+       CREATE TABLE IF NOT EXISTS entreprises (
+    id              INT AUTO_INCREMENT PRIMARY KEY,
+    nom_entreprise  VARCHAR(100) NOT NULL,
+    nom_utilisateur VARCHAR(100) NOT NULL UNIQUE,
+    description     TEXT,
+    secteur         VARCHAR(100) NOT NULL,
+    telephone       VARCHAR(20) NOT NULL,
+    email_entreprise VARCHAR(100) NOT NULL UNIQUE,
+    numero_ifu      VARCHAR(20) NOT NULL UNIQUE,
+    site_web        VARCHAR(255) DEFAULT NULL,
+    facebook        VARCHAR(255) DEFAULT NULL,
+    linkedin        VARCHAR(255) DEFAULT NULL,
+    nombre_employes INT DEFAULT 0,
+    adresse         VARCHAR(200) DEFAULT NULL,
+    annee_creation  DATE DEFAULT NULL,
+    logo            VARCHAR(255) DEFAULT NULL,
+    mot_de_passe    VARCHAR(255) NOT NULL,
+    token           VARCHAR(64) DEFAULT NULL,
+    created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 
 ";
 

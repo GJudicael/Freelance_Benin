@@ -28,6 +28,10 @@ class ComposerStaticInit71d99e9258d54926bb6387893c995c41
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
         ),
+        'F' => 
+        array (
+            'FedaPay\\' => 8,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -55,6 +59,10 @@ class ComposerStaticInit71d99e9258d54926bb6387893c995c41
         'GuzzleHttp\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
+        ),
+        'FedaPay\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fedapay/fedapay-php/lib',
         ),
     );
 

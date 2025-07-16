@@ -1,142 +1,207 @@
-<?php require_once(__DIR__."/../PHP/submit_entreprise.php")?>
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
+session_start();
+$error = $_SESSION["error"] ?? [];
+$message = $_SESSION["message"] ?? null;
+unset($_SESSION["error"], $_SESSION["message"]);
+require_once(__DIR__."/../PHP/traitement_entreprise.php");
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page de création de compte entreprise</title>
-   
+    <title>Création compte entreprise</title>
     <link rel="stylesheet" href="../assets/bootstrap-5.3.6-dist/css/bootstrap.min.css">
-    
     <link rel="stylesheet" href="../assets/style.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Baumans&family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
-     <link rel="stylesheet" href="../assets/bootstrap-icons-1.13.1/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/bootstrap-icons-1.13.1/bootstrap-icons.min.css">
 </head>
 <body>
 
 <main class="container w-75 shadow my-5 p-5">
-   
-    <h3 class="text-center text-primary"> Créez votre compte</h3>
-    <form method="post" action="">
-        <?php 
-            if(isset($message)){
-                echo '<div class="alert alert-danger" role="alert">'. htmlspecialchars($message) .'</div>';
-                unset($message);
-            }
-        ?>
-       
-            <div class="p-2">
-                <label for="nom" class="form-text fs-6 p-1">Nom de l'entreprise </label>
-                <input id="nom" type="text" name="nom" class="form-control" placeholder="Entrerle nom de votre entreprise" value="<?php echo isset($error) || isset($message)? htmlspecialchars($nom): '' ?>">
-            </div>
-            
-             <div class="p-2">
-                <label for="nom_d_utilisateur" class="form-text  fs-6 p-1">Nom d'utilisateur</label>
-                <input id="nom_d_utilisateur" type="text" name="nom_d_utilisateur" class="form-control" placeholder="Entrer un nom d'utilisateur" value="<?php echo isset($error) || isset($message)? htmlspecialchars($nomUtilisateur): '' ?>">
-                <p> <small class="text-danger"> <?php if(isset($error["nomDutilisateur"])) { echo htmlspecialchars($error["nomDutilisateur"]); 
-                    unset($error["nomDutilisateur"]) ; } ?> </small></p>
-            </div>
-            <div class="p-2">
-                <label for="desccription" class="form-text  fs-6 p-1">Description de l'entreprise</label>
-                <input id="description" type="text" name="description" class="form-control" placeholder="Brève description de l'entreprise" value="<?php echo isset($error) || isset($message)? htmlspecialchars($numero): '' ?> ">
-            </div>
+    <h3 class="text-center text-primary mb-4">Créez votre compte entreprise</h3>
 
-             <div class="p-2">
-                <label for="secteurn" class="form-text  fs-6 p-1">Secteur d'activité</label>
-                <input id="secteur" type="text" name="secteur" class="form-control" placeholder="Secteur d'activité de l'entreprise" value="<?php echo isset($error) || isset($message)? htmlspecialchars($numero): '' ?> ">
-            </div>
+    <?php if ($message): ?>
+        <div class="alert alert-danger text-center"><?= htmlspecialchars($message) ?></div>
+    <?php endif; ?>
 
-            <div class="p-2 form-group form-password-toggle ">
-                <label for="email" class="form-text  fs-6 p-1">Site web</label>
-                <input id="site" type="url" name="site" class="form-control" placeholder="Entrer le lien du site web de l'entreprise" value="<?php echo isset($error) || isset($message)? htmlspecialchars($email): '' ?>" data-sb-validations="required">
-                <p> <small class="text-danger"> <?php if(isset($error["email"])) { echo htmlspecialchars($error["email"]); 
-                    unset($error["email"]) ; } ?> </small></p>
+    <form method="post" action="../PHP/traitement_entreprise.php" enctype="multipart/form-data" novalidate>
+        <!-- Informations générales -->
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label for="nom" class="form-label">Nom de l'entreprise *</label>
+                <input type="text" id="nom" name="nom" class="form-control <?= isset($error['nom']) ? 'is-invalid' : '' ?>"
+                       placeholder="Ex: FreeBenin SARL" value="<?= htmlspecialchars($_POST['nom'] ?? '') ?>" required>
+                <?php if (isset($error['nom'])): ?>
+                    <div class="invalid-feedback"><?= htmlspecialchars($error['nom']) ?></div>
+                <?php endif; ?>
             </div>
-
-             <div class="p-2">
-                <label for="facebook" class="form-text  fs-6 p-1">Page facebook</label>
-                <input id="facebook" type="url" name="facebook" class="form-control" placeholder="Lien de la page facebook de l'entreprise" value="<?php echo isset($error) || isset($message)? htmlspecialchars($numero): '' ?> ">
+            <div class="col-md-6">
+                <label for="nom_d_utilisateur" class="form-label">Nom d'utilisateur *</label>
+                <input type="text" id="nom_d_utilisateur" name="nom_d_utilisateur"
+                       class="form-control <?= isset($error['nomDutilisateur']) ? 'is-invalid' : '' ?>"
+                       placeholder="Ex: freebenin_admin" value="<?= htmlspecialchars($_POST['nom_d_utilisateur'] ?? '') ?>" required>
+                <?php if (isset($error['nomDutilisateur'])): ?>
+                    <div class="invalid-feedback"><?= htmlspecialchars($error['nomDutilisateur']) ?></div>
+                <?php endif; ?>
             </div>
+        </div>
 
-            <div class="p-2">
-                <label for="linkdin" class="form-text  fs-6 p-1">Linkdin</label>
-                <input id="linkdin" type="url" name="linkdin" class="form-control" placeholder="Lien du profil linkdin de l'entreprise" value="<?php echo isset($error) || isset($message)? htmlspecialchars($numero): '' ?> ">
+        <!-- Description -->
+        <div class="mt-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea id="description" name="description" rows="3" class="form-control"
+                      placeholder="Présentez brièvement votre entreprise"><?= htmlspecialchars($_POST['description'] ?? '') ?></textarea>
+        </div>
+
+        <!-- Secteur -->
+        <div class="row g-3 mt-2">
+            <div class="col-md-6">
+                <label for="secteur" class="form-label">Secteur d'activité *</label>
+                <input type="text" id="secteur" name="secteur" class="form-control"
+                       placeholder="Ex: Technologie, Conseil" value="<?= htmlspecialchars($_POST['secteur'] ?? '') ?>" required>
             </div>
-
-             <div class="p-2">
-                <label for="employes" class="form-text  fs-6 p-1">Nombre d'employés </label>
-                <input id="employes" type="number" name="employes" class="form-control" placeholder="Nombre d'employés de l'entreprise" value="<?php echo isset($error) || isset($message)? htmlspecialchars($numero): '' ?> ">
+            <div class="col-md-6">
+                <label for="employes" class="form-label">Nombre d'employés</label>
+                <input type="number" id="employes" name="employes" min="0"
+                       class="form-control" value="<?= htmlspecialchars($_POST['employes'] ?? '') ?>">
             </div>
+        </div>
 
-             <div class="p-2">
-                <label for="numero" class="form-text  fs-6 p-1">ID légal</label>
-                <input id="numero" type="number" name="numero" class="form-control" placeholder="Id légal de l'entreprise" value="<?php echo isset($error) || isset($message)? htmlspecialchars($numero): '' ?> ">
+        <!-- Contacts -->
+        <div class="row g-3 mt-2">
+            <div class="col-md-6">
+                <label for="telephone" class="form-label">Téléphone *</label>
+                <input type="tel" id="telephone" name="telephone"
+                       class="form-control <?= isset($error['telephone']) ? 'is-invalid' : '' ?>"
+                       pattern="^\+?[0-9\s\-]{8,20}$"
+                       placeholder="+229 97 00 00 00" value="<?= htmlspecialchars($_POST['telephone'] ?? '') ?>" required>
+                <?php if (isset($error['telephone'])): ?>
+                    <div class="invalid-feedback"><?= htmlspecialchars($error['telephone']) ?></div>
+                <?php endif; ?>
             </div>
-
-             <div class="p-2">
-                <label for="adresse" class="form-text  fs-6 p-1">Adresse</label>
-                <input id="adresse" type="text" name="adresse" class="form-control" placeholder="Adresse de l'entreprise " value="<?php echo isset($error) || isset($message)? htmlspecialchars($numero): '' ?> ">
+            <div class="col-md-6">
+                <label for="email" class="form-label">Email professionnel *</label>
+                <input type="email" id="email" name="email"
+                       class="form-control <?= isset($error['email']) ? 'is-invalid' : '' ?>"
+                       placeholder="contact@freebenin.bj" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" required>
+                <?php if (isset($error['email'])): ?>
+                    <div class="invalid-feedback"><?= htmlspecialchars($error['email']) ?></div>
+                <?php endif; ?>
             </div>
+        </div>
 
-             <div class="p-2">
-                <label for="annee" class="form-text  fs-6 p-1">Année de création </label>
-                <input id="annee" type="date" name="annee" class="form-control" placeholder="Année de création de l'entreprise" value="<?php echo isset($error) || isset($message)? htmlspecialchars($numero): '' ?> ">
+        <!-- Réseaux & IFU -->
+        <div class="row g-3 mt-2">
+            <div class="col-md-4">
+                <label for="site" class="form-label">Site web *</label>
+                <input type="url" id="site" name="site" class="form-control"
+                       pattern="https?://.+" placeholder="https://www.freebenin.bj"
+                       value="<?= htmlspecialchars($_POST['site'] ?? '') ?>" required>
             </div>
-
-             <div class="p-2">
-                <label for="logo" class="form-text  fs-6 p-1">Logo l'entreprise</label>
-                <input id="logo" type="file" name="logo" class="form-control" placeholder="Insérer une image " value="<?php echo isset($error) || isset($message)? htmlspecialchars($numero): '' ?> ">
+            <div class="col-md-4">
+                <label for="facebook" class="form-label">Facebook *</label>
+                <input type="url" id="facebook" name="facebook" class="form-control"
+                       pattern="https?://(www\.)?facebook\.com/.+"
+                       placeholder="https://facebook.com/votrepage"
+                       value="<?= htmlspecialchars($_POST['facebook'] ?? '') ?>" required>
             </div>
+            <div class="col-md-4">
+                <label for="linkedin" class="form-label">LinkedIn *</label>
+                <input type="url" id="linkedin" name="linkedin" class="form-control"
+                       pattern="https?://(www\.)?linkedin\.com/.+"
+                       placeholder="https://linkedin.com/in/entreprise"
+                       value="<?= htmlspecialchars($_POST['linkedin'] ?? '') ?>" required>
+            </div>
+        </div>
 
-            <div class="p-2 form-group form-password-toggle ">
-                <label for="mot_de_passe" class="form-text  fs-6 p-1">Mot de passe</label>
-                <div class="input-group input-group-merge">
-                    <input id="mot_de_passe" type="password" name="mot_de_passe" class="form-control  
-                    <?php if (isset($error["password"])) {
-                        echo "is-invalid";
-                    } ?>" placeholder="Entrer votre mot de passe" aria-describedby="passwordHelp" value="<?php echo isset($error) || isset($message)? htmlspecialchars($motDepasse): '' ?>">
-                    <span class="input-group-text cursor-pointer"><i class="bi bi-eye" id="eyeToggle1"></i></span>
+        <div class="row g-3 mt-2">
+            <div class="col-md-4">
+                <label for="numero" class="form-label">Numéro IFU *</label>
+                <input type="text" id="numero" name="numero"
+                       class="form-control <?= isset($error['numero']) ? 'is-invalid' : '' ?>"
+                       pattern="[0-9]{1,20}" maxlength="20"
+                       placeholder="312011234567" value="<?= htmlspecialchars($_POST['numero'] ?? '') ?>" required>
+                <?php if (isset($error['numero'])): ?>
+                    <div class="invalid-feedback"><?= htmlspecialchars($error['numero']) ?></div>
+                <?php endif; ?>
+            </div>
+            <div class="col-md-4">
+                <label for="adresse" class="form-label">Adresse</label>
+                <input type="text" id="adresse" name="adresse" class="form-control"
+                       value="<?= htmlspecialchars($_POST['adresse'] ?? '') ?>">
+            </div>
+            <div class="col-md-4">
+                <label for="annee" class="form-label">Année de création</label>
+                <input type="date" id="annee" name="annee" class="form-control"
+                       value="<?= htmlspecialchars($_POST['annee'] ?? '') ?>">
+            </div>
+        </div>
+
+        <!-- Logo -->
+        <div class="mt-3">
+            <label for="logo" class="form-label">Logo de l'entreprise</label>
+            <input type="file" id="logo" name="logo" class="form-control" accept="image/png, image/jpeg, image/webp">
+        </div>
+
+        <!-- Mot de passe -->
+        <div class="row g-3 mt-3">
+            <div class="col-md-6">
+                <label for="mot_de_passe" class="form-label">Mot de passe *</label>
+                <div class="input-group">
+                    <input type="password" id="mot_de_passe" name="mot_de_passe"
+                           class="form-control <?= isset($error['password']) ? 'is-invalid' : '' ?>" required>
+                    <span class="input-group-text toggle-password" data-target="mot_de_passe">
+                        <i class="bi bi-eye"></i>
+                    </span>
                 </div>
-                <p> <small class="text-danger"> <?php if(isset($error["password"])) { echo htmlspecialchars($error["password"]); 
-                        unset($error["password"]) ; } ?> </small></p>
-                
+                <?php if (isset($error['password'])): ?>
+                    <div class="invalid-feedback"><?= htmlspecialchars($error['password']) ?></div>
+                <?php endif; ?>
             </div>
-            
-            <div class="p-2">
-                <label for="mot_de_passe_confirmation" class="form-text  fs-6 p-1"> Confirmer votre mot de passe</label>
-                <div class="input-group input-group-merge">
-                    <input id="mot_de_passe_confirmation" type="password" name="mot_de_passe_confirmation" value="<?php echo isset($error) || isset($message)? htmlspecialchars($motDepasseConfirmation): '' ?>" class="form-control
-                    <?php if (isset($error["pass_confirm"])) {
-                        echo "is-invalid";
-                    } ?>" placeholder="Entrer votre mot de passe" aria-describedby="passwordHelp1">
-                    <span class="input-group-text cursor-pointer"><i class="bi bi-eye" id="eyeToggle2"></i></span>
+
+            <div class="col-md-6">
+                <label for="mot_de_passe_confirmation" class="form-label">Confirmer le mot de passe *</label>
+                <div class="input-group">
+                    <input type="password" id="mot_de_passe_confirmation" name="mot_de_passe_confirmation"
+                           class="form-control <?= isset($error['pass_confirm']) ? 'is-invalid' : '' ?>" required>
+                    <span class="input-group-text toggle-password" data-target="mot_de_passe_confirmation">
+                        <i class="bi bi-eye"></i>
+                    </span>
                 </div>
-                <p> <small class="text-danger"> <?php if(isset($error["pass_confirm"])) { echo htmlspecialchars($error["pass_confirm"]); 
-                        unset($error["pass_confirm"]) ; } ?> </small></p>
-                
+                <?php if (isset($error['pass_confirm'])): ?>
+                    <div class="invalid-feedback"><?= htmlspecialchars($error['pass_confirm']) ?></div>
+                <?php endif; ?>
             </div>
-           
-            <div class="text-center">
-                <button type="submit" name="envoyer" class="btn btn-outline-primary mt-2"> Créer un compte </button>
-            </div>
-        
+        </div>
+
+        <!-- Bouton -->
+        <div class="text-center mt-4">
+            <button type="submit" name="envoyer" class="btn btn-primary px-5">
+                <i class="bi bi-check-circle me-2"></i> Créer le compte
+            </button>
+        </div>
     </form>
+
     <div class="text-center mt-3">
-        Vous avez déjà un compte? <a href="Connexion.php" class="text-decoration-none text-primary"> Connectez-vous</a>
+        Vous avez déjà un compte ? <a href="Connexion.php" class="text-decoration-none text-primary">Connectez-vous</a>
     </div>
 </main>
 
-<?php require_once(__DIR__."/footer.php")?>
-    <script src="../assets/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js" ></script>
-    <script src="../assets/js/scripts.js"></script>
+<script src="../assets/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.querySelectorAll('.toggle-password').forEach(icon => {
+    icon.addEventListener('click', () => {
+        const target = document.getElementById(icon.dataset.target);
+        target.type = target.type === 'password' ? 'text' : 'password';
+        icon.querySelector('i').classList.toggle('bi-eye');
+        icon.querySelector('i').classList.toggle('bi-eye-slash');
+    });
+});
+</script>
 </body>
 </html>

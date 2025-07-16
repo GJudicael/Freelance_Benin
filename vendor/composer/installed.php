@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => 'b12d7bedb5694314ab5e7cde3c0b7e9a2cf89bf6',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,11 +11,20 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => 'b12d7bedb5694314ab5e7cde3c0b7e9a2cf89bf6',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'fedapay/fedapay-php' => array(
+            'pretty_version' => '0.4.7',
+            'version' => '0.4.7.0',
+            'reference' => '150c196ae7778b10ab04dc82cd882cf1a3c332ce',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../fedapay/fedapay-php',
             'aliases' => array(),
             'dev_requirement' => false,
         ),

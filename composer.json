@@ -1,7 +1,8 @@
 {
     "require": {
         "tecnickcom/tcpdf": "*",
-        "kkiapay/kkiapay-php": "dev-master"
+        "kkiapay/kkiapay-php": "dev-master",
+        "fedapay/fedapay-php": "^0.4.7"
 
     }
 }

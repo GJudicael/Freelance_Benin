@@ -36,15 +36,31 @@
                             </div>
                         </div>
                     </div>
-                    <div class="text-center d-lg-flex d-block align-content-around justify-content-lg-center">
-                    
-                            <a href="front_projet_EDL/Creation_d_un_compte.php" class="btn btn-primary btn-lg me-3 mb-3"> Créer un compte ordinaire </a>
-                            <a href="front_projet_EDL/compte_entreprise.php" class="btn btn-primary btn-lg ms-3 mb-3"> Créer un compte en tant qu'entreprise </a>
-                        
-                    </div>
+                    <div class="text-center">
+    <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
+        <a href="front_projet_EDL/Creation_d_un_compte.php" class="btn btn-primary btn-lg">
+            <i class="bi bi-person-plus me-2"></i> Créer un compte ordinaire
+        </a>
+        <a href="front_projet_EDL/compte_entreprise.php" class="btn btn-outline-primary btn-lg">
+            <i class="bi bi-building me-2"></i> Créer un compte entreprise
+        </a>
+    </div>
+</div>
+
+                    <div class="text-center text-white">
+    <h3 class="mb-4 fw-semibold fst-italic" style="
+        font-family: 'Fraunces', serif;
+        font-size: 1.6rem;
+        letter-spacing: 0.5px;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    ">
+        Connecter les talents du Bénin au monde
+    </h3>
+</div>
+
         </div>
         </header>
     
-   <?php require_once(__DIR__."/front_projet_EDL/footer.php")?>
+<?php require_once(__DIR__."/front_projet_EDL/footer.php")?>
 </body>
 </html>
