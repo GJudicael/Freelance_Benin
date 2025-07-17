@@ -31,8 +31,8 @@ if (isset($_POST['envoyer'])) {
         if ($company) {
             if (password_verify($mot_de_passe, $company['motDepasse'])) {
 
-                $_SESSION["user_name"] = $user['nomDUtilisateur'];
-                $_SESSION["user_id"] = $user['id'];
+                $_SESSION["user_name"] = $company['user_name'];
+                $_SESSION["user_id"] = $company['id'];
                 $_SESSION['connecte'] = true;
 
                 header("Location: accueil.php");
