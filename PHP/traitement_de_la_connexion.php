@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 require_once(__DIR__ . "/../bdd/creation_bdd.php");
@@ -15,8 +14,8 @@ if (isset($_GET['token'])) {
         // Si l'utilisateur existe et n'est pas encore confirmé, on confirme le compte
         $update = $bdd->prepare("UPDATE inscription SET est_confirme = TRUE, token = NULL WHERE id = :id");
         $update->execute(['id' => $user['id']]);
-    } 
-} 
+    }
+}
 
 if (isset($_POST['envoyer'])) {
     $nom_utilisateur = $_POST['nom_d_utilisateur'];
@@ -25,6 +24,27 @@ if (isset($_POST['envoyer'])) {
     if (empty($nom_utilisateur) || empty($mot_de_passe)) {
         $message_error = "Tous les champs sont requis";
     } else {
+
+        $smtp = $bdd->prepare("SELECT * FROM entreprise WHERE user_name = ?");
+        $smtp->execute([$nom_utilisateur]);
+        $company = $smtp->fetch(PDO::FETCH_ASSOC);
+        if ($company) {
+            if (password_verify($mot_de_passe, $company['motDepasse'])) {
+
+                $_SESSION["user_name"] = $user['nomDUtilisateur'];
+                $_SESSION["user_id"] = $user['id'];
+                $_SESSION['connecte'] = true;
+
+                header("Location: accueil.php");
+                exit();
+            } else {
+                $error["password"] = "Mot de passe incorrect";
+            }
+
+        } else {
+            $error["user_name"] = "Nom d'utilisateur incorrect";
+        }
+
         // Vérifier si l'utilisateur est banni
         $checkBan = $bdd->prepare("SELECT * FROM bannis WHERE nomDUtilisateur = :nom");
         $checkBan->execute(['nom' => $nom_utilisateur]);
@@ -54,7 +74,8 @@ if (isset($_POST['envoyer'])) {
                 $error["user_name"] = "Nom d'utilisateur incorrect";
             }
         }
+
+
     }
 }
 ?>
-

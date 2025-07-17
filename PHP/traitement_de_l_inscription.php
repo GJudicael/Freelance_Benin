@@ -1,8 +1,7 @@
-
 <?php
 session_start();
-require_once(__DIR__."/../bdd/creation_bdd.php");
-require_once(__DIR__."/sendmail.php");
+require_once(__DIR__ . "/../bdd/creation_bdd.php");
+require_once(__DIR__ . "/sendmail.php");
 
 if (isset($_POST['envoyer'])) {
     $nom = $_POST['nom'];
@@ -68,7 +67,7 @@ if (isset($_POST['envoyer'])) {
                         'token' => $token
                     ]);
 
-                    traieMail($email,$token);
+                    traieMail($email, $token);
 
                     $_SESSION["succes"] = 'Vos informations sont enregistrées avec succès. Vous pouvez à présent vous connecter';
                     header("Location:../front_projet_EDL/confirmation1.php");
