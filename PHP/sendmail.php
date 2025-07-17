@@ -42,7 +42,7 @@ function traieMail($email, $token)
         $mail->SMTPDebug = 0; //Pour desactiver le debug
 
         if ($mail->send()) {
-             
+            
             $_SESSION["mail_envoye"]  = "Un mail de validation vous a été envoyé à votre adresse mail! Cliquez sur le lien pour confirmer votre email";
     
         }
