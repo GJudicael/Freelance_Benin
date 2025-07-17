@@ -18,7 +18,6 @@
     <link rel="stylesheet" href="../assets/bootstrap-icons-1.13.1/bootstrap-icons.min.css">
 </head>
 <body class="bg-light d-flex flex-column min-vh-100">
-    <?php require_once(__DIR__."/header.php") ?>
 
     
     <main class="d-flex justify-content-center m-auto mt-5 align-items-center flex-fill">

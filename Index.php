@@ -36,10 +36,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="text-center">
-                        
+                    <div class="text-center d-lg-flex d-block align-content-around justify-content-lg-center">
                     
-                            <a href="front_projet_EDL/Creation_d_un_compte.php" class="btn btn-primary btn-lg"> Créer un compte</a>
+                            <a href="front_projet_EDL/Creation_d_un_compte.php" class="btn btn-primary btn-lg me-3 mb-3"> Créer un compte ordinaire </a>
+                            <a href="front_projet_EDL/compte_entreprise.php" class="btn btn-primary btn-lg ms-3 mb-3"> Créer un compte en tant qu'entreprise </a>
                         
                     </div>
         </div>

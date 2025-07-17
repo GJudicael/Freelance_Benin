@@ -169,6 +169,22 @@ try {
         FOREIGN KEY (user_id) REFERENCES inscription(id)
         );
 
+        CREATE TABLE IF NOT EXISTS entreprise (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nom VARCHAR(100) NOT NULL,
+        user_name VARCHAR(100) NOT NULL,
+        description TEXT,
+        activity_sector VARCHAR(100) NOT NULL,
+        web_site VARCHAR(100) NOT NULL,
+        facebook_url VARCHAR(100) NOT NULL,
+        linkdin_url VARCHAR(100) NOT NULL,
+        nombre_employes INT NOT NULL,
+        legal_id INT NOT NULL,
+        adresse VARCHAR(200) NOT NULL,
+        annee DATE,
+        logo VARCHAR(255) NOT NULL
+        );
+
 ";
 
     $bdd->exec($sqlTables);

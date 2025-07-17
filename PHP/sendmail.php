@@ -43,7 +43,7 @@ function traieMail($email, $token)
 
         if ($mail->send()) {
              
-            $_SESSION["mail_envoye"]  = "Un mail vous a été envoyé à votre adresse mail! Cliquez sur le lien pour confirmer votre email";
+            $_SESSION["mail_envoye"]  = "Un mail de validation vous a été envoyé à votre adresse mail! Cliquez sur le lien pour confirmer votre email";
     
         }
         
