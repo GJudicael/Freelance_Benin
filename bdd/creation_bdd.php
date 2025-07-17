@@ -157,7 +157,17 @@ try {
         photo VARCHAR(200) DEFAULT 'photo_profile.jpg',
         role ENUM('client','freelance') DEFAULT 'client',
         date_bannissement DATETIME DEFAULT CURRENT_TIMESTAMP
-);
+        )
+        ;
+
+        CREATE TABLE IF NOT EXISTS notifications (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        user_id INT NOT NULL,
+        message TEXT NOT NULL,
+        is_read BOOLEAN DEFAULT 0,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES inscription(id)
+        );
 
 ";
 

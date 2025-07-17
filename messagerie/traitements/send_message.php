@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once(__DIR__ . '/../../bdd/creation_bdd.php');
+require_once(__DIR__.'/../../notifications/fonctions_utilitaires.php');
 
 if (!isset($_SESSION["connecte"]) || $_SESSION["connecte"] !== true) {
     header('Location: ../index.php');
@@ -32,6 +33,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['envoyer'])) {
             $stmt->bindParam('message', $_POST['message']);
             $stmt->execute();
 
+            $stmt = $bdd->query('SELECT nom, prenom FROM inscription WHERE id='.$_SESSION['user_id']);
+            $resultat = $stmt->fetch(PDO::FETCH_ASSOC);
+            $stmt->closeCursor();
+
+            ajouterNotification($resultat['nom'].' '.$resultat['prenom'].' vous a envoyé un nouveau message.', $receiver_id);
             header('location:../discussions.php?user_id=' . $receiver_id);
             exit;
         } else {
@@ -39,15 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['envoyer'])) {
             exit;
         }
     } else {
-        echo 'ici';
+        // echo 'ici';
         header('location:./discussions.php');
         exit;
     }
 } else {
-    echo 'ici 2';
-    ?>
-        <pre><?php var_dump($_POST);?></pre>
-    <?php
-    // header('location:./discussions.php');
-    // exit;
+    header('location:./discussions.php');
+    exit;
 }

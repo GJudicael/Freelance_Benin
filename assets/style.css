@@ -1,13 +1,14 @@
-body{
-    font-family: "Fraunces",serif;
+body {
+    font-family: "Fraunces", serif;
     font-size: 1rem;
 }
-.site{
-    font-family:  "Baumans", system-ui;
-   
+
+.site {
+    font-family: "Baumans", system-ui;
+
 }
 
-.historique{
+.historique {
     font-family: "Ancizar Serif", serif;
 
 }
@@ -16,6 +17,7 @@ body{
     position: relative;
     padding-left: 50px;
 }
+
 .timeline::before {
     content: '';
     position: absolute;
@@ -25,33 +27,41 @@ body{
     width: 2px;
     background: #dee2e6;
 }
+
 .timeline-item {
     position: relative;
     margin-bottom: 30px;
 }
 
-.rating .bi-star, .rating .bi-star-fill {
+.rating .bi-star,
+.rating .bi-star-fill {
     cursor: pointer;
     font-size: 1.5rem;
     color: #ddd;
     transition: color 0.2s;
 }
+
 .rating .bi-star-fill {
     color: #ffc107;
 }
 
-.rating .bi-star, .rating .bi-star-fill, .rating .bi-star-half {
+.rating .bi-star,
+.rating .bi-star-fill,
+.rating .bi-star-half {
     font-size: 1.2rem;
     color: #ddd;
 }
-.rating .bi-star-fill, .rating .bi-star-half {
+
+.rating .bi-star-fill,
+.rating .bi-star-half {
     color: #ffc107;
 }
 
- .timeline {
+.timeline {
     position: relative;
     padding-left: 2rem;
-    }
+}
+
 .timeline::before {
     content: '';
     position: absolute;
@@ -61,10 +71,12 @@ body{
     width: 2px;
     background: #dee2e6;
 }
+
 .timeline-item {
     position: relative;
     padding-bottom: 1.5rem;
 }
+
 .timeline-item::before {
     content: '';
     position: absolute;
@@ -75,18 +87,35 @@ body{
     border-radius: 50%;
     background: #0d6efd;
 }
+
 .progress {
     height: 20px;
 }
 
- .mission-card {
-            transition: all 0.3s;
-            border-left: 4px solid var(--bs-primary);
-        }
-        .mission-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .progress {
-            height: 10px;
-        }
+.mission-card {
+    transition: all 0.3s;
+    border-left: 4px solid var(--bs-primary);
+}
+
+.mission-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.progress {
+    height: 10px;
+}
+
+.badge-counter {
+    position: absolute;
+    transform: scale(.7);
+    transform-origin: top right;
+    left: .05rem;
+    margin-top: -.25rem;
+}
+
+.fa,
+.far,
+.fas {
+    font-family: "Font Awesome 5 Free";
+}
