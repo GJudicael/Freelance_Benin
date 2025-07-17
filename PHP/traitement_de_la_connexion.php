@@ -14,6 +14,21 @@ if (isset($_GET['token'])) {
         // Si l'utilisateur existe et n'est pas encore confirmé, on confirme le compte
         $update = $bdd->prepare("UPDATE inscription SET est_confirme = TRUE, token = NULL WHERE id = :id");
         $update->execute(['id' => $user['id']]);
+    } 
+}elseif (isset($_GET['token'])) {
+    $token = $_GET['token'];
+
+    $stmt = $bdd->prepare("SELECT * FROM entreprises WHERE token = :token AND est_confirme = FALSE");
+    $stmt->execute(['token' => $token]);
+    $entreprise = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($entreprise) {
+        $update = $bdd->prepare("UPDATE entreprises SET est_confirme = TRUE, token = NULL WHERE id = :id");
+        $update->execute(['id' => $entreprise['id']]);
+
+        $_SESSION["succes"] = "Le compte entreprise a été confirmé avec succès 🚀";
+    } else {
+        $_SESSION["erreur"] = "Lien de confirmation invalide ou déjà utilisé ❌";
     }
 }
 
