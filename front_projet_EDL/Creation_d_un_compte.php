@@ -90,7 +90,7 @@
             </div>
            
             <div class="text-center">
-                <button type="submit" name="entreprise" class="btn btn-outline-primary mt-2"> Créer un compte </button>
+                <button type="submit" name="envoyer" class="btn btn-outline-primary mt-2"> Créer un compte </button>
             </div>
         
     </form>
