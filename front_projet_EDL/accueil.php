@@ -33,16 +33,15 @@ $freelancers = $smt->fetchALl(PDO::FETCH_ASSOC);
 
     <link rel="stylesheet" href="../assets/style.css">
 
-
     <link rel="stylesheet" href="../assets/bootstrap-icons-1.13.1/bootstrap-icons.min.css">
 </head>
 
 <body class=" bg-light">
 
     <?php require_once(__DIR__ . "/header.php") ?>
-    
+
     <main>
-         
+
         <section class="my-3 p-5 shadow">
             <p class="text-center"> <span class="fw-bold text-secondary site fs-4"> FreeBenin </span> est un site de freelance local qui met en relation les freelances béninois avec des clients à la recherche
                 de compétences spécifiques. Le site permettra aux freelances de créer un profil professionnel, de proposer leurs services
@@ -82,7 +81,7 @@ $freelancers = $smt->fetchALl(PDO::FETCH_ASSOC);
                 </div>
 
                 <!-- Contrôles -->
-                <button class="carousel-control-prev px-3"  type="button" data-bs-target="#freelancerCarousel" data-bs-slide="prev">
+                <button class="carousel-control-prev px-3" type="button" data-bs-target="#freelancerCarousel" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon "></span>
                 </button>
                 <button class="carousel-control-next px-3" type="button" data-bs-target="#freelancerCarousel" data-bs-slide="next">

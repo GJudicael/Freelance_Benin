@@ -13,6 +13,10 @@
   $type = $_POST['type'] ?? '';
 
   ?>
+ <!-- Style mis par Espéro pour faire des tests -->
+ <link rel="stylesheet" href="../assets/style.css?v=<?= time() ?>">
+ <!-- Style mis par Espéro pour faire des tests -->
+
  <header>
    <!-- Barre de navigation -->
    <nav class="navbar navbar-expand-xl navbar-light px-5 shadow bg-primary">
@@ -40,15 +44,32 @@
          <li class="nav-item">
            <a class="nav-link text-light" href="../front_projet_EDL/Mesmissions.php">Mes Missions</a>
          </li>
+         <li class="nav-item me-2">
+           <a class="nav-link text-light d-flex align-items-center" href="../notifications/notifications.php">
+             Notifications
+             <div class="position-relative ms-1">
+               <i class="bi bi-bell-fill text-white"></i>
+               <?php
+                $stmt = $bdd->query('SELECT * FROM notifications WHERE is_read=0 AND user_id=' . $_SESSION['user_id']);
+                $nbr_notifications = $stmt->rowCount();
+                ?>
+
+               <?php if ($nbr_notifications != 0) : ?>
+                 <span class="badge bg-danger badge-counter"><?= $nbr_notifications ?>+</span>
+               <?php endif; ?>
+             </div>
+           </a>
+
+         </li>
          <li class="nav-item">
            <a class="nav-link text-light d-flex align-items-center" href="../messagerie/discussions.php">
              <span>Messages</span>
-             <?php 
-                $stmt = $bdd->query('SELECT sender_id FROM messages WHERE receiver_id ='.$user_id.' AND lu = 0 GROUP BY sender_id');
+             <?php
+              $stmt = $bdd->query('SELECT sender_id FROM messages WHERE receiver_id =' . $user_id . ' AND lu = 0 GROUP BY sender_id');
               ?>
-              <?php if($stmt->rowCount() != 0) : ?>
-                <span class="badge badge-center h-px-20 w-px-20 bg-light ms-1 text-primary"><?= $stmt->rowCount() ?></span>
-              <?php endif; ?>
+             <?php if ($stmt->rowCount() != 0) : ?>
+               <span class="badge badge-center h-px-20 w-px-20 bg-light ms-1 text-primary"><?= $stmt->rowCount() ?></span>
+             <?php endif; ?>
            </a>
          </li>
        </ul>
