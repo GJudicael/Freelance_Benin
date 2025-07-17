@@ -187,7 +187,7 @@ try {
     logo            VARCHAR(255) DEFAULT NULL,
     mot_de_passe    VARCHAR(255) NOT NULL,
     token           VARCHAR(64) DEFAULT NULL,
-    created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    est_confirme BOOLEAN DEFAULT FALSE,
 );
 
 
