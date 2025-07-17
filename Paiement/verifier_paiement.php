@@ -4,7 +4,8 @@ require __DIR__ . '/../vendor/autoload.php';
 use FedaPay\FedaPay;
 
 // Configuration de l’environnement
-//FedaPay::setApiKey('sk_live_p1KluHfGqq72TzYUtIMY8E19');
+$stripe_api_key = getenv('STRIPE_API_KEY');
+
 FedaPay::setEnvironment('sandbox'); // Utilise 'live' en production
 
 // ID de transaction transmis par GET
