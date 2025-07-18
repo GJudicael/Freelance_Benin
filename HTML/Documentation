@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Documentation | FreeBenin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="assets/bootstrap-5.3.6-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/bootstrap-icons-1.13.1/bootstrap-icons.min.css">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #f8f9fa;
+    }
+    .section-title {
+      color: #0d6efd;
+      border-bottom: 2px solid #dee2e6;
+      padding-bottom: .5rem;
+      margin-top: 2rem;
+    }
+    .info-icon {
+      color: #0d6efd;
+      margin-right: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container py-5">
+    <h1 class="text-center mb-5"><i class="bi bi-journal-text"></i> Documentation FreeBenin</h1>
+    <p>FreeBenin est un site de freelance local qui met en relation les freelances béninois avec des clients à la recherche de compétences spécifiques. Le site permets aux freelances de créer un profil professionnel, de proposer leurs services et de recevoir des offres de missions, tandis que les clients pourront publier des projets et entrer en contact avec des prestataires qualifiés.</p>
+    <p>
+        la 1er page que vous rencontre sur FreeBenin vous permet:
+        <ul>
+      <li>La creation d'un compte(Ordinaire ou Entreprise)
+      </li>
+      <li>La connexion(qui vous permet de vous connecter si vous avez deja un compte)</li>
+      <li>Un bouton de decouverte </li>
+      <li>Une documentation</li>
+    </ul>
+  <p>Voici une photo illustrative :</p>
+
+  <img src="photo/index.png" alt="Photo de démonstration" width="300">
+</p>
+<p>
+    <h3>Page de creation d'un compte</h3>
+    <p>
+        Nous avons ici 2 possibilite :
+                .un compte ordinaire
+                .un comptre Entreprise
+        <p>
+            <h4><a href="http://localhost/freelance_benin/front_projet_EDL/Creation_d_un_compte.php" >Créer un compte ordinaire</a></h4>
+            par compte ordinaire on entends par la compte clients 
+            <p>Voici une photo illustrative :</p>
+            <img src="photo/compte ordinaire.png" alt="Photo de démonstration" width="300">
+            <p>Ici on vous demande d'entre votre :
+                <ul>
+                    <li>Nom,</li>
+                <li>Prenom(s),</li>
+                <li>Nom d'utilisateur : si vous entrez un nom d'utilisateur deja existant il sera refuse(ceci a ete penser pour etre unique),
+                </li>
+                <li>Numéro de téléphone,</li>
+                <li>Email (si le format de l'email n'est pas correcte alors vous ne pourez ps soumettre le formulaire),
+                </li>
+                <li>Mot de passe (LE MOT DE PASSE EST DEMANDER 2 fois) </li>
+                </ul>
+                </p>
+        </p>
+        <p>
+            <h4><a href="http://localhost/freelance_benin/front_projet_EDL/compte_entreprise.php">Créer un compte entreprise </a></h4>
+            Nous avons penser aux entreprise et pour plus de securite et de creduliter  nous demandons assez d'information
+            <p>Voici une photo illustrative :</p>
+            <img src="photo/compte entreprise.png" alt="Photo de démonstration" width="300">
+
+        </p>
+    </p>
+</p>
+    <h2 class="section-title"><i class="bi bi-person-lines-fill info-icon"></i>🚀 Commencer avec FreeBenin</h2>
+            Lorsque vous creez un compte et confirmer votre email vous etes rediriger vers la page de <a href="http://localhost/freelance_benin/front_projet_EDL/Connexion.php">connexion</a>:
+           <p><img src="photo/connexion.png" alt="Photo de démonstration" width="300">
+  </p>           
+</p>
+
+<p>
+    <h3 class="section-title"><i class="bi bi-person-lines-fill info-icon"></i> Page d'accueil</h3>
+    <p>
+        <img src="photo/accueil.png" alt="Photo de démonstration" width="500">
+    </p>
+    Vous constaterez que nous avons les options:
+    <ul>
+      <li>Accueil</li>
+    <li>Effectuer une demande</li>
+    <li>Mes Demandes</li>
+      <li>Mes Missions</li>
+      <li>Notifications </li>
+      <li>Messageries </li>
+      <li>Recherche </li>
+      <li>Le nom de l'utilisateur </li>
+      <li>Nos freelanceurs </li>
+      <li>Demande publiees </li>
+    </ul>
+    
+    et nous avons les freelancer disponible sur le site  
+    <p><h5>Effectuer une demande</h5>
+    <img src="photo/demande.png" alt="Photo de démonstration" width="500">
+    </p>
+
+    <p><h5>Demandes publiees</h5>
+    Lorsque vous soumettez une demande elle apparait sur la page d'accueil:
+    <p>
+        <img src="photo/accueil avec des demandes.png" alt="Photo de démonstration" width="500">
+    </p>
+    Mais attention un systeme de moderation est present sur le site si vous essayez de poster des demande avec des mots inapproprier 
+    vous recevrez un avertissement et au bout de 3 vous  serez bannis du site.
+
+    Un bouton signaler est present sous les demandes toujours pour des raisons de moderation
+    ce bouton vous permet de signaler les demande que vous jugez inauportun
+    <p>
+            
+        <img src="photo/signalement de la demande.png" alt="Photo de démonstration" >
+    </p>
+
+    <p><h5>Mes Demandes</h5>
+        Lorsque vous n'effectuer aucune demande voici ce que vous aurez comme onglet:
+    <img src="photo/demande efectuees.png" alt="Photo de démonstration" width="500">
+    </p>
+    Dans le cas ou un demande est effectue alors vous aurez une liste des demande effectuer:
+    <p><img src="photo/demande efectuees 2.png" alt="Photo de démonstration" width="500"></p>
+
+    A partis de la l'attribution des demandes a un freelanceur est possible:
+    <p><img src="photo/demande efectuees 3.png" alt="Photo de démonstration" width="500"></p>
+    lors de l'attribution vous aurez la liste des freelancer disponible sur le site aparaitre.
+    Apres cela vous aurez ceci comme rendus:
+    <p><img src="photo/demande efectuees 4.png" alt="Photo de démonstration" width="500"></p>
+
+<p><h5>Notifications</h5>
+        La notification s'actualise a chaque fois que vous recvez un message d'un utilisateur du site ou des message de moderation:
+       
+        <p><img src="photo/Notifications.png" alt="Photo de démonstration" width="1000">
+    </p>
+  
+    </p>
+
+    <p><h5>Recherche</h5>
+        La Recherche vous enmene sur une page pour effectuer vos recherche a l'aide d'un filtre pour plus de precision  
+        <p><img src="photo/barre de recherche.png" alt="Photo de démonstration" width="1000">
+    </p>
+    et apres selection de ce que vous souhaitez alors vous aurez ce rendu pors la recherche 
+    <p><img src="photo/recherche.png" alt="Photo de démonstration" width="1000">
+    </p>
+    A partir de la vous pouvez vous rendre sur le profile de la personne souhaiter dans ce cas
+    
+    </p>
+    <p><h5>Messageries</h5>
+        La Messageries vous permet de discuter avec les gens presents sru le site cela permet aux freelancers de pouvoir contacter leus client et de se proposer pour des missions.
+        Pour cela vous allez soit dans voir profil soit vous apuyer sur le liens d'une demande pour avoir acces au profil soit vous allez dans la barre de recherche pour retrouver la personne souhaiter 
+        et vous aurez cece comme resultats 
+        <p><img src="photo/me contacter.png" alt="Photo de démonstration" width="800">
+    </p>
+    En appuyant sur le bouton me contacter vous pouvez debuter un message avec le profile concerner 
+    <p><img src="photo/messagerie 3.png" alt="Photo de démonstration" width="1000">
+    </p>
+    La messagerie vous permet de modifier ou supprimer un message :
+    <p><img src="photo/messagerie 2.png" alt="Photo de démonstration" width="1000">
+    </p>
+    </p>
+    
+
+<p><h5>Nos Freelanceur</h5>
+        La parti nos freelancer vous permet de voir les differents freelancers present sur le site et de pouvoir acceder a leurs profil  
+        <p><img src="photo/nos freelancer.png" alt="Photo de démonstration" width=500">
+    </p>
+    </p>
+Voici les differents fonctionnalite commun pour n'importe qui s'incrivant sur le site 
+
+</p>
+
+<p><h5>Profil</h5>
+  selon que vous soyez clients entreprise ou freelancers vous n'aurez pas les meme information sur le profil
+  <p><h6>Client</h6></p>
+        <p><img src="photo/profil.png" alt="Photo de démonstration" width="1000">
+    </p>
+    vous avez la possibilite de possibilite de passer en mode freelancers si voys le desirer, c'est le seul moyens de devenir freelancers ceci dit.
+    Modiffier mes informations est un bouton permettant de mettre a jour vos information.
+      <p><h6>Freelancer</h6></p>
+    <p><img src="photo/freelancer profil.png" alt="Photo de démonstration" width="700">
+    </p>
+    Le bouton completer mon profil vous permet de modifier vos information professionnelle
+    </p>
+    
+    <p><h6>Mes missions</h6></p>
+    <p><img src="photo/Mes misson.png" alt="Photo de démonstration" width="700">
+    </p>
+    Cette parti s'addresse plus aux freelancers et aux entreprises, il leurs permet de voirs les missions qui leurs ont ete attribuer par le clients 
+
+    </p>
+
+    <h2 class="section-title"><i class="bi bi-lightbulb info-icon"></i>Realisation d'une mission</h2>
+    La realisation d'une mission se fais en ces etape:
+    <ul>
+      <li>Atrrbutions de la mission a un freelancer </li>
+    <li>Demarrage de la missions par le freelancer</li>
+    <li>Suivi de l'evolution du projet </li>
+      <li>Notation du freelancer par le clients </li>
+    </ul>
+    <p></p>
+
+    <p><h6>Atrrbutions de la mission a un freelancer</h6></p>
+    Pour l'attribution d'une mission le clients doit se rendre dans mes demande et atrribuer la mission
+    <p><img src="photo/demande efectuees 3.png" alt="Photo de démonstration" width="700">
+    </p>
+    Lorsque vous appuye sur le champ de texte la liste des freelancer sur le site aparaitras dous forme de sugestion 
+    ce champ n'accepte que le nom d'utilisation du freelancer en question.
+    <p>Apres attribution vous aurez ce resultats indiquant que la demande a ete bien atrribuer
+      <p><img src="photo/demande efectuees 4.png" alt="Photo de démonstration" width="700">
+    </p>
+     <p><h6>Demarrage de la missions par le freelancer</h6></p>
+    Lorsque la missions est attribuer alors le freelancer le recevra dans <strong>Mes Mission</strong>
+    <p><img src="photo/missions.png" alt="Photo de démonstration" width="700">
+    </p>
+    alors il peut demarrer la mission.
+    Si une tout se passe comme prevue alors vous aurez ce rendus:
+    
+    <p><img src="photo/demarrage.png" alt="Photo de démonstration" width="700">
+    </p>
+    lorsque la missions demarre alors voici le rendu chez le client :
+    <p><img src="photo/suivi.png" alt="Photo de démonstration" width="700">
+    </p>
+    Vous remarquerai que nous avons avancement et historique des mises a jour(a voir dans la parti suivi de l'evolution du projet) 
+    <p><h6>Suivi de l'evolution du projet</h6></p>
+    Cette fonctionnalite a ete developper pour permettre aux freelancer d'informer leur clients sur l'avancement du projet qu'ils ont en cours
+    <p><img src="photo/suivi 3.png" alt="Photo de démonstration" width="700">
+    </p>
+    apres l'enregistrement vous aurez ceci :
+    <p><img src="photo/suivi 4.png" alt="Photo de démonstration" width="700">
+    </p>
+    et pour resoumettre l'avancement vous n'aurez qu'a appuyer sur <strong><h7>Suivi</h7></strong>
+    <p><img src="photo/suivi 5.png" alt="Photo de démonstration" width="700">
+    </p>
+    Le client a la possibilite de voir le deroulement du projet en appuyant sur <strong><h7>Voir le suivi</h7></strong>:
+    <p><img src="photo/suivi 6.png" alt="Photo de démonstration" width="700">
+    </p>
+    Voici comment elle se presente :
+    <p><img src="photo/historique.png" alt="Photo de démonstration" width="700">
+    </p>
+    ici c'est l'historique d'un projet totalement terminer 
+    <p><img src="photo/historique 2.png" alt="Photo de démonstration" width="700">
+    </p>
+    <p><h6>Notation du freelancer par le clients</h6></p>
+    Lorsqu'une mission se termine alors le clients a la possibiliter de noter un freelancers et de laisser un commentaire (nous encouragons tous les clients a le faire cela participe a ameliorer l'experience utilisateur)
+    <p><img src="photo/historique 3.png" alt="Photo de démonstration" width="700">
+    </p>
+    <p><img src="photo/historique 4.png" alt="Photo de démonstration" width="700">
+    </p>
+    <p><img src="photo/historique 5.png" alt="Photo de démonstration" width="700">
+    </p>
+
+    <h5><strong>Profil du freelancer apres une notation et un commentaire</strong></h5>
+    <p><img src="photo/profil freelancer 2.png" alt="Photo de démonstration" width="700">
+    </p>
+    
+    
+
+    <h2 class="section-title"><i class="bi bi-shield-check info-icon"></i>Signalement du profil</h2>
+    Vous aurez remarquer le bouton <strong>Signaler le profil</strong> sur le profil des autres utilisateurs
+    ce bouton est la pour que les utilisateurs denonce les comportement innaproprie 
+     <p><img src="photo/signalement du profil.png" alt="Photo de démonstration" width="700">
+    </p>
+    </div>
+
+    <footer class="text-center mt-5 pt-4 border-top">
+      <p>&copy; 2025 FreeBenin. Tous droits réservés.</p>
+    </footer>
+  </div>
+
+  <script src="assets/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
