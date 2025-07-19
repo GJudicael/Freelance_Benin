@@ -38,11 +38,7 @@
             echo '<p><small class="text-danger text-center">' . htmlspecialchars($errors['db_insert_error']) . '</small></p>';
             unset($errors['db_insert_error']);
         }
-        // General error for debugging (optional, remove for production)
-        // if (!empty($errors)) {
-        //     echo '<div class="alert alert-danger">Veuillez corriger les erreurs dans le formulaire.</div>';
-        //     echo '<pre>' . print_r($errors, true) . '</pre>'; // For debugging purposes
-        // }
+
         ?>
         <form method="post" action="" enctype="multipart/form-data" novalidate>
             <div class="p-2">

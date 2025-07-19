@@ -17,20 +17,20 @@ if (isset($_GET['token'])) {
 
         $_SESSION["succes"] = "Votre compte a été confirmé avec succès ";
 
-    } else {
-        $stmt = $bdd->prepare("SELECT * FROM entreprise WHERE token = :token AND est_confirme = FALSE");
-        $stmt->execute(['token' => $token]);
-        $entreprise = $stmt->fetch(PDO::FETCH_ASSOC);
+    }/* else {
+      $stmt = $bdd->prepare("SELECT * FROM entreprise WHERE token = :token AND est_confirme = FALSE");
+      $stmt->execute(['token' => $token]);
+      $entreprise = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($entreprise) {
-            $update = $bdd->prepare("UPDATE entreprise SET est_confirme = TRUE, token = NULL WHERE id = :id");
-            $update->execute(['id' => $entreprise['id']]);
+      if ($entreprise) {
+          $update = $bdd->prepare("UPDATE entreprise SET est_confirme = TRUE, token = NULL WHERE id = :id");
+          $update->execute(['id' => $entreprise['id']]);
 
-            $_SESSION["succes"] = "Le compte entreprise a été confirmé avec succès ";
-        } else {
-            $_SESSION["erreur"] = "Lien de confirmation invalide ou déjà utilisé ❌";
-        }
-    }
+          $_SESSION["succes"] = "Le compte entreprise a été confirmé avec succès ";
+      } else {
+          $_SESSION["erreur"] = "Lien de confirmation invalide ou déjà utilisé ❌";
+      }
+  }*/
 }
 
 
@@ -43,36 +43,6 @@ if (isset($_POST['envoyer'])) {
     if (empty($nom_utilisateur) || empty($mot_de_passe)) {
         $message_error = "Tous les champs sont requis";
     } else {
-
-        $smtp = $bdd->prepare("SELECT * FROM entreprise WHERE user_name = ?");
-        $smtp->execute([$nom_utilisateur]);
-        $company = $smtp->fetch(PDO::FETCH_ASSOC);
-
-        if ($company) {
-            if (password_verify($mot_de_passe, $company['motDepasse'])) {
-                if ($company['est_confirme']) {
-                    $_SESSION["user_name"] = $company['user_name'];
-                    $_SESSION["user_id"] = $company['id'];
-                    $_SESSION['connecte'] = true;
-
-                    header("Location: accueil.php");
-                    exit();
-                } else {
-                    $message_error = "Assurez-vous d'avoir confirmé votre compte en cliquant sur le lien envoyé à votre adresse mail";
-                }
-
-
-            } else {
-                $error["password"] = "Mot de passe incorrect";
-            }
-
-        } else {
-            $error["user_name"] = "Nom d'utilisateur incorrect";
-        }
-    }
-
-    if (!isset($message_error) && !$company) {
-
 
 
         // Vérifier si l'utilisateur est banni
@@ -89,7 +59,7 @@ if (isset($_POST['envoyer'])) {
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
             if ($user) {
                 if (!$user['est_confirme']) {
-                    $message_error = '<div class="text-center">⚠️ Veuillez confirmer votre compte via le lien reçu par email.</div>';
+                    $message_error = ' Veuillez confirmer votre compte via le lien reçu par email.';
                 } elseif (password_verify($mot_de_passe, $user['motDePasse'])) {
                     $_SESSION["user_name"] = $user['nomDUtilisateur'];
                     $_SESSION["user_id"] = $user['id'];

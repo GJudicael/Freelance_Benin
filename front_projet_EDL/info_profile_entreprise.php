@@ -6,14 +6,12 @@ require_once(__DIR__ . "/../PHP/update_profile_entreprise.php");
 $user_id = isset($_GET['id']) ? (int) $_GET['id'] : $_SESSION['user_id'];
 $user_name = isset($_GET['user_name']) ? $_GET['user_name'] : $_SESSION['user_name'];
 
-var_dump($user_id);
-var_dump($user_name);
-$stm = $bdd->prepare("SELECT * FROM entreprise WHERE id = ? && user_name = ?");
+$stm = $bdd->prepare("SELECT * FROM inscription WHERE id = ? && nomDUtilisateur = ?");
 $stm->execute([$user_id, $user_name]);
 $comp = $stm->fetch(PDO::FETCH_ASSOC);
 
 
-$_SESSION['logo'] = $comp['logo'];
+$_SESSION['logo'] = $comp['photo'];
 
 
 ?>
@@ -98,7 +96,7 @@ $_SESSION['logo'] = $comp['logo'];
                         <li> <i class="bi bi-envelope me-2"></i><a href="https://gmail.com/"
                                 .<?= htmlspecialchars($comp['email']) ?> class="text-decoration-none text-dark">
                                 <?= htmlspecialchars($comp['email']) ?></a> </li>
-                        <li> <i class="bi bi-telephone me-2"></i> <?= htmlspecialchars($comp['telephone']) ?> </li>
+                        <li> <i class="bi bi-telephone me-2"></i> <?= htmlspecialchars($comp['numero']) ?> </li>
                         <li></li>
                     </ul>
 
@@ -119,15 +117,6 @@ $_SESSION['logo'] = $comp['logo'];
                 <div class="mb-3">
                     <label class="form-label" for="nom">Nom l'entreprise</label>
                     <input type="text" name="nom" class="form-control" value="<?= htmlspecialchars($comp['nom']) ?>">
-
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="nom_utilisateur">Nom d'utilisateur de l'entreprise</label>
-                    <input type="text" name="nom_utilisateur" class="form-control"
-                        value="<?= htmlspecialchars($comp['user_name']) ?>">
-                    <?php if (isset($errors)): ?>
-                        <p><small class="text-danger"><?= htmlspecialchars($errors) ?></small></p>
-                    <?php endif; ?>
 
                 </div>
 
@@ -186,7 +175,7 @@ $_SESSION['logo'] = $comp['logo'];
                 <div class="mb-3 ">
                     <label for="telephone" class="form-text fs-6 p-1">Téléphone</label>
                     <input id="telephone" type="text" name="telephone" class="form-control"
-                        value="<?= htmlspecialchars($comp['telephone']) ?>">
+                        value="<?= htmlspecialchars($comp['numero']) ?>">
 
                 </div>
 

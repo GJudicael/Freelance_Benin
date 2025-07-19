@@ -3,24 +3,18 @@ require_once(__DIR__ . "/../bdd/creation_bdd.php");
 require_once(__DIR__ . "/../PHP/update_profile.php");
 
 $user_id = $_SESSION['user_id'];
-$user_name = $_SESSION['user_name'];
 
 
-$stmt = $bdd->prepare("SELECT photo FROM inscription WHERE id = ? && nomDUtilisateur = ?");
-$stmt->execute([$user_id, $user_name]);
+
+$stmt = $bdd->prepare("SELECT photo, role FROM inscription WHERE id = ?");
+$stmt->execute([$user_id]);
 $users = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if (!$users) {
-  $stmt = $bdd->prepare("SELECT logo FROM entreprise WHERE id = ? && user_name = ?");
-  $stmt->execute([$user_id, $user_name]);
-  $company = $stmt->fetch(PDO::FETCH_ASSOC);
+if ($users) {
 
-  $photo = $company['logo'];
+  $photo = $users['photo'];
 
-} else {
-  $photo = $users["photo"];
 }
-
 
 $type = $_POST['type'] ?? '';
 
@@ -97,11 +91,11 @@ $type = $_POST['type'] ?? '';
       <div class="dropdown ms-3">
         <a class="d-flex align-items-center text-decoration-none dropdown-toggle text-light" href="#"
           id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-          <?php if ($users): ?>
+          <?php if ($users['role'] !== 'entreprise'): ?>
             <img src="../photo_profile/<?= isset($photo) ? htmlspecialchars($photo) : "photo_profile.jpg " ?>"
               alt="Profil" class="rounded-circle me-2 mt-2" width="40px" height="40px">
-          <?php elseif ($company): ?>
-            <img src="../logo/<?= htmlspecialchars($photo) ?>" alt="Profil" class="rounded-circle me-2 mt-2" width="40px"
+          <?php elseif ($users['role'] === 'entreprise'): ?>
+            <img src="../logo/<?= htmlspecialchars($photo) ?>" alt="Logo" class="rounded-circle me-2 mt-2" width="40px"
               height="40px">
           <?php endif; ?>
 
@@ -111,9 +105,9 @@ $type = $_POST['type'] ?? '';
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
           <li>
-            <?php if ($users): ?>
+            <?php if ($users['role'] !== 'entreprise'): ?>
               <a class="dropdown-item" href="../front_projet_EDL/info_profile.php">Mon Profil</a>
-            <?php elseif ($company): ?>
+            <?php elseif ($users['role'] === 'entreprise'): ?>
               <a class="dropdown-item" href="../front_projet_EDL/info_profile_entreprise.php">Mon Profil</a>
             <?php endif; ?>
           </li>
