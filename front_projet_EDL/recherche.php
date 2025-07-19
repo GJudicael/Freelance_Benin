@@ -29,6 +29,13 @@
                 $stmt->execute([$keyword, $keyword,$keyword]);
                 $searchResults = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 break;
+            case 'entreprise':
+
+                $stmt = $bdd->prepare("SELECT * FROM inscription WHERE (nom LIKE ? OR prenom LIKE ? OR nomDUtilisateur LIKE ?) AND role = 'entreprise'");
+
+                $stmt->execute([$keyword, $keyword, $keyword]);
+                $searchResults = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                break;
 
             default:
 
@@ -77,6 +84,7 @@
             <select name="type" class="form-select bg-info  shadow-none">
                 <option value="">Filtre</option>
                 <option value="client" <?= $type === 'client' ? 'selected' : '' ?>>Client</option>
+                <option value="entreprise" <?= $type === 'entreprise' ? 'selected' : '' ?>>Entreprise</option>
                 <option value="freelancer" <?= $type === 'freelancer' ? 'selected' : '' ?>>Freelancer</option>
                 <option value="demande" <?= $type === 'demande' ? 'selected' : '' ?>>Demande</option>
             </select>
@@ -109,7 +117,7 @@
                                                 <a href="info_profile.php?id=<?= htmlspecialchars($result['id']) ?>" class="text-decoration-none text-tertiary">
 
                                                     <strong><?php echo htmlspecialchars($result['nom']) . ' ' . htmlspecialchars($result['prenom']) .
-                                                         ' <i>('. htmlspecialchars($result['nomDUtilisateur']) . ')</i> ';
+                                                        ' <i>('. htmlspecialchars($result['nomDUtilisateur']) . ')</i> ';
                                                     ?> </strong>
 
                                                 </a>
