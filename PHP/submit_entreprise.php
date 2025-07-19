@@ -13,21 +13,33 @@ $entreprise = [];
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['creer'])) {
 
 
+<<<<<<< HEAD
    $entreprise = [
         "nom_utilisateur" => filter_input(INPUT_POST, "nom_utilisateur", FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH) ?? '',
         "nom" => filter_input(INPUT_POST, "nom", FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH) ?? '',
         "description" => filter_input(INPUT_POST, "description", FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH) ?? '',
         "secteur" => filter_input(INPUT_POST, "secteur", FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH) ?? '',
+=======
+    // 1. Sanitize and retrieve POST data using filter_input()
+    // Using ?? '' to ensure a default empty string if input is missing/null after filtering
+    // Note: FILTER_SANITIZE_STRING is deprecated in PHP 8.1+. For modern PHP, consider htmlspecialchars() directly.
+    // For simplicity, I'll use FILTER_UNSAFE_RAW combined with htmlspecialchars() for general text fields.
+    $entreprise = [
+        "nom_utilisateur" => filter_input(INPUT_POST, "nom_utilisateur", FILTER_UNSAFE_RAW) ?? '',
+        "nom" => filter_input(INPUT_POST, "nom", FILTER_UNSAFE_RAW) ?? '',
+        "description" => filter_input(INPUT_POST, "description", FILTER_UNSAFE_RAW) ?? '',
+        "secteur" => filter_input(INPUT_POST, "secteur", FILTER_UNSAFE_RAW) ?? '',
+>>>>>>> 0dafb14372c8fa6debdc4fb75b221450ade1e598
         "site" => filter_input(INPUT_POST, "site", FILTER_SANITIZE_URL) ?? '',
         "email" => filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL) ?? '',
         "facebook" => filter_input(INPUT_POST, "facebook", FILTER_SANITIZE_URL) ?? '',
         "linkdin" => filter_input(INPUT_POST, "linkdin", FILTER_SANITIZE_URL) ?? '',
         "employes" => filter_input(INPUT_POST, "employes", FILTER_SANITIZE_NUMBER_INT) ?? '', // Sanitize as integer
         "numero" => filter_input(INPUT_POST, "numero", FILTER_SANITIZE_NUMBER_INT) ?? '', // Assuming legal ID is numeric
-        "telephone" => filter_input(INPUT_POST, "telephone", FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH) ?? '',
-        "pays" => filter_input(INPUT_POST, "pays", FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH) ?? '',
-        "ville" => filter_input(INPUT_POST, "ville", FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH) ?? '',
-        "adresse" => filter_input(INPUT_POST, "adresse", FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH) ?? '',
+        "telephone" => filter_input(INPUT_POST, "telephone", FILTER_UNSAFE_RAW) ?? '',
+        "pays" => filter_input(INPUT_POST, "pays", FILTER_UNSAFE_RAW) ?? '',
+        "ville" => filter_input(INPUT_POST, "ville", FILTER_UNSAFE_RAW) ?? '',
+        "adresse" => filter_input(INPUT_POST, "adresse", FILTER_UNSAFE_RAW) ?? '',
         "annee" => filter_input(INPUT_POST, "annee", FILTER_UNSAFE_RAW) ?? '', // Keep as raw for date type HTML input, validate later
         "motDepasse" => $_POST["mot_de_passe"] ?? '',
         "motDepasseConfirmer" => $_POST["mot_de_passe_confirmation"] ?? ''
@@ -88,10 +100,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['creer'])) {
         $errors["email"] = "Cet email est invalide.";
     }
 
+    //user_name validation
+    if (!isset(($errors['nom_utilisateur']))) {
+        try {
+            $requete = $bdd->prepare('SELECT COUNT(*) FROM inscription WHERE nomDUtilisateur = ?');
+            $requete->execute([$entreprise['nom_utilisateur']]);
+            if ($requete->fetchColumn() > 0) {
+                $errors["nom_utilisateur"] = "Ce nom_utilisateur est déjà utilisé.";
+            }
+        } catch (PDOException $e) {
+            $errors['db_error'] = "Erreur de base de données lors de la vérification de l'email.";
+            error_log("DB Error: " . $e->getMessage()); // Log detailed error for debugging
+        }
+    }
+
     // Check if email already exists in DB (only if no other email errors)
     if (!isset($errors['email'])) {
         try {
-            $requete = $bdd->prepare('SELECT COUNT(*) FROM entreprise WHERE email = :email');
+            $requete = $bdd->prepare('SELECT COUNT(*) FROM inscription WHERE email = :email');
             $requete->execute(['email' => $entreprise['email']]);
             if ($requete->fetchColumn() > 0) {
                 $errors["email"] = "Cette adresse email est déjà utilisée.";
@@ -152,8 +178,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['creer'])) {
         }
     } elseif (isset($_FILES['logo']) && $_FILES['logo']['error'] !== UPLOAD_ERR_NO_FILE) {
         $errors['logo'] = "Erreur d'upload du fichier : Code " . $_FILES['logo']['error'];
+    } else {
+        $errors['logo'] = "Le logo de l'entreprise est requis.";
     }
+<<<<<<< HEAD
     
+=======
+>>>>>>> 0dafb14372c8fa6debdc4fb75b221450ade1e598
 
 
     
@@ -168,11 +199,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['creer'])) {
 
         try {
             $requete = $bdd->prepare("
-                INSERT INTO entreprise(
-                    nom, user_name, email, description, activity_sector, web_site,
-                    ville, pays,telephone, facebook_url, linkdin_url, nombre_employes,
-                    legal_id, adresse, annee, motDepasse, logo,token
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                INSERT INTO inscription(
+                    nom, nomDUtilisateur, email, description, activity_sector, web_site,
+                    ville, pays, numero, facebook_url, linkdin_url, nombre_employes,
+                    legal_id, adresse, annee, photo, motDepasse,token, role 
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'entreprise')
             ");
 
             $requete->execute([
@@ -191,15 +222,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['creer'])) {
                 $entreprise['numero'],         // Corrected key: numero (for legal_id)
                 $entreprise['adresse'],
                 $entreprise['annee'],
+                $logoFileName,
                 $entreprise['motDepasse'],
-                $logoFileName, // Include the logo filename here
-                $token
+                $token,
+
             ]);
 
             traieMail($entreprise['email'], $token);
 
+
             $_SESSION['success_message'] = "Vos informations sont enregistrées avec succès !";
-            header('Location: ../front_projet_EDL/Connexion.php');
+            header('Location: ../front_projet_EDL/confirmation1.php');
             exit();
 
         } catch (PDOException $e) {
@@ -211,7 +244,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['creer'])) {
                 unlink($cheminDestination);
             }
 
-            die('Erreur : ' . $e->getMessage());
         }
     }
 }

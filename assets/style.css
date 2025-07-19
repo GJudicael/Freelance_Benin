@@ -119,3 +119,12 @@ body {
 .fas {
     font-family: "Font Awesome 5 Free";
 }
+
+.nom_entreprise {
+    font-size: 3.5rem;
+    color: #3a73c9;
+}
+
+li {
+    list-style: none;
+}
