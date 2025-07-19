@@ -208,7 +208,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['creer'])) {
                 $token
             ]);
 
-            traieMail($email, $token);
+            traieMail($entreprise['email'], $token);
 
             $_SESSION['success_message'] = "Vos informations sont enregistrées avec succès !";
             header('Location: ../front_projet_EDL/Connexion.php');
