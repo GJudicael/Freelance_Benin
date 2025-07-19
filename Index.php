@@ -70,7 +70,7 @@
             </div>
 
         </div>
-<<<<<<< HEAD
+
         </header>
         
         <div class="d-flex flex-wrap justify-content-center gap-3 mt-3">
@@ -109,21 +109,7 @@ function envoyerVersConnexion() {
     .catch(error => console.error("Erreur fetch :", error));
 }
 </script>
-=======
-    </header>
->>>>>>> 0dafb14372c8fa6debdc4fb75b221450ade1e598
 
-    <div class="d-flex flex-wrap justify-content-center gap-3 mt-3">
-        <a href="front_projet_EDL/decouverte.php" class="btn btn-success btn-lg">
-            <i class="bi bi-eye me-2"></i> Découvrir la plateforme
-        </a>
-        <a href="http://localhost/freelance_benin/HTML/Documentation" class="btn btn-secondary btn-lg">
-            <i class="bi bi-journal-text me-2"></i> Lire la documentation
-        </a>
-    </div>
-
-
-    <?php require_once(__DIR__ . "/front_projet_EDL/footer.php") ?>
 </body>
 
 </html>
