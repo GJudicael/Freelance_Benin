@@ -4,12 +4,12 @@ require_once(__DIR__."/../bdd/creation_bdd.php");
 
 
 if (isset($_POST['envoyer'])) {
-    $description = filter_input(INPUT_POST, 'demande', FILTER_SANITIZE_STRING);
-    $categorie = filter_input(INPUT_POST, 'categorie', FILTER_SANITIZE_STRING);
-    $nom_utilisateur = filter_input(INPUT_POST, 'client', FILTER_SANITIZE_STRING);
-    $titre = filter_input(INPUT_POST, 'titre', FILTER_SANITIZE_STRING);
+   $description = htmlspecialchars($_POST['demande'] ?? '', ENT_QUOTES, 'UTF-8');
+    $categorie = htmlspecialchars($_POST['categorie'] ?? '', ENT_QUOTES, 'UTF-8');
+    $nom_utilisateur = htmlspecialchars($_POST['client'] ?? '', ENT_QUOTES, 'UTF-8');
+    $titre = htmlspecialchars($_POST['titre'] ?? '', ENT_QUOTES, 'UTF-8');
     $budget = filter_input(INPUT_POST, 'budget', FILTER_VALIDATE_FLOAT);
-    $date_souhaitee = filter_input(INPUT_POST, 'date_souhaitee', FILTER_SANITIZE_STRING);
+    $date_souhaitee = htmlspecialchars($_POST['date_souhaitee'] ?? '', ENT_QUOTES, 'UTF-8');
 
     // Validation des champs requis
     if (empty($description)) {

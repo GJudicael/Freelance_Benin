@@ -35,17 +35,28 @@ try {
         (
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         nom VARCHAR(100) NOT NULL,
-        prenom VARCHAR(100) NOT NULL,
-        numero VARCHAR(100) NOT NULL,
-        email VARCHAR(100) NOT NULL,
-        motDePasse VARCHAR(100) NOT NULL,
+        prenom VARCHAR(100)  NULL,
         nomDUtilisateur VARCHAR(100) NOT NULL UNIQUE ,
+        numero VARCHAR(100) NOT NULL,
+        email VARCHAR(100) NOT NULL UNIQUE,
+        description TEXT NULL,
+        activity_sector VARCHAR(100) NULL,
+        web_site VARCHAR(100) NULL,
+        ville VARCHAR(200) NULL,
+        pays VARCHAR(200) NULL,
+        facebook_url VARCHAR(100) NULL,
+        linkdin_url VARCHAR(100) NULL,
+        nombre_employes INT NULL,
+        legal_id INT(20) NULL,
+        adresse VARCHAR(200) NULL,
+        annee DATE  NULL,
         photo VARCHAR(200) DEFAULT 'photo_profile.jpg',
+        motDePasse VARCHAR(100) NOT NULL,
         token VARCHAR(255) DEFAULT NULL,
         est_confirme BOOLEAN DEFAULT FALSE,
         admin ENUM('admin','non_admin') DEFAULT 'non_admin',
         avertissement INT DEFAULT 0,
-        role ENUM('client','freelance') DEFAULT 'client'
+        role ENUM('client','freelance','entreprise') DEFAULT 'client'
         );
 
    
@@ -169,29 +180,6 @@ try {
         is_read BOOLEAN DEFAULT 0,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES inscription(id)
-        );
-
-        CREATE TABLE IF NOT EXISTS entreprise (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        nom VARCHAR(100) NOT NULL,
-        user_name VARCHAR(100) NOT NULL UNIQUE,
-        email VARCHAR(100) NOT NULL UNIQUE,
-        description TEXT,
-        activity_sector VARCHAR(100) NOT NULL,
-        web_site VARCHAR(100) NOT NULL,
-        ville VARCHAR(200) NOT NULL,
-        pays VARCHAR(200) NOT NULL,
-        telephone VARCHAR(100) NOT NULL,
-        facebook_url VARCHAR(100) NOT NULL,
-        linkdin_url VARCHAR(100) NOT NULL,
-        nombre_employes INT NOT NULL,
-        legal_id INT(20) NOT NULL,
-        adresse VARCHAR(200) NOT NULL,
-        annee DATE,
-        logo VARCHAR(255) NOT NULL,
-        motDepasse VARCHAR(100) NOT NULL,
-        token VARCHAR(64) DEFAULT NULL,
-        est_confirme  BOOLEAN DEFAULT FALSE
         );
 
 ";
