@@ -221,8 +221,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['creer'])) {
             ]);
 
             traieMail($entreprise['email'], $token);
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> d3114648fba789c1661cf33ddf5a80f978747c8c
 
             $_SESSION['success_message'] = "Vos informations sont enregistrées avec succès !";
             header('Location: ../front_projet_EDL/confirmation1.php');
