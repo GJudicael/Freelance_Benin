@@ -219,15 +219,11 @@ $_SESSION['photo'] = $user['photo'];
 
                 <?php endif; ?>
 
-<<<<<<< HEAD
                 <?php if ($user['email'] !== 'decouverte_de_platform@gmail.com') : ?>
                     <button class="btn btn-outline-primary" onclick="afficherFormulaire()">Modifier mes informations</button>
                 <?php endif; ?>
-<?php if ($user['role'] === 'client') : ?>
-=======
-                <button class="btn btn-outline-primary" onclick="afficherFormulaire()">Modifier mes informations</button>
-                <?php if ($user['role'] === 'client'): ?>
->>>>>>> 0dafb14372c8fa6debdc4fb75b221450ade1e598
+                <?php if ($user['role'] === 'client') : ?>
+
                   <div class="alert alert-info mt-4">
                     Vous êtes actuellement en mode <strong>Client</strong>.
 
