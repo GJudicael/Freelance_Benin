@@ -25,8 +25,8 @@
 
             case 'freelancer':
 
-                $stmt = $bdd->prepare("SELECT i.nom, i.prenom, i.id AS id, i.nomDUtilisateur FROM freelancers f INNER JOIN inscription i ON f.user_id = i.id WHERE i.nom LIKE ? OR i.prenom LIKE ?");
-                $stmt->execute([$keyword, $keyword]);
+                $stmt = $bdd->prepare("SELECT i.nom, i.prenom, i.id AS id, i.nomDUtilisateur FROM freelancers f INNER JOIN inscription i ON f.user_id = i.id WHERE i.nom LIKE ? OR i.prenom LIKE ? OR i.nomDUtilisateur LIKE ?");
+                $stmt->execute([$keyword, $keyword,$keyword]);
                 $searchResults = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 break;
 
@@ -36,7 +36,7 @@
                     SELECT d.*, i.nom, i.prenom, i.id 
                     FROM demande d 
                     INNER JOIN inscription i ON d.user_id = i.id 
-                    WHERE (titre LIKE ? OR description LIKE ? OR categorie LIKE ? OR nom LIKE ? OR prenom LIKE ?)
+                    WHERE (d.titre LIKE ? OR d.description LIKE ? OR d.categorie LIKE ? OR i.nom LIKE ? OR i.prenom LIKE ?)
                     AND d.statut = 'en attente'
                 ");
                 $stmt->execute([$keyword, $keyword, $keyword, $keyword, $keyword]);
