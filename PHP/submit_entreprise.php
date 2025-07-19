@@ -13,13 +13,6 @@ $entreprise = [];
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['creer'])) {
 
 
-<<<<<<< HEAD
-   $entreprise = [
-        "nom_utilisateur" => filter_input(INPUT_POST, "nom_utilisateur", FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH) ?? '',
-        "nom" => filter_input(INPUT_POST, "nom", FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH) ?? '',
-        "description" => filter_input(INPUT_POST, "description", FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH) ?? '',
-        "secteur" => filter_input(INPUT_POST, "secteur", FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH) ?? '',
-=======
     // 1. Sanitize and retrieve POST data using filter_input()
     // Using ?? '' to ensure a default empty string if input is missing/null after filtering
     // Note: FILTER_SANITIZE_STRING is deprecated in PHP 8.1+. For modern PHP, consider htmlspecialchars() directly.
@@ -29,7 +22,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['creer'])) {
         "nom" => filter_input(INPUT_POST, "nom", FILTER_UNSAFE_RAW) ?? '',
         "description" => filter_input(INPUT_POST, "description", FILTER_UNSAFE_RAW) ?? '',
         "secteur" => filter_input(INPUT_POST, "secteur", FILTER_UNSAFE_RAW) ?? '',
->>>>>>> 0dafb14372c8fa6debdc4fb75b221450ade1e598
         "site" => filter_input(INPUT_POST, "site", FILTER_SANITIZE_URL) ?? '',
         "email" => filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL) ?? '',
         "facebook" => filter_input(INPUT_POST, "facebook", FILTER_SANITIZE_URL) ?? '',
@@ -181,10 +173,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['creer'])) {
     } else {
         $errors['logo'] = "Le logo de l'entreprise est requis.";
     }
-<<<<<<< HEAD
     
-=======
->>>>>>> 0dafb14372c8fa6debdc4fb75b221450ade1e598
 
 
     
