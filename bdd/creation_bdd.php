@@ -66,6 +66,8 @@ try {
         user_id INT UNIQUE,
         bio TEXT,
         competences TEXT,
+        gitHub VARCHAR(100) NOT NULL,
+        linkdin VARCHAR(100) NOT NULL,
         FOREIGN KEY (user_id) REFERENCES inscription(id) ON DELETE CASCADE
         );
 
@@ -188,7 +190,7 @@ try {
         annee DATE,
         logo VARCHAR(255) NOT NULL,
         motDepasse VARCHAR(100) NOT NULL,
-        token VARCHAR(64) NOT NULL,
+        token VARCHAR(64) DEFAULT NULL,
         est_confirme  BOOLEAN DEFAULT FALSE
         );
 

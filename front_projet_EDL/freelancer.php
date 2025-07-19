@@ -19,23 +19,26 @@ function freelancers($bdd, $rechercher) {
 
         foreach ($demandes as $demande) {
 ?>
-            <div class="container py-4 ">
-                <div class="row justify-content-center ">
-                    <!-- Carte -->
-                    <div class="col-lg-8 col-md-12">
-                        <div class="card h-100 p-2 shadow border-primary-subtle border-3 rounded-4">
-                            <div class="card-body overflow-auto">
-                                <div class="user-info pb-3">
+<div class="container py-4 ">
+    <div class="row justify-content-center ">
+        <!-- Carte -->
+        <div class="col-lg-8 col-md-12">
+            <div class="card h-100 p-2 shadow border-primary-subtle border-3 rounded-4">
+                <div class="card-body overflow-auto">
+                    <div class="user-info pb-3">
 
-                                    <a href="info_profile.php?id=<?= htmlspecialchars($demande['id']) ?>" class="text-decoration-none text-tertiary">
-                                        <strong><?= htmlspecialchars($demande["nom"]) . ' ' . htmlspecialchars($demande["prenom"]) ?></strong>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="info_profile.php?id=<?= htmlspecialchars($demande['id']) ?>"
+                            class="text-decoration-none text-tertiary">
+                            <strong>
+                                <?= htmlspecialchars($demande["nom"]) . ' ' . htmlspecialchars($demande["prenom"]) ?>
+                            </strong>
+                        </a>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
 <?php
         }
 }

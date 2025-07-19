@@ -106,11 +106,18 @@ $type = $_POST['type'] ?? '';
           <?php endif; ?>
 
           <span class="text-light">
-            <?php echo isset($_SESSION["user_name"]) ? htmlspecialchars($_SESSION["user_name"]) : "Profile" ?></span>
+            <?php echo isset($user_name) ? htmlspecialchars($user_name) : "Profile" ?></span>
 
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-          <li><a class="dropdown-item" href="../front_projet_EDL/info_profile.php">Mon Profil</a></li>
+          <li>
+            <?php if ($users): ?>
+              <a class="dropdown-item" href="../front_projet_EDL/info_profile.php">Mon Profil</a>
+            <?php elseif ($company): ?>
+              <a class="dropdown-item" href="../front_projet_EDL/info_profile_entreprise.php">Mon Profil</a>
+            <?php endif; ?>
+          </li>
+
           <li>
             <hr class="dropdown-divider">
           </li>

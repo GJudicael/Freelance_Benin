@@ -35,7 +35,7 @@
         <?php
         // Display general database insertion errors if any
         if (isset($errors['db_insert_error'])) {
-            echo '<p><small class="text-danger">' . htmlspecialchars($errors['db_insert_error']) . '</small></p>';
+            echo '<p><small class="text-danger text-center">' . htmlspecialchars($errors['db_insert_error']) . '</small></p>';
             unset($errors['db_insert_error']);
         }
         // General error for debugging (optional, remove for production)
@@ -56,7 +56,7 @@
             </div>
 
             <div class="p-2">
-                <label for="nom_utilisateur" class="form-text fs-6 p-1">Nom de d'utilisateur </label>
+                <label for="nom_utilisateur" class="form-text fs-6 p-1">Nom d'itilisateur </label>
                 <input id="nom_utilisateur" type="text" name="nom_utilisateur"
                     class="form-control <?= isset($errors['nom_utilisateur']) ? 'is-invalid' : '' ?>"
                     placeholder="Ex : Freelance Sarl" value="<?= htmlspecialchars($entreprise['nom_utilisateur']) ?>">
@@ -148,7 +148,7 @@
                 <label for="telephone" class="form-text fs-6 p-1">Téléphone</label>
                 <input id="telephone" type="text" name="telephone"
                     class="form-control <?= isset($errors['telephone']) ? 'is-invalid' : '' ?>"
-                    placeholder="00 00 00 00" value="<?= htmlspecialchars($entreprise['telephone'] ?? '') ?>">
+                    placeholder="EX: 00 00 00 00" value="<?= htmlspecialchars($entreprise['telephone'] ?? '') ?>">
                 <?php if (isset($errors["telephone"])): ?>
                     <p><small class="text-danger"><?= htmlspecialchars($errors["telephone"]) ?></small></p>
                 <?php endif; ?>

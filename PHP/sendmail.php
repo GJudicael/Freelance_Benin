@@ -8,7 +8,6 @@ require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
 function traieMail($email, $token)
-
 {
 
     $mail = new PHPMailer(true);
@@ -26,7 +25,7 @@ function traieMail($email, $token)
         $mail->addAddress($email, 'Site Freelance Bénin');
         $mail->isHTML(true); //Pour activer l'envoi de mail sous forme html
 
-        
+
 
         $lienConfirmation = "http://localhost/freelance_benin/front_projet_EDL/Connexion.php?token=$token";
 
@@ -42,13 +41,13 @@ function traieMail($email, $token)
         $mail->SMTPDebug = 0; //Pour desactiver le debug
 
         if ($mail->send()) {
-            
-            $_SESSION["mail_envoye"]  = "Un mail de validation vous a été envoyé à votre adresse mail! Cliquez sur le lien pour confirmer votre email";
-    
+
+            $_SESSION["mail_envoye"] = "Un mail de validation vous a été envoyé à votre adresse mail! Cliquez sur le lien pour confirmer votre email";
+
         }
-        
+
     } catch (Exception $e) {
-        //throw $th;
+
         $_SESSION["erreur"] = " Erreur : Impossible d’envoyer l’e-mail. Vérifiez votre connexion Internet ou réessayez plus tard.";
 
     }

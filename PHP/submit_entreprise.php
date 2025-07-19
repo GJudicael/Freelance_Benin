@@ -95,6 +95,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['creer'])) {
         $errors["email"] = "Cet email est invalide.";
     }
 
+    //user_name validation
+    if (!isset(($errors['nom_utilisateur']))) {
+        try {
+            $requete = $bdd->prepare('SELECT COUNT(*) FROM entreprise WHERE user_name = ?');
+            $requete->execute([$entreprise['nom_utilisateur']]);
+            if ($requete->fetchColumn() > 0) {
+                $errors["nom_utilisateur"] = "Ce nom_utilisateur est déjà utilisé.";
+            }
+        } catch (PDOException $e) {
+            $errors['db_error'] = "Erreur de base de données lors de la vérification de l'email.";
+            error_log("DB Error: " . $e->getMessage()); // Log detailed error for debugging
+        }
+    }
+
     // Check if email already exists in DB (only if no other email errors)
     if (!isset($errors['email'])) {
         try {
@@ -161,11 +175,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['creer'])) {
     } elseif (isset($_FILES['logo']) && $_FILES['logo']['error'] !== UPLOAD_ERR_NO_FILE) {
         // Handle other upload errors (e.g., size exceeded PHP limit, partial upload)
         $errors['logo'] = "Erreur d'upload du fichier : Code " . $_FILES['logo']['error'];
+    } else {
+        $errors['logo'] = "Le logo de l'entreprise est requis.";
     }
-    // If no file was uploaded AND it's a required field, you'd add:
-    // else {
-    //     $errors['logo'] = "Le logo de l'entreprise est requis.";
-    // }
 
 
     // 3. Process data if no errors
@@ -208,10 +220,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['creer'])) {
                 $token
             ]);
 
-            traieMail($email, $token);
+            traieMail($entreprise['email'], $token);
+
+
 
             $_SESSION['success_message'] = "Vos informations sont enregistrées avec succès !";
-            header('Location: ../front_projet_EDL/Connexion.php');
+            header('Location: ../front_projet_EDL/confirmation1.php');
             exit();
 
         } catch (PDOException $e) {
@@ -223,7 +237,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['creer'])) {
                 unlink($cheminDestination);
             }
 
-            die('Erreur : ' . $e->getMessage());
         }
     }
 }
