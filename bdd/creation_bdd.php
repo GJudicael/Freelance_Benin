@@ -22,6 +22,7 @@ try {
     die("Erreur : " . $e->getMessage());
 }
 
+
 try {
     $bdd = new PDO('mysql:host=' . BDD_HOST . ';dbname=' . BDD_NAME . ';', BDD_USER, BDD_PASSWORD);
     $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -221,6 +222,95 @@ try {
     //echo "Tables créées avec succès.";
 
     $bdd->exec($triggerSql);
+    $motDePasse = password_hash('JUDICAEL1234', PASSWORD_DEFAULT);
+    $sqlInsertions = "
+
+-- INSCRIPTION
+INSERT IGNORE INTO inscription (
+  id,nom, prenom, numero, email, motDePasse, nomDUtilisateur, photo, token, est_confirme, admin, avertissement, role
+) VALUES 
+(
+  1,'GBAGUIDI', 'Judicael', '0197000000', 'gbaguidijudicael520@gmail.com',
+  '$motDePasse', 'G.J', 'photo_profile.jpg', NULL, TRUE, 'non_admin', 0, 'client'
+),
+(
+  2,'Decouverte', 'Utilisateur', '01--------', 'decouverte_de_platform@gmail.com',
+  '$motDePasse', 'Utilisateur', 'photo_profile.jpg', NULL, TRUE, 'non_admin', 0, 'freelance'
+);
+
+-- FREELANCERS
+INSERT IGNORE INTO freelancers (user_id, bio, competences)
+VALUES (
+  2,
+  'Je suis un utilisateur découvrant la plateforme de freelance pour le Bénin. La plateforme connectant les talents béninois',
+  'Mes compétences sont diverses et variées'
+);
+
+INSERT IGNORE INTO demande (
+  id,user_id, categorie, titre, description, budget, date_soumission, statut, avancement, date_fin
+) VALUES (
+  1,
+  1,
+  'Site Web',
+  'site de vente',
+  'je souhaite un site web pour la vente de mes articles',
+  50000,
+  CURDATE(),
+  'terminé',
+  100,
+  CURDATE()
+);
+
+-- SUIVI PROJET
+INSERT IGNORE INTO suivi_projet (id,demande_id, etape, pourcentage,date_mise_a_jour, commentaire)
+VALUES 
+(1,1, '1er etape', 25,CURDATE(), 'Réalisation du backend'),
+(2,1, '2e etape', 50,CURDATE(), 'Le frontend'),
+(3,1, '3e etape', 55,CURDATE(), 'La dynamisation'),
+(4,1, 'Dernière etape', 100, CURDATE(),'La mise en ligne');
+
+-- MESSAGES
+INSERT IGNORE INTO messages (
+  sender_id, receiver_id, message, created_at, modifie, sup_for_sender, sup_for_receiver, sup_tout_le_monde, lu
+) VALUES
+(
+  1, 2, 'Bonjour comment allez-vous ?', '2025-07-17 23:17:03',
+  0, 0, 0, 0, 1
+),
+(
+  1, 2,'Jai vu votre profil et je souhaite collaborer', '2025-07-17 23:18:08',
+  0, 1, 0, 0, 1
+);
+
+
+
+
+INSERT IGNORE INTO notation (
+  freelancer_id, user_id, stars, comment
+) VALUES (
+  1, 1, 5, 'Du bon travail a été fait je suis satisfait'
+);
+
+-- NOTIFICATIONS
+INSERT IGNORE INTO notifications (
+  user_id, message, is_read, created_at
+) VALUES 
+(
+  2, 'GBAGUIDI Judicael vous a envoyé un nouveau message...', 1, '2025-07-17 23:17:03'
+),
+(
+  2, 'GBAGUIDI Judicael vous a envoyé un nouveau message...', 1, '2025-07-17 23:18:08'
+);
+";
+
+$check = $bdd->query("SELECT COUNT(*) FROM inscription WHERE id = 1");
+$exists = $check->fetchColumn();
+
+if ($exists == 0) {
+    $bdd->exec($sqlInsertions); // Lancement des insertions si pas déjà présentes
+}
+
+
 } catch (PDOException $e) {
     echo "Echec lors de la connexion : " . $e->getMessage();
 }

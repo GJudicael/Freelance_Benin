@@ -4,6 +4,7 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 require_once(__DIR__ . "/../bdd/creation_bdd.php");
+require_once(__DIR__ . "/../notifications/fonctions_utilitaires.php");
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $demande_id = $_POST['demande_id'] ?? null;
@@ -11,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $signale_par = $_SESSION['user_id'] ?? null;
 
     if ($demande_id && $signale_par && !empty($raison)) {
-        // Vérifie que la demande existe
+       
         $check = $bdd->prepare("SELECT id FROM demande WHERE id = :id");
         $check->execute(['id' => $demande_id]);
         if (!$check->fetch()) {
@@ -19,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exit();
         }
 
-        // Vérifie qu'elle n'a pas déjà été signalée par cet utilisateur
+        
         $doublon = $bdd->prepare("SELECT id FROM signalements WHERE demande_id = :demande_id AND signale_par = :signale_par");
         $doublon->execute([
             'demande_id' => $demande_id,

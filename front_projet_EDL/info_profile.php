@@ -205,8 +205,10 @@ $_SESSION['photo'] = $user['photo'];
                   <p><?= htmlspecialchars($freelancer['competences']) ?></p>
                 <?php endif; ?>
 
-                <button class="btn btn-outline-primary" onclick="afficherFormulaire()">Modifier mes informations</button>
-                <?php if ($user['role'] === 'client') : ?>
+                <?php if ($user['email'] !== 'decouverte_de_platform@gmail.com') : ?>
+                    <button class="btn btn-outline-primary" onclick="afficherFormulaire()">Modifier mes informations</button>
+                <?php endif; ?>
+<?php if ($user['role'] === 'client') : ?>
                   <div class="alert alert-info mt-4">
                     Vous êtes actuellement en mode <strong>Client</strong>.
 

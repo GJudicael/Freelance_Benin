@@ -80,7 +80,7 @@ if (isset($_POST['envoyer'])) {
                     $_SESSION["user_id"] = $user['id'];
                     $_SESSION['connecte'] = true;
 
-                    header("Location: accueil.php");
+                    header("Location: http://localhost/freelance_benin/front_projet_EDL/accueil.php");
                     exit();
                 } else {
                     $error["password"] = "Mot de passe incorrect";

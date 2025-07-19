@@ -7,17 +7,13 @@ session_start();
 require_once(__DIR__ . "/../bdd/creation_bdd.php"); // Ensure $bdd is correctly initialized here
 require_once(__DIR__ . "/sendmail.php");
 
-$errors = []; // Initialize $errors array for error messages
-$entreprise = []; // Initialize $entreprise array to hold sanitized and validated data
+$errors = [];
+$entreprise = []; 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['creer'])) {
 
 
-    // 1. Sanitize and retrieve POST data using filter_input()
-    // Using ?? '' to ensure a default empty string if input is missing/null after filtering
-    // Note: FILTER_SANITIZE_STRING is deprecated in PHP 8.1+. For modern PHP, consider htmlspecialchars() directly.
-    // For simplicity, I'll use FILTER_UNSAFE_RAW combined with htmlspecialchars() for general text fields.
-    $entreprise = [
+   $entreprise = [
         "nom_utilisateur" => filter_input(INPUT_POST, "nom_utilisateur", FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH) ?? '',
         "nom" => filter_input(INPUT_POST, "nom", FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH) ?? '',
         "description" => filter_input(INPUT_POST, "description", FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH) ?? '',
@@ -41,9 +37,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['creer'])) {
     // Placeholder for logo file name
     $logoFileName = null;
 
-    // 2. Validate fields
-    // Basic required fields check
-    // We'll skip password fields here as they have specific validation
     $required_fields = [
         "nom_utilisateur",
         "nom",
@@ -107,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['creer'])) {
             $errors['db_error'] = "Erreur de base de données lors de la vérification de l'email.";
             error_log("DB Error: " . $e->getMessage()); // Log detailed error for debugging
         }
-    }
+    } 
 
     // Year validation (for 'annee' input type date)
     if (!empty($entreprise['annee'])) {
@@ -153,27 +146,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['creer'])) {
             $cheminDestination = __DIR__ . '/../logo/' . $nouveauNom;
 
             if (move_uploaded_file($nomTemporaire, $cheminDestination)) {
-                $logoFileName = $nouveauNom; // Store the new file name for DB insertion
-            } else {
+                $logoFileName = $nouveauNom; } else {
                 $errors['logo'] = "Erreur lors du déplacement du fichier téléchargé.";
             }
         }
     } elseif (isset($_FILES['logo']) && $_FILES['logo']['error'] !== UPLOAD_ERR_NO_FILE) {
-        // Handle other upload errors (e.g., size exceeded PHP limit, partial upload)
         $errors['logo'] = "Erreur d'upload du fichier : Code " . $_FILES['logo']['error'];
     }
-    // If no file was uploaded AND it's a required field, you'd add:
-    // else {
-    //     $errors['logo'] = "Le logo de l'entreprise est requis.";
-    // }
+    
 
 
-    // 3. Process data if no errors
+    
     if (empty($errors)) {
-        // Hash the password before storing!
+        
         $entreprise['motDepasse'] = password_hash($entreprise['motDepasse'], PASSWORD_DEFAULT);
 
-        // Remove confirmation password, it's not stored
+    
         unset($entreprise['motDepasseConfirmer']);
         $token = bin2hex(string: random_bytes(32)); // Génère un token sécurisé
 
@@ -228,10 +216,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['creer'])) {
     }
 }
 
-// Prepare values for HTML form to re-populate fields and display errors
-// This ensures $entreprise and $errors are available even on initial page load
-// or if there are validation errors.
-// Initialise $entreprise with empty strings if not yet set (first load)
 $entreprise = array_merge([
     "nom_utilisateur" => '',
     "nom" => '',
@@ -250,9 +234,4 @@ $entreprise = array_merge([
     "motDepasse" => '',
     "motDepasseConfirmer" => ''
 ], $entreprise);
-
-
-// You might want to display a general error message if $errors is not empty
-// echo "<pre>"; print_r($errors); echo "</pre>"; // For debugging: shows all errors
-// echo "<pre>"; print_r($entreprise); echo "</pre>"; // For debugging: shows all data
 ?>

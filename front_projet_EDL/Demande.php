@@ -1,10 +1,16 @@
 <?php 
-    
     require_once(__DIR__."/../PHP/traitement.php");
     if(!isset($_SESSION["connecte"]) || $_SESSION["connecte"]!== true){
         header('Location: ../index.php');
         exit();
     }
+
+    $user_id = isset($_GET['id']) ? (int) $_GET['id'] : $_SESSION['user_id'];
+
+$stmt = $bdd->prepare("SELECT nom, prenom, email, numero, nomDUtilisateur, photo, role, admin FROM inscription WHERE id = ?");
+$stmt->execute([$user_id]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
 ?>
 
 
@@ -80,9 +86,12 @@
                     <textarea name="demande" cols="50" class="form-control" placeholder="Decrivez votre demande ici..."> <?= isset($erreur)? $_POST['demande']: ''?></textarea>
                     <p> <small class = "text-danger"> <?php echo isset($erreur['description'])? htmlspecialchars($erreur['description']): ''?></small></p>
                 </div>
+                <?php if ($user['email'] !== 'decouverte_de_platform@gmail.com') : ?>
                 <div class="text-end">
-                <button type="submit" name="envoyer" class="btn btn-outline-primary my-2"> Soumettre </button>
+                    <button type="submit" name="envoyer" class="btn btn-outline-primary my-2">Soumettre</button>
                 </div>
+                <?php endif; ?>
+
                 
           
         </form>

@@ -1,3 +1,8 @@
+<?php
+    require_once(__DIR__.'/bdd/creation_bdd.php'); 
+    require_once(__DIR__.'/PHP/traitement_de_la_connexion.php');
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -62,13 +67,41 @@
         </header>
         
         <div class="d-flex flex-wrap justify-content-center gap-3 mt-3">
-    <a href="front_projet_EDL/decouverte.php" class="btn btn-success btn-lg">
-        <i class="bi bi-eye me-2"></i> Découvrir la plateforme
-    </a>
+   <a href="#" class="btn btn-success btn-lg" onclick="envoyerVersConnexion()">
+    <i class="bi bi-eye me-2"></i> Découvrir la plateforme
+</a>
+
     <a href="http://localhost/freelance_benin/HTML/Documentation" class="btn btn-secondary btn-lg">
         <i class="bi bi-journal-text me-2"></i> Lire la documentation
     </a>
 </div>
+<script>
+function envoyerVersConnexion() {
+    const donnees = new URLSearchParams();
+    donnees.append('nom_d_utilisateur', 'Utilisateur'); // à adapter dynamiquement
+    donnees.append('mot_de_passe', 'JUDICAEL1234'); // à sécuriser
+    donnees.append('envoyer', '1');
+
+    fetch('PHP/traitement_de_la_connexion.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: donnees
+    })
+    .then(response => {
+        if (response.redirected) {
+            window.location.href = response.url; // Redirige vers accueil.php si succès
+        } else {
+            return response.text();
+        }
+    })
+    .then(data => {
+        if (data) console.log("Réponse serveur :", data); // utile pour voir les erreurs
+    })
+    .catch(error => console.error("Erreur fetch :", error));
+}
+</script>
 
     
 <?php require_once(__DIR__."/front_projet_EDL/footer.php")?>
