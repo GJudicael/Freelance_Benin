@@ -21,97 +21,146 @@
       color: #0d6efd;
       margin-right: 6px;
     }
+    img {
+      max-width: 100%;
+      height: auto;
+    }
   </style>
 </head>
 <body>
   <div class="container py-5">
     <h1 class="text-center mb-5"><i class="bi bi-journal-text"></i> Documentation FreeBenin</h1>
-    <p>FreeBenin est un site de freelance local qui met en relation les freelances béninois avec des clients à la recherche de compétences spécifiques. Le site permets aux freelances de créer un profil professionnel, de proposer leurs services et de recevoir des offres de missions, tandis que les clients pourront publier des projets et entrer en contact avec des prestataires qualifiés.</p>
-    <p>
-        la 1er page que vous rencontre sur FreeBenin vous permet:
-        <ul>
-      <li>La creation d'un compte(Ordinaire ou Entreprise)
-      </li>
-      <li>La connexion(qui vous permet de vous connecter si vous avez deja un compte)</li>
-      <li>Un bouton de decouverte </li>
-      <li>Une documentation</li>
-    </ul>
-  <p>Voici une photo illustrative :</p>
 
-  <img src="photo/Screenshot 2025-07-17 170437.png" alt="Photo de démonstration" width="300">
-</p>
-<p>
-    <h3>Page de creation d'un compte</h3>
-    <p>
-        Nous avons ici 2 possibilite :
-                .un compte ordinaire
-                .un comptre Entreprise
-        <p>
-            <h4><a href="http://localhost/freelance_benin/front_projet_EDL/Creation_d_un_compte.php" >Créer un compte ordinaire</a></h4>
-            par compte ordinaire on entends par la compte clients 
-            <p>Voici une photo illustrative :</p>
-            <img src="photo/compte ordinaire.png" alt="Photo de démonstration" width="300">
-            <p>Ici on vous demande d'entre votre :
-                <ul>
-                    <li>Nom,</li>
-                <li>Prenom(s),</li>
-                <li>Nom d'utilisateur : si vous entrez un nom d'utilisateur deja existant il sera refuse(ceci a ete penser pour etre unique),
-                </li>
-                <li>Numéro de téléphone,</li>
-                <li>Email (si le format de l'email n'est pas correcte alors vous ne pourez ps soumettre le formulaire),
-                </li>
-                <li>Mot de passe (lE MOT DE PASSE EST DEMANDER 2 fois) </li>
-                </ul>
-                </p>
-        </p>
-        <p>
-            <h4><a href="http://localhost/freelance_benin/front_projet_EDL/compte_entreprise.php">Créer un compte entreprise </a></h4>
-            Nous avons penser aux entreprise et pour plus de securite et de creduliter  nous demandons assez d'information
-            <p>Voici une photo illustrative :</p>
-            <img src="photo/compte entreprise.png" alt="Photo de démonstration" width="300">
+    <p>FreeBenin est une plateforme locale de mise en relation entre freelances béninois et clients. Elle permet aux freelances de créer un profil professionnel, proposer leurs services et recevoir des offres de mission. Les clients, quant à eux, peuvent publier des projets et trouver des prestataires qualifiés.</p>
 
-        </p>
-    </p>
-</p>
-    <h2 class="section-title"><i class="bi bi-person-lines-fill info-icon"></i>🚀 Commencer avec FreeBenin</h2>
-            Lorsque vous creez un compte et confirmer votre email vous etes rediriger vers la page de <a href="http://localhost/freelance_benin/front_projet_EDL/Connexion.php">connexion</a>:
-            <p><img src="photo/connexion.png" alt="Photo de démonstration" width="300">
-</p>
-    <h2 class="section-title"><i class="bi bi-lightbulb info-icon"></i>💼 Pour les Freelances</h2>
+    <h3 class="mt-4">Première page du site</h3>
     <ul>
-      <li>🎯 Créez votre vitrine professionnelle</li>
-    <li>📌 Ciblez les offres de mission en fonction de vos compétences</li>
-    <li>📨 Communiquez avec les clients via la messagerie interne</li>
-      <li>💰 Recevez vos paiements rapidement et en toute sécurité</li>
+      <li>Création de compte (Ordinaire ou Entreprise)</li>
+      <li>Connexion (si vous avez déjà un compte)</li>
+      <li>Bouton de découverte</li>
+      <li>Documentation</li>
     </ul>
-    <p></p>
+    <p>Illustration :</p>
+    <img src="photo/index.png" alt="Page d'accueil">
 
-    <h2 class="section-title"><i class="bi bi-building info-icon"></i>🏢 Pour les Clients</h2>
+    <h3 class="section-title">Création de compte</h3>
+    <p>Deux types de comptes sont disponibles :</p>
     <ul>
-      <li>📢 Publiez une mission avec vos besoins</li>
-      <li>🔍 Explorez les profils disponibles et sélectionnez votre prestataire</li>
-      <li>🤝 Gérez vos projets et suivez leur avancement depuis votre tableau de bord</li>
+      <li><a href="http://localhost/freelance_benin/front_projet_EDL/Creation_d_un_compte.php">Compte Ordinaire</a> (clients)</li>
+      <li><a href="http://localhost/freelance_benin/front_projet_EDL/compte_entreprise.php">Compte Entreprise</a></li>
     </ul>
 
-    <h2 class="section-title"><i class="bi bi-shield-check info-icon"></i>🔐 Sécurité & Fiabilité</h2>
-    <p>FreeBenin s’engage à garantir une expérience fiable :</p>
+    <h4>Compte Ordinaire</h4>
+    <img src="photo/compte ordinaire.png" alt="Formulaire compte ordinaire">
+    <p>Champs requis :</p>
     <ul>
-      <li>📧 Notifications par email pour chaque action importante</li>
-      <li>🔐 Système de paiement sécurisé (Mobile Money, carte bancaire, etc.)</li>
-      <li>🛡️ Modération active contre les abus et contenus inappropriés</li>
+      <li>Nom</li>
+      <li>Prénom(s)</li>
+      <li>Nom d'utilisateur (unique)</li>
+      <li>Numéro de téléphone</li>
+      <li>Email (format valide requis)</li>
+      <li>Mot de passe (confirmé)</li>
     </ul>
 
-    <h2 class="section-title"><i class="bi bi-chat-square-text info-icon"></i>💬 Assistance & FAQ</h2>
-    <p>Consultez notre <strong>FAQ</strong> pour des réponses rapides, ou <a href="contact.php">contactez l’équipe support</a>.</p>
+    <h4>Compte Entreprise</h4>
+    <p>Plus d'informations sont demandées pour garantir la fiabilité de l'entreprise.</p>
+    <img src="photo/compte entreprise.png" alt="Formulaire compte entreprise">
 
-    <div class="text-center mt-5">
-      <a href="creation_compte.php" class="btn btn-primary btn-lg me-2">
-        <i class="bi bi-person-plus"></i> Créer un compte
-      </a>
-      <a href="publier_mission.php" class="btn btn-success btn-lg">
-        <i class="bi bi-megaphone"></i> Publier une mission
-      </a>
-    </div>
+    <h2 class="section-title">🚀 Commencer avec FreeBenin</h2>
+    <p>Une fois votre email confirmé, vous serez redirigé vers la <a href="http://localhost/freelance_benin/front_projet_EDL/Connexion.php">page de connexion</a> :</p>
+    <img src="photo/connexion.png" alt="Connexion">
+
+    <h3 class="section-title">Page d'accueil</h3>
+    <img src="photo/accueil.png" alt="Accueil">
+    <p>Menu :</p>
+    <ul>
+      <li>Accueil</li>
+      <li>Effectuer une demande</li>
+      <li>Mes demandes</li>
+      <li>Mes missions</li>
+      <li>Notifications</li>
+      <li>Messagerie</li>
+      <li>Recherche</li>
+      <li>Profil utilisateur</li>
+      <li>Nos freelances</li>
+      <li>Demandes publiées</li>
+    </ul>
+
+    <h5>Effectuer une demande</h5>
+    <img src="photo/demande.png" alt="Formulaire de demande">
+
+    <h5>Demandes publiées</h5>
+    <p>Apparaissent sur la page d'accueil. Un système de modération empêche les contenus inappropriés. Un bouton <strong>Signaler</strong> permet de dénoncer ces contenus :</p>
+    <img src="photo/accueil avec des demandes.png" alt="Demandes affichées">
+    <img src="photo/signalement de la demande.png" alt="Signalement">
+
+    <h5>Mes demandes</h5>
+    <img src="photo/demande efectuees.png" alt="Aucune demande">
+    <img src="photo/demande efectuees 2.png" alt="Liste de demandes">
+    <img src="photo/demande efectuees 3.png" alt="Attribution de la demande">
+    <img src="photo/demande efectuees 4.png" alt="Demande attribuée">
+
+    <h5>Notifications</h5>
+    <img src="photo/Notifications.png" alt="Notifications">
+
+    <h5>Recherche</h5>
+    <img src="photo/barre de recherche.png" alt="Barre de recherche">
+    <img src="photo/recherche.png" alt="Résultats">
+
+    <h5>Messageries</h5>
+    <img src="photo/me contacter.png" alt="Me contacter">
+    <img src="photo/messagerie 3.png" alt="Messagerie">
+    <img src="photo/messagerie 2.png" alt="Modifier ou supprimer message">
+
+    <h5>Nos Freelances</h5>
+    <img src="photo/nos freelancer.png" alt="Liste des freelances">
+
+    <h5>Profil</h5>
+    <p><strong>Client :</strong></p>
+    <img src="photo/profil.png" alt="Profil client">
+    <p>Possibilité de passer en mode freelance et de modifier les informations.</p>
+    <p><strong>Freelance :</strong></p>
+    <img src="photo/freelancer profil.png" alt="Profil freelance">
+    <p>Bouton pour compléter les informations professionnelles.</p>
+
+    <h5>Mes missions</h5>
+    <img src="photo/Mes misson.png" alt="Missions freelance">
+
+    <h2 class="section-title">Réalisation d'une mission</h2>
+    <ul>
+      <li>Attribution de la mission</li>
+      <li>Démarrage de la mission</li>
+      <li>Suivi de l'avancement</li>
+      <li>Notation du freelance</li>
+    </ul>
+
+    <h6>Attribution</h6>
+    <img src="photo/demande efectuees 3.png" alt="Formulaire d'attribution">
+    <img src="photo/demande efectuees 4.png" alt="Mission attribuée">
+
+    <h6>Démarrage</h6>
+    <img src="photo/missions.png" alt="Mes missions">
+    <img src="photo/demarrage.png" alt="Mission en cours">
+    <img src="photo/suivi.png" alt="Suivi client">
+
+    <h6>Suivi du projet</h6>
+    <img src="photo/suivi 3.png" alt="Ajout d'avancement">
+    <img src="photo/suivi 4.png" alt="Avancement enregistré">
+    <img src="photo/suivi 5.png" alt="Bouton Suivi">
+    <img src="photo/suivi 6.png" alt="Voir suivi">
+    <img src="photo/historique.png" alt="Historique du projet">
+    <img src="photo/historique 2.png" alt="Projet terminé">
+
+    <h6>Notation</h6>
+    <img src="photo/historique 3.png" alt="Noter le freelance">
+    <img src="photo/historique 4.png" alt="Formulaire de note">
+    <img src="photo/historique 5.png" alt="Commentaire client">
+    <h5>Profil freelance après notation</h5>
+    <img src="photo/profil freelancer 2.png" alt="Profil noté">
+
+    <h2 class="section-title">Signalement de profil</h2>
+    <p>Le bouton <strong>Signaler le profil</strong> permet de signaler des comportements inappropriés :</p>
+    <img src="photo/signalement du profil.png" alt="Signalement de profil">
 
     <footer class="text-center mt-5 pt-4 border-top">
       <p>&copy; 2025 FreeBenin. Tous droits réservés.</p>
