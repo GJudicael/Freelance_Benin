@@ -11,6 +11,8 @@ $stmt = $bdd->prepare("SELECT nom, prenom, email, numero, nomDUtilisateur, photo
 $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
+
+
 ?>
 
 

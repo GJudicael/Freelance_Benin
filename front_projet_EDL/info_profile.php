@@ -17,6 +17,7 @@ $role = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if ($role['role'] === "entreprise"){
   header("Location: info_profile_entreprise.php?id=".$user_id);
+  exit;
 }
 
 
