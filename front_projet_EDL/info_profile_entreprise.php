@@ -3,11 +3,12 @@ session_start();
 require_once(__DIR__ . "/../bdd/creation_bdd.php");
 require_once(__DIR__ . "/../PHP/update_profile_entreprise.php");
 
-$user_id = isset($_GET['id']) ? (int) $_GET['id'] : $_SESSION['user_id'];
-$user_name = isset($_GET['user_name']) ? $_GET['user_name'] : $_SESSION['user_name'];
+$entreprise_id = isset($_GET['id']) ? (int) $_GET['id'] : $_SESSION['user_id'];
 
-$stm = $bdd->prepare("SELECT * FROM inscription WHERE id = ? && nomDUtilisateur = ?");
-$stm->execute([$user_id, $user_name]);
+//$user_name = isset($_GET['user_name']) ? $_GET['user_name'] : $_SESSION['user_name'];
+
+$stm = $bdd->prepare("SELECT * FROM inscription WHERE id = ?");
+$stm->execute([$entreprise_id]);
 $comp = $stm->fetch(PDO::FETCH_ASSOC);
 
 
@@ -15,6 +16,8 @@ $_SESSION['logo'] = $comp['photo'];
 
 
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -102,12 +105,19 @@ $_SESSION['logo'] = $comp['photo'];
 
                 </div>
             </section>
-            <?php if (isset($_SESSION['user_id'])): ?>
+            
+            <?php if (isset($_SESSION['user_id']) && (int)$_SESSION['user_id'] === (int)$entreprise_id): ?>               
                 <span class=" d-flex justify-content-end me-5"><button class="btn btn-outline-primary"
                         onclick="afficherFormulaire()">Modifier mes
                         informations</button></span>
 
+            <?php else: ?>
+            <div class="pt-3">
+              <a href="../messagerie/discussions.php?user_id=<?= $_GET['id'] ?>" class="btn btn-info"> Me contacter </a>
+            </div>
             <?php endif; ?>
+
+         
         </div>
 
 

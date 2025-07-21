@@ -17,8 +17,8 @@ $freelancer = $check->fetch();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $bio = $_POST['bio'] ?? '';
   $competences = $_POST['competences'] ?? '';
-  $gitHub = $_POST['gitHub'];
-  $linkdin = $_POST['linkdin'];
+  $gitHub = $_POST['gitHub'] ?? '';
+  $linkdin = $_POST['linkdin']  ?? '';
 
   if ($freelancer) {
     $update = $bdd->prepare("UPDATE freelancers SET bio = ?, competences = ?, gitHub = ?, linkdin = ? WHERE user_id = ?");
@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="mb-3">
           <label for="gitHub" class="form-text text-black fs-6">Lien gitHub</label>
           <input type="url" name="gitHub" class="form-control" pattern="https?://github\.com/.+"
-            placeholder="https://github.com/{nom_utilisateur}"
+            placeholder="https://github.com/nom_utilisateur"
             value=" <?= htmlspecialchars($freelancer['gitHub'] ?? '') ?>">
           <?php if (isset($errors["gitHub"])): ?>
             <p><small class="text-danger"><?= htmlspecialchars($errors["gitHub"]) ?></small></p>
@@ -104,8 +104,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class="mb-3">
           <label for="linkdin" class="form-text text-black fs-6">Linkdin</label>
-          <input type="url" name="linkdin" class="form-control" pattern="https?://(www\.)?linkedin\.com/.+"
-            placeholder="https://www.inkedin.com/in/{nom_utilisateur}"
+          <input type="url" name="linkdin" class="form-control" pattern="https?://www\.?linkdin\.com/in/.+"
+            placeholder="https://www.linkdin.com/in/nom_utilisateur"
             value="<?= htmlspecialchars($freelancer['linkdin'] ?? '') ?>">
           <?php if (isset($errors["linkdin"])): ?>
             <p><small class="text-danger"><?= htmlspecialchars($errors["linkdin"]) ?></small></p>
