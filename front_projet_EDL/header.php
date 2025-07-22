@@ -78,6 +78,14 @@ $type = $_POST['type'] ?? '';
             <?php endif; ?>
           </a>
         </li>
+
+              <li class="nav-item">
+  <a class="nav-link fw-semibold text-white d-flex align-items-center gap-2" href="../Paiement/paiement.html">
+    <i class="bi bi-star-fill fs-5 text-white"></i> <span>S’abonner</span>
+  </a>
+</li>
+
+
       </ul>
 
       <!-- Barre de recherche -->

@@ -32,36 +32,34 @@ try {
     $sqlTables =
         "
 
-        CREATE TABLE IF NOT EXISTS inscription
-        (
-        id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-        nom VARCHAR(100) NOT NULL,
-        prenom VARCHAR(100)  NULL,
-        nomDUtilisateur VARCHAR(100) NOT NULL UNIQUE ,
-        numero VARCHAR(100) NOT NULL,
-        email VARCHAR(100) NOT NULL UNIQUE,
-        description TEXT NULL,
-        activity_sector VARCHAR(100) NULL,
-        web_site VARCHAR(100) NULL,
-        ville VARCHAR(200) NULL,
-        pays VARCHAR(200) NULL,
-        facebook_url VARCHAR(100) NULL,
-        linkdin_url VARCHAR(100) NULL,
-        nombre_employes INT NULL,
-        legal_id INT(20) NULL,
-        adresse VARCHAR(200) NULL,
-        annee DATE  NULL,
-        photo VARCHAR(200) DEFAULT 'photo_profile.jpg',
-        motDePasse VARCHAR(100) NOT NULL,
-        token VARCHAR(255) DEFAULT NULL,
-        est_confirme BOOLEAN DEFAULT FALSE,
-        admin ENUM('admin','non_admin') DEFAULT 'non_admin',
-        avertissement INT DEFAULT 0,
-        role ENUM('client','freelance','entreprise') DEFAULT 'client'
-        );
-
-   
-
+        CREATE TABLE IF NOT EXISTS inscription (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    prenom VARCHAR(100) NULL,
+    nomDUtilisateur VARCHAR(100) NOT NULL UNIQUE,
+    numero VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    description TEXT NULL,
+    activity_sector VARCHAR(100) NULL,
+    web_site VARCHAR(100) NULL,
+    ville VARCHAR(200) NULL,
+    pays VARCHAR(200) NULL,
+    facebook_url VARCHAR(100) NULL,
+    linkdin_url VARCHAR(100) NULL,
+    nombre_employes INT NULL,
+    legal_id INT(20) NULL,
+    adresse VARCHAR(200) NULL,
+    annee DATE NULL,
+    photo VARCHAR(200) DEFAULT 'photo_profile.jpg',
+    motDePasse VARCHAR(100) NOT NULL,
+    token VARCHAR(255) DEFAULT NULL,
+    est_confirme BOOLEAN DEFAULT FALSE,
+    admin ENUM('admin','non_admin') DEFAULT 'non_admin',
+    avertissement INT DEFAULT 0,
+    role ENUM('client','freelance','entreprise') DEFAULT 'client',
+    date_debut_abonnement DATE DEFAULT CURRENT_DATE,
+    date_fin_abonnement DATE DEFAULT (CURRENT_DATE + INTERVAL 6 MONTH)
+);
 
     CREATE TABLE IF NOT EXISTS signalements_profil (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -182,6 +180,17 @@ try {
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES inscription(id)
         );
+
+        CREATE TABLE IF NOT EXISTS transaction (
+          id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+          utilisateur_id INT NOT NULL,
+          mois INT NOT NULL,
+          transaction_id VARCHAR(100) NOT NULL,
+          date_transaction DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+          FOREIGN KEY (utilisateur_id) REFERENCES inscription(id) ON DELETE CASCADE
+      );
+
 
 ";
 
