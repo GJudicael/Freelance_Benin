@@ -289,7 +289,7 @@ function afficherEtoiles($moyenne) {
                         <?php foreach ($group as $entreprise): ?>
                             <div class="col-lg-3 col-md-6 ">
                                 <div class="card text-center py-3 my-2 border-0 " style="width: 18vw;">
-                                    <img src="../photo_profile/<?= htmlspecialchars($entreprise['photo']) ?>"
+                                    <img src="../logo/<?= htmlspecialchars($entreprise['photo']) ?>"
                                         class="rounded-circle mx-auto d-block" alt="Entreprise" height="100" width="100">
                                     <div class="card-body">
                                         <h5 class="card-title fw-bold"><?= htmlspecialchars($entreprise['nom']) ?></h5>

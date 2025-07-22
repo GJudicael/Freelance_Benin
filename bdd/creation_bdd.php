@@ -191,6 +191,18 @@ try {
           FOREIGN KEY (utilisateur_id) REFERENCES inscription(id) ON DELETE CASCADE
       );
 
+      CREATE TABLE offres_entreprise (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      entreprise_id INT NOT NULL,
+      titre VARCHAR(255) NOT NULL, 
+      description TEXT NOT NULL, 
+      categorie VARCHAR(100) NOT NULL, 
+      image VARCHAR(255) DEFAULT NULL, 
+      date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
+      statut ENUM('active', 'inactive') DEFAULT 'active',
+      FOREIGN KEY (entreprise_id) REFERENCES inscription(id) ON DELETE CASCADE
+);
+
 
 ";
 
