@@ -6,6 +6,7 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once(__DIR__ . "/../bdd/creation_bdd.php");
 
 $user_id = $_SESSION["user_id"];
+$user_name = $_SESSION['user_name'];
 
 // Récupération des freelanceurs en bdd
 $smt = $bdd->prepare("SELECT i.nom, i.prenom, i.nomDUtilisateur, i.photo, f.bio, f.user_id FROM inscription i 
