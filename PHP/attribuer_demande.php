@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once(__DIR__."/../bdd/creation_bdd.php");
-
+require_once(__DIR__.'/../notifications/fonctions_utilitaires.php');
 // Vérifications de sécurité
 if (!isset($_SESSION['user_id']) || $_SERVER['REQUEST_METHOD'] !== 'POST') {
     header("Location: login.php");
@@ -48,6 +48,30 @@ try {
     if (!$success) {
         throw new Exception("Erreur lors de la mise à jour de la demande");
     }
+// Récupérer les infos du demandeur
+$stmtDemandeur = $bdd->prepare("SELECT nom, prenom FROM inscription WHERE id = :id");
+$stmtDemandeur->bindParam(':id', $_SESSION['user_id'], PDO::PARAM_INT);
+$stmtDemandeur->execute();
+$demandeur = $stmtDemandeur->fetch(PDO::FETCH_ASSOC);
+
+// Récupérer l’ID du freelance
+$stmtFreelance = $bdd->prepare("SELECT id FROM inscription WHERE nomDUtilisateur = :username AND role = 'freelance'");
+$stmtFreelance->bindParam(':username', $_POST['freelance_username'], PDO::PARAM_STR);
+$stmtFreelance->execute();
+$freelancer = $stmtFreelance->fetch(PDO::FETCH_ASSOC);
+
+// Envoyer la notification
+$stmtTitre = $bdd->prepare("SELECT titre FROM demande WHERE id = ?");
+$stmtTitre->execute([$demande_id]);
+$demande = $stmtTitre->fetch(PDO::FETCH_ASSOC);
+
+
+
+if ($freelancer) {
+    $receiver_id = $freelancer['id'];
+    $message = $demandeur['nom'].' '.$demandeur['prenom'].' vous a attribué la mission : "' . $demande['titre'] . '".';
+    ajouterNotification($message, $receiver_id);
+}
 
     $_SESSION['success'] = "Demande attribuée avec succès à $freelance_username";
 } catch (Exception $e) {

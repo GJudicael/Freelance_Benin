@@ -43,7 +43,7 @@
         <div class="card-body">
           <h4 class="card-title text-primary">1 Mois</h4>
           <h5 class="card-subtitle mb-2 text-muted">5 000 FCFA</h5>
-          <a href="paiement.php?plan=1mois" class="btn btn-outline-primary btn-subscribe">S'abonner</a>
+          <a href="traitement_du_paiement.php?plan=1mois&prix=5000" class="btn btn-outline-primary btn-subscribe">S'abonner</a>
         </div>
       </div>
 
@@ -52,7 +52,7 @@
         <div class="card-body">
           <h4 class="card-title text-success">3 Mois</h4>
           <h5 class="card-subtitle mb-2 text-muted">12 000 FCFA</h5>
-          <a href="paiement.php?plan=3mois" class="btn btn-outline-success btn-subscribe">S'abonner</a>
+          <a href="traitement_du_paiement.php?plan=3mois&prix=12000" class="btn btn-outline-success btn-subscribe">S'abonner</a>
         </div>
       </div>
 
@@ -61,7 +61,7 @@
         <div class="card-body">
           <h4 class="card-title text-warning">12 Mois</h4>
           <h5 class="card-subtitle mb-2 text-muted">40 000 FCFA</h5>
-          <a href="paiement.php?plan=12mois" class="btn btn-outline-warning btn-subscribe">S'abonner</a>
+          <a href="traitement_du_paiement.php?plan=12mois&prix=40000" class="btn btn-outline-warning btn-subscribe">S'abonner</a>
         </div>
       </div>
 
@@ -71,9 +71,10 @@
     <div class="card mx-auto offer-card shadow-sm border-info" style="max-width: 400px;">
       <div class="card-body">
         <h4 class="card-title text-info">Durée personnalisée</h4>
-        <form action="paiement.php" method="GET">
+        <form action="traitement_du_paiement.php" method="GET">
           <label for="mois" class="form-label">Entrez le nombre de mois</label>
           <input type="number" name="mois" id="mois" min="1" max="24" class="form-control mb-3" placeholder="Ex: 6" required>
+          <input type="hidden" name="prix_unitaire" value="5000">
           <button type="submit" class="btn btn-outline-info btn-subscribe">S'abonner</button>
         </form>
       </div>

@@ -15,8 +15,8 @@ WHERE f.user_id != ?");
 
 $smt->execute([$user_id]);
 $freelancers = $smt->fetchALl(PDO::FETCH_ASSOC);
-var_dump($freelancers);
-echo '<br>';
+//var_dump($freelancers);
+//echo '<br>';
 
 
 // Récupération des entreprises en bdd
@@ -25,43 +25,43 @@ WHERE i.id != ? AND i.role = 'entreprise' ");
 
 $smt->execute([$user_id]);
 $entreprise = $smt->fetchALl(PDO::FETCH_ASSOC);
-var_dump($entreprise);
-echo '<br>';
+//var_dump($entreprise);
+//echo '<br>';
 
 
 
 
 // Récupération des notes en bdd pour les freelanceurs
 $stmtRatings = $bdd->prepare("SELECT 
-                              sum(n.stars) AS total_note,
-                              n.freelancer_id ,  COUNT(*) AS occurence
-                              FROM notation n
-                              JOIN demande d ON n.order_id = d.id
-                              JOIN freelancers f ON f.id = n.freelancer_id
-                              WHERE f.user_id != :user_id 
-                              AND d.statut = 'terminé'
-                              GROUP BY freelancer_id");
+                            sum(n.stars) AS total_note,
+                            n.freelancer_id ,  COUNT(*) AS occurence
+                            FROM notation n
+                            JOIN demande d ON n.order_id = d.id
+                            JOIN freelancers f ON f.id = n.freelancer_id
+                            WHERE f.user_id != :user_id 
+                            AND d.statut = 'terminé'
+                            GROUP BY freelancer_id");
 
 $stmtRatings->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 $stmtRatings->execute();
 $ratings = $stmtRatings->fetchAll(PDO::FETCH_ASSOC);
-var_dump($ratings);
-echo '<br>';
+//var_dump($ratings);
+//echo '<br>';
 
 
 
 // Récupération des notes en bdd pour les entreprises
 $stmtRatingsentreprise = $bdd->prepare("SELECT n.stars,n.freelancer_id
-                             FROM notation n
-                             JOIN demande d ON n.order_id = d.id
-                             JOIN inscription i ON i.id = n.freelancer_id
-                             WHERE i.id != :user_id
-                             AND d.statut = 'terminé' AND i.role = 'entreprise' ");
+                            FROM notation n
+                            JOIN demande d ON n.order_id = d.id
+                            JOIN inscription i ON i.id = n.freelancer_id
+                            WHERE i.id != :user_id
+                            AND d.statut = 'terminé' AND i.role = 'entreprise' ");
 $stmtRatingsentreprise->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 $stmtRatingsentreprise->execute();
 $ratingsentreprise = $stmtRatingsentreprise->fetchAll(PDO::FETCH_ASSOC);
-var_dump($ratingsentreprise);
-echo '<br>';
+//var_dump($ratingsentreprise);
+//echo '<br>';
 
 
 
@@ -134,12 +134,12 @@ if ($total_ratings > 0) {
                         <div class="carousel-item <?= $active ? 'active' : '' ?>">
                             <div class="row justify-content-center px-3">
                                 <?php foreach ($group as $freelancer): ?>
-                                   
+                                
                                     
                                     
                                     <?php if ($freelancer['prenom'] != 'Utilisateur') {?>
 
-  
+
 
                                         <div class="col-lg-3 col-md-6 ">
                                             <div class="card text-center py-3 my-2 border-0 " style="width: 18vw;">
@@ -174,12 +174,7 @@ if ($total_ratings > 0) {
                                                     <a href="info_profile.php?id=<?= $freelancer['user_id'] ?>&user_name=<?= $freelancer['nomDUtilisateur'] ?>"
                                                         class="btn btn-primary">Voir Profil</a>
                                                 </div>
-<<<<<<< HEAD
-=======
-                                                </p>
-                                                <a href="info_profile.php?id=<?= $freelancer['user_id'] ?>"
-                                                    class="btn btn-primary">Voir Profil</a>
->>>>>>> 4df841b271754b6517befdec3517ce69c88a6a13
+
                                             </div>
                                         </div>
                                     <?php } ?>
