@@ -87,41 +87,50 @@ if ($total_ratings > 0) {
                         <div class="carousel-item <?= $active ? 'active' : '' ?>">
                             <div class="row justify-content-center px-3">
                                 <?php foreach ($group as $freelancer): ?>
-                                    <div class="col-lg-3 col-md-6 ">
-                                        <div class="card text-center py-3 my-2 border-0 " style="width: 18vw;">
-                                            <img src="../photo_profile/<?= htmlspecialchars($freelancer['photo']) ?>"
-                                                class="rounded-circle mx-auto d-block" alt="Freelancer" height="100"
-                                                width="100">
-                                            <div class="card-body">
-                                                <h5 class="card-title fw-bold"><?= htmlspecialchars($freelancer['nom']) ?>
-                                                    <?= htmlspecialchars($freelancer['prenom']) ?>
-                                                </h5>
+                                   
+                                    
+                                    
+                                    <?php if ($freelancer['prenom'] != 'Utilisateur') {?>
 
-                                                <p class="card-text"><?= htmlspecialchars($freelancer['bio']) ?>
-                                                <div class="rating card-text mb-2">
-                                                    <?php
-                                                    $full_stars = floor($average_rating);
-                                                    $has_half_star = ($average_rating - $full_stars) >= 0.5;
-                                                    for ($i = 1; $i <= 5; $i++):
-                                                        ?>
-                                                        <i class="bi <?php
-                                                        if ($i <= $full_stars) {
-                                                            echo 'bi-star-fill text-warning';
-                                                        } elseif ($has_half_star && $i == $full_stars + 1) {
-                                                            echo 'bi-star-half text-warning';
-                                                        } else {
-                                                            echo 'bi-star';
-                                                        }
-                                                        ?>"></i>
-                                                    <?php endfor; ?>
+  
 
+                                        <div class="col-lg-3 col-md-6 ">
+                                            <div class="card text-center py-3 my-2 border-0 " style="width: 18vw;">
+                                                <img src="../photo_profile/<?= htmlspecialchars($freelancer['photo']) ?>"
+                                                    class="rounded-circle mx-auto d-block" alt="Freelancer" height="100"
+                                                    width="100">
+                                                <div class="card-body">
+                                                    <h5 class="card-title fw-bold"><?= htmlspecialchars($freelancer['nom']) ?>
+                                                        <?= htmlspecialchars($freelancer['prenom']) ?>
+                                                    </h5>
+
+                                                    <p class="card-text"><?= htmlspecialchars($freelancer['bio']) ?>
+                                                    <div class="rating card-text mb-2">
+                                                        <?php
+                                                        $full_stars = floor($average_rating);
+                                                        $has_half_star = ($average_rating - $full_stars) >= 0.5;
+                                                        for ($i = 1; $i <= 5; $i++):
+                                                            ?>
+                                                            <i class="bi <?php
+                                                            if ($i <= $full_stars) {
+                                                                echo 'bi-star-fill text-warning';
+                                                            } elseif ($has_half_star && $i == $full_stars + 1) {
+                                                                echo 'bi-star-half text-warning';
+                                                            } else {
+                                                                echo 'bi-star';
+                                                            }
+                                                            ?>"></i>
+                                                        <?php endfor; ?>
+
+                                                    </div>
+                                                    </p>
+                                                    <a href="info_profile.php?id=<?= $freelancer['user_id'] ?>&user_name=<?= $freelancer['nomDUtilisateur'] ?>"
+                                                        class="btn btn-primary">Voir Profil</a>
                                                 </div>
-                                                </p>
-                                                <a href="info_profile.php?id=<?= $freelancer['user_id'] ?>&user_name=<?= $freelancer['nomDUtilisateur'] ?>"
-                                                    class="btn btn-primary">Voir Profil</a>
                                             </div>
                                         </div>
-                                    </div>
+                                    <?php } ?>
+                                        
                                 <?php endforeach; ?>
                             </div>
                         </div>
