@@ -61,6 +61,9 @@ if (isset($_POST['envoyer'])) {
                 if (!$user['est_confirme']) {
                     $message_error = ' Veuillez confirmer votre compte via le lien reçu par email.';
                 } elseif (password_verify($mot_de_passe, $user['motDePasse'])) {
+        // Vérifier si l'utilisateur a un abonnement actif
+                $aujourdhui = date('Y-m-d');
+                if (!empty($user['date_fin_abonnement']) && $user['date_fin_abonnement'] >= $aujourdhui) {
                     $_SESSION["user_name"] = $user['nomDUtilisateur'];
                     $_SESSION["user_id"] = $user['id'];
                     $_SESSION['connecte'] = true;
@@ -68,6 +71,10 @@ if (isset($_POST['envoyer'])) {
                     header("Location: http://localhost/freelance_benin/front_projet_EDL/accueil.php");
                     exit();
                 } else {
+                    $message_error = '⏳ Votre abonnement est expiré. Veuillez le renouveler pour accéder à votre espace.';
+                }
+            }
+ else {
                     $error["password"] = "Mot de passe incorrect";
                 }
             } else {

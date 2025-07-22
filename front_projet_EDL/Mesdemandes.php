@@ -4,6 +4,7 @@
 require_once(__DIR__."/../bdd/creation_bdd.php");
 require_once(__DIR__."/../PHP/traitement.php");
 
+
 if(!isset($_SESSION["connecte"]) || $_SESSION["connecte"]!== true){
         header('Location: ../index.php');
         exit();
@@ -135,7 +136,8 @@ $demandes = $result->fetchAll(PDO::FETCH_ASSOC);
                         // Récupération de la liste des freelancers
                         $reqFreelancers = $bdd->prepare("SELECT nomDUtilisateur 
                                                         FROM inscription 
-                                                        WHERE role = 'freelance'");
+                                                        WHERE role = 'freelance' 
+                                                        AND nomDUtilisateur <> 'Utilisateur'");
                         $reqFreelancers->execute();
                         $freelancers = $reqFreelancers->fetchAll(PDO::FETCH_ASSOC);
 
@@ -146,11 +148,15 @@ $demandes = $result->fetchAll(PDO::FETCH_ASSOC);
                     </form>
 
             <?php else: ?>
+                
                 <div class="alert alert-success mt-3 p-2">
                     <i class="bi bi-check-circle"></i> Attribué à: 
                     <strong><a class="text-dark text-decoration-none" href="info_profile.php?id=<?= htmlspecialchars($demande['user_id'])?>"><?= htmlspecialchars($demande['freelance_nom'].'  '.$demande['freelance_prenom']  ?? 'Inconnu') ?></a></strong>
                     (le <?= date('d/m/Y', strtotime($demande['date_attribution'])) ?>)
+                    
                 </div>
+                
+               
                 <a href="suivi_notation_projet_client.php?id=<?= $demande['id'] ?>" class="btn btn-sm btn-info mt-2">
                         <i class="bi bi-eye"></i> Voir le suivi
                 </a>

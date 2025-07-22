@@ -2,41 +2,86 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Paiement personnalisé avec FedaPay</title>
-  <script src="https://cdn.fedapay.com/checkout.js?v=1.1.7"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Abonnement - FreeBenin</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .btn-subscribe {
+      font-size: 1.1rem;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+    }
+    .btn-subscribe:hover {
+      transform: scale(1.05);
+    }
+    .offer-card {
+      min-width: 280px;
+      border-radius: 15px;
+    }
+    input[type="number"] {
+      border-radius: 50px;
+      padding: 0.7rem;
+      font-size: 1rem;
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-  <h2>Formulaire de paiement</h2>
-  <form id="paymentForm">
-    <input type="text" id="lastname" placeholder="Nom" required><br>
-    <input type="email" id="email" placeholder="Email" required><br>
-    <input type="number" id="amount" placeholder="Montant en FCFA" required><br>
-    <button type="submit">Payer maintenant</button>
-  </form>
 
-  <script>
-    const widget = FedaPay.init({
-      public_key: 'pk_live_bmmv8cm21X7OMwrYhGShiSnb'
-    });
+  <div class="container text-center py-5">
+    <h1 class="fw-bold mb-3">Abonnement FreeBenin</h1>
+    <p class="text-muted mb-5">Choisissez ou entrez le nombre de mois souhaité ✨</p>
 
-    document.getElementById('paymentForm').addEventListener('submit', function(e) {
-      e.preventDefault();
+    <div class="d-flex flex-column flex-md-row justify-content-center gap-4 mb-5">
 
-      const lastname = document.getElementById('lastname').value;
-      const email = document.getElementById('email').value;
-      const amount = document.getElementById('amount').value;
+      <!-- Offre 1 Mois -->
+      <div class="card offer-card shadow-sm border-primary">
+        <div class="card-body">
+          <h4 class="card-title text-primary">1 Mois</h4>
+          <h5 class="card-subtitle mb-2 text-muted">5 000 FCFA</h5>
+          <a href="traitement_du_paiement.php?plan=1mois&prix=5000" class="btn btn-outline-primary btn-subscribe">S'abonner</a>
+        </div>
+      </div>
 
-      widget.open({
-        transaction: {
-          amount: 2,
-          description: 'Paiement personnalisé'
-        },
-        customer: {
-          lastname: lastname,
-          email: email
-        }
-      });
-    });
-  </script>
+      <!-- Offre 3 Mois -->
+      <div class="card offer-card shadow-sm border-success">
+        <div class="card-body">
+          <h4 class="card-title text-success">3 Mois</h4>
+          <h5 class="card-subtitle mb-2 text-muted">12 000 FCFA</h5>
+          <a href="traitement_du_paiement.php?plan=3mois&prix=12000" class="btn btn-outline-success btn-subscribe">S'abonner</a>
+        </div>
+      </div>
+
+      <!-- Offre 12 Mois -->
+      <div class="card offer-card shadow-sm border-warning">
+        <div class="card-body">
+          <h4 class="card-title text-warning">12 Mois</h4>
+          <h5 class="card-subtitle mb-2 text-muted">40 000 FCFA</h5>
+          <a href="traitement_du_paiement.php?plan=12mois&prix=40000" class="btn btn-outline-warning btn-subscribe">S'abonner</a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Champ personnalisé -->
+    <div class="card mx-auto offer-card shadow-sm border-info" style="max-width: 400px;">
+      <div class="card-body">
+        <h4 class="card-title text-info">Durée personnalisée</h4>
+        <form action="traitement_du_paiement.php" method="GET">
+          <label for="mois" class="form-label">Entrez le nombre de mois</label>
+          <input type="number" name="mois" id="mois" min="1" max="24" class="form-control mb-3" placeholder="Ex: 6" required>
+          <input type="hidden" name="prix_unitaire" value="5000">
+          <button type="submit" class="btn btn-outline-info btn-subscribe">S'abonner</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
