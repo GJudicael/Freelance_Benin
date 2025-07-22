@@ -37,51 +37,73 @@
     <p class="text-muted mb-5">Choisissez ou entrez le nombre de mois souhaité ✨</p>
 
     <div class="d-flex flex-column flex-md-row justify-content-center gap-4 mb-5">
-
-      <!-- Offre 1 Mois -->
-      <div class="card offer-card shadow-sm border-primary">
-        <div class="card-body">
-          <h4 class="card-title text-primary">1 Mois</h4>
-          <h5 class="card-subtitle mb-2 text-muted">5 000 FCFA</h5>
-          <a href="traitement_du_paiement.php?plan=1mois&prix=5000" class="btn btn-outline-primary btn-subscribe">S'abonner</a>
-        </div>
-      </div>
-
-      <!-- Offre 3 Mois -->
-      <div class="card offer-card shadow-sm border-success">
-        <div class="card-body">
-          <h4 class="card-title text-success">3 Mois</h4>
-          <h5 class="card-subtitle mb-2 text-muted">12 000 FCFA</h5>
-          <a href="traitement_du_paiement.php?plan=3mois&prix=12000" class="btn btn-outline-success btn-subscribe">S'abonner</a>
-        </div>
-      </div>
-
-      <!-- Offre 12 Mois -->
-      <div class="card offer-card shadow-sm border-warning">
-        <div class="card-body">
-          <h4 class="card-title text-warning">12 Mois</h4>
-          <h5 class="card-subtitle mb-2 text-muted">40 000 FCFA</h5>
-          <a href="traitement_du_paiement.php?plan=12mois&prix=40000" class="btn btn-outline-warning btn-subscribe">S'abonner</a>
-        </div>
-      </div>
-
+      <!-- Offre simple -->
+      <button onclick="launchPayment(1, 50)" class="btn btn-outline-primary btn-subscribe">1 Mois - 5 000 FCFA</button>
+      <button onclick="launchPayment(3, 12000)" class="btn btn-outline-success btn-subscribe">3 Mois - 12 000 FCFA</button>
+      <button onclick="launchPayment(12, 40000)" class="btn btn-outline-warning btn-subscribe">12 Mois - 40 000 FCFA</button>
     </div>
 
-    <!-- Champ personnalisé -->
+    <!-- Durée personnalisée -->
     <div class="card mx-auto offer-card shadow-sm border-info" style="max-width: 400px;">
       <div class="card-body">
         <h4 class="card-title text-info">Durée personnalisée</h4>
-        <form action="traitement_du_paiement.php" method="GET">
-          <label for="mois" class="form-label">Entrez le nombre de mois</label>
-          <input type="number" name="mois" id="mois" min="1" max="24" class="form-control mb-3" placeholder="Ex: 6" required>
-          <input type="hidden" name="prix_unitaire" value="5000">
+        <form onsubmit="event.preventDefault(); customPayment();">
+          <input type="number" id="customMois" min="1" max="24" class="form-control mb-3" placeholder="Ex: 6" required>
           <button type="submit" class="btn btn-outline-info btn-subscribe">S'abonner</button>
         </form>
       </div>
     </div>
-
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- SDK Kkiapay -->
+  <script src="https://cdn.kkiapay.me/k.js"></script>
+  <script>
+    function launchPayment(mois, montant) {
+      sessionStorage.setItem("mois", mois); // pour le callback
+      openKkiapayWidget({
+        amount: montant,
+        key: "ea9534dc15c123315069269740eb2c74980ae74f",
+        callback: "paiement_success.php",
+        theme: "#0095ff",
+        position: "center",
+        sandbox: false,
+        reason: "Abonnement FreeBenin de " + mois + " mois"
+      });
+    }
+
+    function customPayment() {
+      let mois = parseInt(document.getElementById("customMois").value);
+      let montant = 0;
+
+      if (mois === 1) montant = 5000;
+      else if (mois === 3) montant = 12000;
+      else if (mois === 12) montant = 40000;
+      else {
+        let forfaits = Math.floor(mois / 3);
+        let reste = mois % 3;
+        montant = (forfaits >= 4 ? 40000 : forfaits * 12000) + reste * 5000;
+      }
+
+      launchPayment(mois, montant);
+    }
+    addSuccessListener(response => {
+  const transactionId = response.transactionId;
+  const mois = sessionStorage.getItem("mois");
+
+  fetch("callback.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      transaction_id: transactionId,
+      mois: mois
+    })
+  }).then(() => {
+    window.location.href = "paiement_success.php";
+  });
+});
+
+  </script>
 </body>
 </html>
