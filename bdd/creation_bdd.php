@@ -191,7 +191,7 @@ try {
           FOREIGN KEY (utilisateur_id) REFERENCES inscription(id) ON DELETE CASCADE
       );
 
-      CREATE TABLE offres_entreprise (
+      CREATE TABLE IF NOT EXISTS offres_entreprise (
       id INT AUTO_INCREMENT PRIMARY KEY,
       entreprise_id INT NOT NULL,
       titre VARCHAR(255) NOT NULL, 
