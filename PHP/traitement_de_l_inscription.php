@@ -50,10 +50,13 @@ if (isset($_POST['envoyer'])) {
                     $error["nomDutilisateur"] = "Ce nom d'utilisateur existe déjà";
                 } else {
                     // Insérer le nouvel utilisateur
+                   $debut = date('Y-m-d');
+                    $fin = date('Y-m-d', strtotime('+6 months'));
+
                     $token = bin2hex(random_bytes(32)); // Génère un token sécurisé
                     $requete = $bdd->prepare('
-                        INSERT INTO inscription(nom, prenom, numero, email, motDePasse, nomDUtilisateur, token)
-                        VALUES(:nom, :prenom, :numero, :email, :motDePasse, :nomDUtilisateur, :token)
+                        INSERT INTO inscription(nom, prenom, numero, email, motDePasse, nomDUtilisateur, token, date_debut_abonnement, date_fin_abonnement)
+                        VALUES(:nom, :prenom, :numero, :email, :motDePasse, :nomDUtilisateur, :token, :date_debut, :date_fin)
                     ');
 
                     $requete->execute([
@@ -61,10 +64,11 @@ if (isset($_POST['envoyer'])) {
                         'prenom' => $prenom,
                         'numero' => $numero,
                         'email' => $email,
-
                         'motDePasse' => password_hash($motDepasse, PASSWORD_DEFAULT),
                         'nomDUtilisateur' => $nomUtilisateur,
-                        'token' => $token
+                        'token' => $token,
+                        'date_debut' => $debut,
+                        'date_fin' => $fin
                     ]);
 
                     traieMail($email, $token);

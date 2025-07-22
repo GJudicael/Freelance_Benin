@@ -1,11 +1,11 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+session_start();
+
 
 require_once(__DIR__ . "/../bdd/creation_bdd.php");
 
 $user_id = $_SESSION["user_id"];
+$user_name = $_SESSION['user_name'];
 
 // Récupération des freelanceurs en bdd
 $smt = $bdd->prepare("SELECT i.nom, i.prenom, i.nomDUtilisateur, i.photo, f.bio, f.user_id FROM inscription i 
@@ -35,6 +35,7 @@ $entreprise = $smt->fetchALl(PDO::FETCH_ASSOC);
 
 // Récupération des notes en bdd pour les freelanceurs
 $stmtRatings = $bdd->prepare("SELECT 
+
                               sum(n.stars) AS total_note,
                               f.user_id,
                               n.freelancer_id , COUNT(*) AS occurence
@@ -44,6 +45,7 @@ $stmtRatings = $bdd->prepare("SELECT
                               WHERE f.user_id != :user_id 
                               AND d.statut = 'terminé'
                               GROUP BY freelancer_id");
+
 
 $stmtRatings->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 $stmtRatings->execute();
@@ -55,6 +57,7 @@ $ratings = $stmtRatings->fetchAll(PDO::FETCH_ASSOC);
 
 
 // Récupération des notes en bdd pour les entreprises
+
 $stmtRatingsentreprise = $bdd->prepare("SELECT 
                              sum(n.stars) AS total_note,
                              i.id,
@@ -124,11 +127,7 @@ function afficherEtoiles($moyenne) {
     return $etoiles;
 }
 
-
-
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -169,7 +168,8 @@ function afficherEtoiles($moyenne) {
             </p>
         </section>
 
-       <section class=" my-4 py-4 bg-black bg-opacity-75 ">
+
+        <section class=" my-4 py-4 bg-black bg-opacity-75 ">
     <h3 class="mb-2 text-center fw-bold text-warning p-2 historique"> NOS FREELANCEURS </h3>
 
     <div id="freelancerCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -179,8 +179,6 @@ function afficherEtoiles($moyenne) {
             $perSlide = 3;
             $chunked = array_chunk($freelancers, $perSlide);
             $active = true;
-
-            // Préparation des moyennes
             $notes = [];
             foreach ($ratings as $rating) {
                 if (!empty($rating['user_id']) && $rating['occurence'] > 0) {
@@ -193,58 +191,63 @@ function afficherEtoiles($moyenne) {
                 <div class="carousel-item <?= $active ? 'active' : '' ?>">
                     <div class="row justify-content-center px-3">
                         <?php foreach ($group as $freelancer): ?>
-                            <div class="col-lg-3 col-md-6 ">
-                                <div class="card text-center py-3 my-2 border-0 " style="width: 18vw;">
-                                    <img src="../photo_profile/<?= htmlspecialchars($freelancer['photo']) ?>"
-                                        class="rounded-circle mx-auto d-block" alt="Freelancer" height="100" width="100">
-                                    <div class="card-body">
-                                        <h5 class="card-title fw-bold"><?= htmlspecialchars($freelancer['nom']) ?>
-                                            <?= htmlspecialchars($freelancer['prenom']) ?>
-                                        </h5>
-                                        <p class="card-text"><?= htmlspecialchars($freelancer['bio']) ?></p>
 
-                                        <div class="rating card-text mb-2">
-                                            <?php
-                                            $id = $freelancer['user_id']; 
-                                            //$moyenne = isset($notes[$id]) ? round($notes[$id], 1) : 0;
-                                            //echo afficherEtoiles($moyenne);
-                                            ?>
+                            <?php if ($freelancer['prenom'] != 'Utilisateur') {?>
 
-                                                 <div class="mb-3">
-                                                <h5>Note moyenne:</h5>
-                                                <div class="rating">
-                                                    <?php
-                                                    if (isset($notes[$id])) {
-                                                        $moyenne = $notes[$id];
-                                                    }
-                                                    else {
-                                                        $moyenne = 0;
-                                                    }
-                   
-                                            
-                                                    $full_stars = floor($moyenne);
-                                                    $has_half_star = ($moyenne - $full_stars) >= 0.5;
-                                                    for ($i = 1; $i <= 5; $i++):
-                                                    ?>
-                                                    <i class="bi <?php
-                                                    if ($i <= $full_stars) {
-                                                        echo 'bi-star-fill text-warning';
-                                                    } elseif ($has_half_star && $i == $full_stars + 1) {
-                                                        echo 'bi-star-half text-warning';
-                                                    } else {
-                                                        echo 'bi-star';
-                                                    }
-                                                    ?>"></i>
-                                                    <?php endfor; ?>
-                                                </div>
-                                                </div>
-                                            
+                                <div class="col-lg-3 col-md-6 ">
+                                    <div class="card text-center py-3 my-2 border-0 " style="width: 18vw;">
+                                        <img src="../photo_profile/<?= htmlspecialchars($freelancer['photo']) ?>"
+                                            class="rounded-circle mx-auto d-block" alt="Freelancer" height="100" width="100">
+                                        <div class="card-body">
+                                            <h5 class="card-title fw-bold"><?= htmlspecialchars($freelancer['nom']) ?>
+                                                <?= htmlspecialchars($freelancer['prenom']) ?>
+                                            </h5>
+                                            <p class="card-text"><?= htmlspecialchars($freelancer['bio']) ?></p>
+
+                                            <div class="rating card-text mb-2">
+                                                <?php
+                                                $id = $freelancer['user_id']; 
+                                                //$moyenne = isset($notes[$id]) ? round($notes[$id], 1) : 0;
+                                                //echo afficherEtoiles($moyenne);
+                                                ?>
+
+                                                    <div class="mb-3">
+                                                    <h5>Note moyenne:</h5>
+                                                    <div class="rating">
+                                                        <?php
+                                                        if (isset($notes[$id])) {
+                                                            $moyenne = $notes[$id];
+                                                        }
+                                                        else {
+                                                            $moyenne = 0;
+                                                        }
+                    
+                                                
+                                                        $full_stars = floor($moyenne);
+                                                        $has_half_star = ($moyenne - $full_stars) >= 0.5;
+                                                        for ($i = 1; $i <= 5; $i++):
+                                                        ?>
+                                                        <i class="bi <?php
+                                                        if ($i <= $full_stars) {
+                                                            echo 'bi-star-fill text-warning';
+                                                        } elseif ($has_half_star && $i == $full_stars + 1) {
+                                                            echo 'bi-star-half text-warning';
+                                                        } else {
+                                                            echo 'bi-star';
+                                                        }
+                                                        ?>"></i>
+                                                        <?php endfor; ?>
+                                                    </div>
+                                                    </div>
+                                                
+                                            </div>
+
+                                            <a href="info_profile.php?id=<?= $freelancer['user_id'] ?>" class="btn btn-primary">Voir Profil</a>
                                         </div>
-
-                                        <a href="info_profile.php?id=<?= $freelancer['user_id'] ?>" class="btn btn-primary">Voir Profil</a>
                                     </div>
+
                                 </div>
-                            </div>
+                            <?php } ?>
                         <?php endforeach; ?>
                     </div>
                 </div>

@@ -94,7 +94,8 @@ require_once(__DIR__ . "/../PHP/traitement_de_la_connexion.php");
             </form>
             <p class=" text-center"> Êtes-vous nouveau sur le site ?
                 <a href="Creation_d_un_compte.php" class=" text-decoration-none">Créez un compte ordinaire </a> ou <a
-                    href="compte_entreprise.php" class=" text-decoration-none">Créez un compte entreprise </a>
+                    href="compte_entreprise.php" class=" text-decoration-none">Créez un compte entreprise </a> ou <a href="../Paiement/paiement.html" class="text-decoration-none text-primary">Réabonnez-vous</a>
+
             </p>
 
         </section>
