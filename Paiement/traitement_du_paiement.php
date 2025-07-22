@@ -1,69 +1,59 @@
-<?php
+<?php 
+session_start(); // Démarre la session
+
 require_once __DIR__ . '/../vendor/autoload.php';
-require_once __DIR__ . '/../bdd/creation_bdd.php';
 
 use Kkiapay\Kkiapay;
 
 $publicKey  = "ea9534dc15c123315069269740eb2c74980ae74f";
-$privateKey = "pk_60d9268ac6adf471691f93ca71ae6a61f2353c8f044967a257de97c7c7ce1270";
-$secretKey  = "sk_3dd42cfbae5ec2e0bcf50fe5d966be0e581b9616ddba4343c622a0474c86808e";
 
-// Récupérer l'ID de la transaction
-$transactionId = $_GET['transaction_id'] ?? null;
+// Récupération des données
+$plan = $_GET['plan'] ?? null;
+$mois = isset($_GET['mois']) ? intval($_GET['mois']) : 0;
+$prix_unitaire = isset($_GET['prix_unitaire']) ? intval($_GET['prix_unitaire']) : 5000;
+$prix = 0;
 
-if (!$transactionId) {
-    die("Aucune transaction reçue.");
+// Déterminer la durée
+if ($mois <= 0 && $plan) {
+    if ($plan === "1mois") {
+        $mois = 1;
+    } elseif ($plan === "3mois") {
+        $mois = 3;
+    } elseif ($plan === "12mois") {
+        $mois = 12;
+    }
 }
 
-session_start();
-$userId = $_SESSION['user_id'] ?? null;
-$mois = $_SESSION['mois'] ?? 1; // Défaut 1 mois si rien n'est en session
+// Calcul du prix
+if ($mois <= 0) {
+    die("Durée invalide");
+} elseif ($mois === 1) {
+    $prix = 5000;
+} elseif ($mois === 3) {
+    $prix = 12000;
+} elseif ($mois === 12) {
+    $prix = 40000;
+} else {
+    $nb_forfaits = intdiv($mois, 3);
+    $reste = $mois % 3;
+    $prix = 0;
 
-if (!$userId) {
-    die("Utilisateur non connecté.");
-}
-
-// Vérification du paiement
-$kkiapay = new Kkiapay($publicKey, $privateKey, $secretKey, false); // false = production
-try {
-    $transaction = $kkiapay->verifyTransaction($transactionId);
-
-    if ($transaction->status === "SUCCESS") {
-
-        // 1. Mise à jour de la date de fin d’abonnement
-        $update = $bdd->prepare("
-            UPDATE inscription
-            SET date_fin_abonnement = IF(
-                date_fin_abonnement >= CURDATE(),
-                DATE_ADD(date_fin_abonnement, INTERVAL :mois MONTH),
-                DATE_ADD(CURDATE(), INTERVAL :mois MONTH)
-            )
-            WHERE id = :user_id
-        ");
-        $update->execute([
-            'mois' => $mois,
-            'user_id' => $userId
-        ]);
-
-        // 2. Insertion dans la table transaction
-        $insert = $bdd->prepare("
-            INSERT INTO transaction (utilisateur_id, mois, transaction_id)
-            VALUES (:utilisateur_id, :mois, :transaction_id)
-        ");
-        $insert->execute([
-            'utilisateur_id' => $userId,
-            'mois' => $mois,
-            'transaction_id' => $transactionId
-        ]);
-
-        
-        header("Location: paiement_success.php");
-        exit();
-    } else {
-        header("Location: paiement_echec.php");
-        exit();
+    if ($nb_forfaits >= 4) {
+        $prix += 40000;
+        $nb_forfaits -= 4;
     }
 
-} catch (Exception $e) {
-    die("Erreur de vérification : " . $e->getMessage());
+    $prix += $nb_forfaits * 12000;
+    $prix += $reste * 5000;
 }
+
+// Stocker les données en session
+$_SESSION['mois'] = $mois;
+$_SESSION['user_id'] = $_SESSION['user_id'] ?? null; // Doit être défini lors de la connexion
+
+// Redirection vers Kkiapay
+$callbackUrl = "callback.php"; // À adapter
+$url = "https://widget-v2.kkiapay.me/?amount={$prix}&key={$publicKey}&sandbox=false&reason=Abonnement%20FreeBenin%20{$mois}mois&callback={$callbackUrl}";
+
+header("Location: $url");
+exit;
