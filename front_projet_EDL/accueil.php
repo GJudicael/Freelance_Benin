@@ -1,10 +1,11 @@
 <?php
-   @ session_start();
+session_start();
 
 
 require_once(__DIR__ . "/../bdd/creation_bdd.php");
 
 $user_id = $_SESSION["user_id"];
+$user_name = $_SESSION['user_name'];
 
 // Récupération des freelanceurs en bdd
 $smt = $bdd->prepare("SELECT i.nom, i.prenom, i.nomDUtilisateur, i.photo, f.bio, f.user_id FROM inscription i 
@@ -14,10 +15,9 @@ WHERE f.user_id != ?");
 
 $smt->execute([$user_id]);
 $freelancers = $smt->fetchALl(PDO::FETCH_ASSOC);
-
+//echo "Les frelanceurs";
 //var_dump($freelancers);
 //echo '<br>';
-//echo "Les frelanceurs";
 
 
 // Récupération des entreprises en bdd
@@ -26,11 +26,9 @@ WHERE i.id != ? AND i.role = 'entreprise' ");
 
 $smt->execute([$user_id]);
 $entreprise = $smt->fetchALl(PDO::FETCH_ASSOC);
-
+//echo "Les entreprises";
 //var_dump($entreprise);
 //echo '<br>';
-
-//echo "Les entreprises";
 
 
 
@@ -52,11 +50,9 @@ $stmtRatings = $bdd->prepare("SELECT
 $stmtRatings->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 $stmtRatings->execute();
 $ratings = $stmtRatings->fetchAll(PDO::FETCH_ASSOC);
-
+//echo "Notes des freelanceurs";
 //var_dump($ratings);
 //echo '<br>';
-//echo "Notes des freelanceurs";
-
 
 
 
@@ -77,6 +73,8 @@ $ratingsentreprise = $stmtRatingsentreprise->fetchAll(PDO::FETCH_ASSOC);
 //echo "Notes des entreprises";
 //var_dump($ratingsentreprise);
 //echo '<br>';
+
+
 
 // Calcul de la moyenne des notes et du nombre de votants pour les freelanceurs
 $notes = []; // tableau pour stocker les moyennes par freelanceur
