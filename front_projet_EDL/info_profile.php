@@ -9,10 +9,20 @@ require_once(__DIR__ . "/../PHP/update_profile.php");
 // Simulation d'utilisateur connecté (à remplacer par session et requête réelle)
 
 $user_id = isset($_GET['id']) ? (int) $_GET['id'] : $_SESSION['user_id'];
-$user_name = isset($_GET['user_name']) ? $_GET['user_name'] : $_SESSION['user_name'];
+//$user_name = isset($_GET['user_name']) ? $_GET['user_name'] : $_SESSION['user_name'];
 
-$stmt = $bdd->prepare("SELECT nom, prenom, email, numero, nomDUtilisateur, photo, role, admin FROM inscription WHERE id = ? && nomDUtilisateur = ?");
-$stmt->execute([$user_id, $user_name]);
+$stmt = $bdd->prepare("SELECT  role FROM inscription WHERE id = ? ");
+$stmt->execute([$user_id]);
+$role = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if ($role['role'] === "entreprise"){
+  header("Location: info_profile_entreprise.php?id=".$user_id);
+  exit;
+}
+
+
+$stmt = $bdd->prepare("SELECT nom, prenom, email, numero, nomDUtilisateur, photo, role, admin FROM inscription WHERE id = ? ");
+$stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 

@@ -1,7 +1,9 @@
 <?php
-session_start();
+//session_start();
 
 require_once(__DIR__."/../bdd/creation_bdd.php");
+require_once(__DIR__."/../PHP/traitement.php");
+
 if(!isset($_SESSION["connecte"]) || $_SESSION["connecte"]!== true){
         header('Location: ../index.php');
         exit();
@@ -68,6 +70,14 @@ $demandes = $result->fetchAll(PDO::FETCH_ASSOC);
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
             <?php unset($_SESSION['success']); ?>
+        <?php endif; ?>
+
+         <?php if (isset($_SESSION['$succes_demande'])): ?>
+            <div class="alert alert-success alert-dismissible fade show">
+                <?= $_SESSION['$succes_demande'] ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+             <?php unset($_SESSION['$succes_demande']); ?>
         <?php endif; ?>
 
         <?php if (empty($demandes)): ?>

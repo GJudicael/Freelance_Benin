@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once(__DIR__."/../bdd/creation_bdd.php");
-
+//$succes_demande = null;
 
 if (isset($_POST['envoyer'])) {
    $description = htmlspecialchars($_POST['demande'] ?? '', ENT_QUOTES, 'UTF-8');
@@ -99,7 +99,9 @@ foreach ($mots_interdits as $mot) {
             'date_souhaitee' => !empty($date_souhaitee) ? $date_souhaitee : null
         ]);
 
-        
+       $_SESSION['$succes_demande'] = "Votre demande a été effectué avec succès. Contacter un freelanceur pour le lui attribué";
+        header("Location: ../front_projet_EDL/Mesdemandes.php");
+        exit;
     }
 }
 ?>

@@ -7,6 +7,7 @@ require_once(__DIR__ . "/../bdd/creation_bdd.php");
 
 $user_id = $_SESSION["user_id"];
 
+// Récupération des freelanceurs en bdd
 $smt = $bdd->prepare("SELECT i.nom, i.prenom, i.nomDUtilisateur, i.photo, f.bio, f.user_id FROM inscription i 
 INNER JOIN freelancers f 
 ON i.id = f.user_id 
@@ -14,23 +15,69 @@ WHERE f.user_id != ?");
 
 $smt->execute([$user_id]);
 $freelancers = $smt->fetchALl(PDO::FETCH_ASSOC);
+var_dump($freelancers);
+echo '<br>';
 
 
-$stmtRatings = $bdd->prepare("SELECT n.stars
-                             FROM notation n
-                             JOIN demande d ON n.order_id = d.id
-                             JOIN freelancers f ON f.id = n.freelancer_id
-                             WHERE f.user_id = :user_id
-                             AND d.statut = 'terminé'");
+// Récupération des entreprises en bdd
+$smt = $bdd->prepare("SELECT i.nom, i.photo, i.description FROM inscription i 
+WHERE i.id != ? AND i.role = 'entreprise' ");
+
+$smt->execute([$user_id]);
+$entreprise = $smt->fetchALl(PDO::FETCH_ASSOC);
+var_dump($entreprise);
+echo '<br>';
+
+
+
+
+// Récupération des notes en bdd pour les freelanceurs
+$stmtRatings = $bdd->prepare("SELECT 
+                              sum(n.stars) AS total_note,
+                              n.freelancer_id ,  COUNT(*) AS occurence
+                              FROM notation n
+                              JOIN demande d ON n.order_id = d.id
+                              JOIN freelancers f ON f.id = n.freelancer_id
+                              WHERE f.user_id != :user_id 
+                              AND d.statut = 'terminé'
+                              GROUP BY freelancer_id");
+
 $stmtRatings->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 $stmtRatings->execute();
 $ratings = $stmtRatings->fetchAll(PDO::FETCH_ASSOC);
+var_dump($ratings);
+echo '<br>';
 
-// Calcul de la moyenne des notes et du nombre de votants
+
+
+// Récupération des notes en bdd pour les entreprises
+$stmtRatingsentreprise = $bdd->prepare("SELECT n.stars,n.freelancer_id
+                             FROM notation n
+                             JOIN demande d ON n.order_id = d.id
+                             JOIN inscription i ON i.id = n.freelancer_id
+                             WHERE i.id != :user_id
+                             AND d.statut = 'terminé' AND i.role = 'entreprise' ");
+$stmtRatingsentreprise->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+$stmtRatingsentreprise->execute();
+$ratingsentreprise = $stmtRatingsentreprise->fetchAll(PDO::FETCH_ASSOC);
+var_dump($ratingsentreprise);
+echo '<br>';
+
+
+
+// Calcul de la moyenne des notes et du nombre de votants pour les freelanceurs
 $total_ratings = count($ratings);
 $average_rating = 0;
 if ($total_ratings > 0) {
     $sum = array_sum(array_column($ratings, 'stars'));
+    $average_rating = round($sum / $total_ratings, 1);
+}
+
+// Calcul de la moyenne des notes et du nombre de votants pour les entreprises
+$total_ratings = count($ratingsentreprise);
+$average_rating = 0;
+if ($total_ratings > 0) {
+    $sum = array_sum(array_column($ratingsentreprise, 'stars'));
     $average_rating = round($sum / $total_ratings, 1);
 }
 
@@ -127,6 +174,12 @@ if ($total_ratings > 0) {
                                                     <a href="info_profile.php?id=<?= $freelancer['user_id'] ?>&user_name=<?= $freelancer['nomDUtilisateur'] ?>"
                                                         class="btn btn-primary">Voir Profil</a>
                                                 </div>
+<<<<<<< HEAD
+=======
+                                                </p>
+                                                <a href="info_profile.php?id=<?= $freelancer['user_id'] ?>"
+                                                    class="btn btn-primary">Voir Profil</a>
+>>>>>>> 4df841b271754b6517befdec3517ce69c88a6a13
                                             </div>
                                         </div>
                                     <?php } ?>
