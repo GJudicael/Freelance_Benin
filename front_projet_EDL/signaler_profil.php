@@ -1,30 +1,41 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
+//if (session_status() === PHP_SESSION_NONE) {
     session_start();
-}
+//}
 
 require_once(__DIR__."/../bdd/creation_bdd.php");
-
+require_once(__DIR__.'/../notifications/fonctions_utilitaires.php');
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $utilisateur_id = $_POST['utilisateur_id'] ?? null;
-    $raison = trim($_POST['raison'] ?? '');
-    $signale_par = $_SESSION['user_id'] ?? null;
+    $utilisateur_id = isset($_POST['utilisateur_id']) ? (int) $_POST['utilisateur_id'] : null;
+$signale_par = isset($_SESSION['user_id']) ? (int) $_SESSION['user_id'] : null;
+$raison = trim($_POST['raison'] ?? '');
+    //$signale_par = $_SESSION['user_id'] ?? null;
+    if ($utilisateur_id === $signale_par)
+        {
+            echo "No1";
+            exit;
+        }
 
     if (!empty($raison)) {
-        // Debug si besoin :
-        // echo "<pre>"; print_r($_POST); print_r($_SESSION); echo "</pre>"; 
-
-        $stmt = $bdd->prepare("INSERT INTO signalements_profil (utilisateur_id, signale_par, raison) VALUES (:utilisateur_id, :signale_par, :raison)");
-        $stmt->execute([
-            'utilisateur_id' => $utilisateur_id,
-            'signale_par' => $signale_par,
-            'raison' => $raison
-        ]);
-
-        header("Location: ../front_projet_EDL/info_profile.php?id=$utilisateur_id&signalement=ok");
-        exit();
-    } else {
-        echo "❌ Veuillez fournir une raison.";
+    if ($utilisateur_id === $signale_par) {
+        echo "❌ Vous ne pouvez pas vous signaler vous-même.";
+        exit;
     }
+
+    $stmt = $bdd->prepare("INSERT INTO signalements_profil (utilisateur_id, signale_par, raison) VALUES (:utilisateur_id, :signale_par, :raison)");
+    $stmt->execute([
+        'utilisateur_id' => $utilisateur_id,
+        'signale_par' => $signale_par,
+        'raison' => $raison
+    ]);
+    
+    // pas de redirection ici
+    echo "✅ Votre signalement a été pris en compte.";
+    exit;
+} else {
+    echo "❌ Veuillez fournir une raison.";
+    exit;
+}
+
 }
 ?>

@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once(__DIR__."/../bdd/creation_bdd.php");
+require_once(__DIR__.'/../notifications/fonctions_utilitaires.php');
 //$succes_demande = null;
 
 if (isset($_POST['envoyer'])) {
@@ -77,8 +78,10 @@ foreach ($mots_interdits as $mot) {
                 header("Location: /freelance_benin/index.php");
                     exit();
             }
-
-            die("❌ Mot interdit détecté (« $mot »). Vous avez reçu un avertissement. ⚠️");
+                    $message="❌ Mot interdit détecté (« $mot »). Vous avez reçu un avertissement. ⚠️";
+                    ajouterNotification($message);
+                    $erreur['description']="Mot interdit détecté $mot";
+           // die();
         }
     }
 }

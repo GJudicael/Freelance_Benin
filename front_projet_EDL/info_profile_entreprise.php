@@ -234,7 +234,20 @@ $_SESSION['logo'] = $comp['photo'];
                 <button type="button" class="btn btn-secondary" onclick="annulerFormulaire()">Annuler</button>
             </form>
         </div>
+         
     </main>
+    <div class=" container">
+                <!-- Bouton Signaler -->
+                <button class="btn btn-outline-danger btn-sm" onclick="toggleSignalement()">🚩 Signaler le profil</button>
+
+                <!-- Formulaire de signalement -->
+                <form action="signaler_profil.php" method="POST" class="mt-3 d-none" id="form-signalement">
+                  <input type="hidden" name="utilisateur_id" value="<?= htmlspecialchars($entreprise_id) ?>"> <!-- à adapter -->
+                  <textarea name="raison" class="form-control mb-2" rows="3"
+                    placeholder="Expliquez la raison du signalement..." required></textarea>
+                  <button type="submit" class="btn btn-danger btn-sm">Envoyer le signalement</button>
+                </form>
+              </div>
 
     <?php require_once(__DIR__ . "/footer.php") ?>
 
@@ -249,6 +262,10 @@ $_SESSION['logo'] = $comp['photo'];
             document.getElementById('infos-affichage').style.display = 'block';
         }
 
+        function toggleSignalement() {
+            const form = document.getElementById('form-signalement');
+            form.classList.toggle('d-none');
+        }
     </script>
 
     <script src="../assets/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>

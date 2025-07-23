@@ -9,6 +9,7 @@ require_once(__DIR__ . "/../PHP/update_profile.php");
 // Simulation d'utilisateur connecté (à remplacer par session et requête réelle)
 
 $user_id = isset($_GET['id']) ? (int) $_GET['id'] : $_SESSION['user_id'];
+
 //$user_name = isset($_GET['user_name']) ? $_GET['user_name'] : $_SESSION['user_name'];
 
 $stmt = $bdd->prepare("SELECT  role FROM inscription WHERE id = ? ");
@@ -357,19 +358,27 @@ $_SESSION['photo'] = $user['photo'];
               <?php endif; ?>
             <?php endif; ?>
 
-            <?php if (isset($_GET['id']) && $user["admin"] !== "admin"): ?>
-              <div class=" container">
-                <!-- Bouton Signaler -->
-                <button class="btn btn-outline-danger btn-sm" onclick="toggleSignalement()">🚩 Signaler le profil</button>
+            <?php if (isset($_GET['id']) && $user["admin"] !== "admin"): 
+              $profil_id = isset($_GET['id']) ? (int) $_GET['id'] : null;?>
 
-                <!-- Formulaire de signalement -->
-                <form action="signaler_profil.php" method="POST" class="mt-3 d-none" id="form-signalement">
-                  <input type="hidden" name="utilisateur_id" value="<?= htmlspecialchars($user_id) ?>"> <!-- à adapter -->
-                  <textarea name="raison" class="form-control mb-2" rows="3"
-                    placeholder="Expliquez la raison du signalement..." required></textarea>
-                  <button type="submit" class="btn btn-danger btn-sm">Envoyer le signalement</button>
-                </form>
-              </div>
+              <div class="container">
+  <!-- Bouton Signaler -->
+  <button class="btn btn-outline-danger btn-sm" onclick="toggleSignalement()">🚩 Signaler le profil</button>
+
+  <!-- Zone de message -->
+  <div id="message-signalement" class="mt-2"></div>
+
+  <!-- Formulaire de signalement -->
+  <form id="form-signalement" class="mt-3 d-none">
+    <input type="hidden" name="utilisateur_id" value="<?= htmlspecialchars($profil_id) ?>">
+    <textarea name="raison" class="form-control mb-2" rows="3" placeholder="Expliquez la raison du signalement..." required></textarea>
+    <button type="submit" class="btn btn-danger btn-sm">Envoyer le signalement</button>
+  </form>
+</div>
+
+
+
+              
             <?php endif; ?>
 
 
@@ -388,10 +397,40 @@ $_SESSION['photo'] = $user['photo'];
             document.getElementById('infos-affichage').style.display = 'block';
           }
 
-          function toggleSignalement() {
-            const form = document.getElementById('form-signalement');
-            form.classList.toggle('d-none');
-          }
+  function toggleSignalement() {
+    document.getElementById('form-signalement').classList.toggle('d-none');
+    document.getElementById('message-signalement').innerHTML = ''; // on efface l'ancien message
+  }
+
+  document.getElementById('form-signalement').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+    const messageDiv = document.getElementById('message-signalement');
+
+    fetch('signaler_profil.php', {
+      method: 'POST',
+      body: formData
+    })
+      .then(response => response.text())
+      .then(response => {
+        if (response.includes("✅") || response.includes("pris en compte")) {
+          messageDiv.innerHTML = `<div class="alert alert-success">✅ Signalement envoyé avec succès !</div>`;
+          form.classList.add('d-none');
+          form.reset();
+        } else if (response.includes("No1")) {
+          messageDiv.innerHTML = `<div class="alert alert-warning">⚠️ Vous ne pouvez pas vous signaler vous-même.</div>`;
+        } else {
+          messageDiv.innerHTML = `<div class="alert alert-danger">${response}</div>`;
+        }
+      })
+      .catch(error => {
+        console.error("Erreur:", error);
+        messageDiv.innerHTML = `<div class="alert alert-danger">Une erreur est survenue. Veuillez réessayer plus tard.</div>`;
+      });
+  });
+
 
         </script>
         <script src="../assets/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>
