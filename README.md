@@ -1,7 +1,5 @@
 # 🌍 Installation locale de FreeBenin
 
-Ce guide vous permet d'installer et d'exécuter FreeBenin en local à l'aide de **XAMPP** pour l'environnement serveur et **LocalTunnel** pour activer les paiements via les API.
-
 ---
 
 ## 🛠 Prérequis
