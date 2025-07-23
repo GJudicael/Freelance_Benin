@@ -136,7 +136,7 @@ $demandes = $result->fetchAll(PDO::FETCH_ASSOC);
                         // Récupération de la liste des freelancers
                         $reqFreelancers = $bdd->prepare("SELECT nomDUtilisateur 
                                                         FROM inscription 
-                                                        WHERE role = 'freelance' 
+                                                        WHERE role IN ('freelance', 'entreprise')
                                                         AND nomDUtilisateur <> 'Utilisateur'");
                         $reqFreelancers->execute();
                         $freelancers = $reqFreelancers->fetchAll(PDO::FETCH_ASSOC);

@@ -107,15 +107,17 @@ $_SESSION['logo'] = $comp['photo'];
             </section>
             
             <?php if (isset($_SESSION['user_id']) && (int)$_SESSION['user_id'] === (int)$entreprise_id): ?>               
-                <span class=" d-flex justify-content-end me-5"><button class="btn btn-outline-primary"
-                        onclick="afficherFormulaire()">Modifier mes
-                        informations</button></span>
-
-            <?php else: ?>
-            <div class="pt-3">
-              <a href="../messagerie/discussions.php?user_id=<?= $_GET['id'] ?>" class="btn btn-info"> Me contacter </a>
-            </div>
-            <?php endif; ?>
+    <div class="d-flex justify-content-end me-5 gap-3">
+        <button class="btn btn-outline-primary" onclick="afficherFormulaire()">Modifier mes informations</button>
+        <a href="ajouter_offre.php" class="btn btn-outline-primary">Ajouter une offre</a>
+        <a href="gerer_offres.php" class="btn btn-outline-primary">Gérer mes offres</a>
+    </div>
+    <?php else: ?>
+    <div class="pt-3 d-flex justify-content-between align-items-center">
+        <a href="../messagerie/discussions.php?user_id=<?= $_GET['id'] ?>" class="btn btn-info">Nous contacter</a>
+        <a href="offres_entreprise.php?id=<?= $_GET['id'] ?>" class="btn btn-outline-primary">Découvrir nos services</a>
+    </div>
+    <?php endif; ?>
 
          
         </div>

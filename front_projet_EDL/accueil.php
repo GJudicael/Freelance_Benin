@@ -233,6 +233,7 @@ foreach ($ratingsEntreprise as $rating) {
             </div>
         </section>
 
+<<<<<<< HEAD
         <!-- Section Entreprises -->
         <section class="mb-5">
             <h3 class="text-center">Nos Entreprises</h3>
@@ -253,6 +254,50 @@ foreach ($ratingsEntreprise as $rating) {
                                                 <h5 class="card-title fw-bold"><?= htmlspecialchars($entreprise['nom']) ?></h5>
                                                 <p class="card-text flex-grow-1"><?= htmlspecialchars($entreprise['description']) ?></p>
                                                 <div class="mb-3 rating">
+=======
+
+<section class=" my-4 py-4 bg-black bg-opacity-75 ">
+    <h3 class="mb-2 text-center fw-bold text-warning p-2 historique"> NOS ENTREPRISES </h3>
+
+    <div id="entrepriseCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <?php
+            $count = count($entreprise);
+            $perSlide = 3;
+            $chunked = array_chunk($entreprise, $perSlide);
+            $active = true;
+
+            // Préparation des moyennes pour entreprises
+            $notes_entreprise = [];
+            foreach ($ratingsentreprise as $rating) {
+                if (!empty($rating['id']) && $rating['occurence'] > 0) {
+                    $notes_entreprise[$rating['id']] = $rating['total_note'] / $rating['occurence'];
+                }
+            }
+
+            foreach ($chunked as $group): ?>
+                <div class="carousel-item <?= $active ? 'active' : '' ?>">
+                    <div class="row justify-content-center px-3">
+                        <?php foreach ($group as $entreprise): ?>
+                            <div class="col-lg-3 col-md-6 ">
+                                <div class="card text-center py-3 my-2 border-0 " style="width: 18vw;">
+                                    <img src="../logo/<?= htmlspecialchars($entreprise['photo']) ?>"
+                                        class="rounded-circle mx-auto d-block" alt="Entreprise" height="100" width="100">
+                                    <div class="card-body">
+                                        <h5 class="card-title fw-bold"><?= htmlspecialchars($entreprise['nom']) ?></h5>
+                                        <p class="card-text"><?= htmlspecialchars($entreprise['description']) ?></p>
+
+                                        <div class="rating card-text mb-2">
+                                            <?php
+                                            $id = $entreprise['id'];
+                                            //$moyenne = isset($notes_entreprise[$id]) ? round($notes_entreprise[$id], 1) : 0;
+                                            //echo afficherEtoiles($moyenne);
+                                            ?>
+
+                                                    <div class="mb-3">
+                                                    <h5>Note moyenne:</h5>
+                                                    <div class="rating">
+>>>>>>> 37bdd84c4e07b54885920e32b460b5bf760cf80f
                                                     <?php
                                                     $id = $entreprise['id'];
                                                     $moyenne = $notes_entreprise[$id] ?? 0;
