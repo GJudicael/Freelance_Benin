@@ -1,6 +1,6 @@
 # Documentation FreeBenin
 
-FreeBenin est une plateforme locale de mise en relation entre freelances béninois et clients. Elle permet aux freelances de créer un profil professionnel, proposer leurs services et recevoir des offres de mission. Les clients, quant à eux, peuvent publier des projets et trouver des prestataires qualifiés.
+FreeBenin est une plateforme locale de mise en relation entre freelanceurs béninois, les entreprises, startup et clients. Elle permet aux freelanceurs de créer un profil professionnel, proposer leurs services et recevoir des offres de mission. Les clients, quant à eux, peuvent publier des projets et trouver des prestataires qualifiés.
 
 ### Première page du site
 

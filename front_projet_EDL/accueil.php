@@ -18,7 +18,7 @@ $freelancers = $smt->fetchAll(PDO::FETCH_ASSOC);
 $smt = $bdd->prepare("SELECT i.id, i.nom, i.photo, i.description FROM inscription i 
 WHERE i.id != ? AND i.role = 'entreprise'");
 $smt->execute([$user_id]);
-$entreprises = $smt->fetchAll(PDO::FETCH_ASSOC);
+$entreprise = $smt->fetchAll(PDO::FETCH_ASSOC);
 
 // Récupération des notes pour freelances
 $stmtRatings = $bdd->prepare("SELECT 
@@ -37,7 +37,7 @@ $stmtRatings->execute();
 $ratings = $stmtRatings->fetchAll(PDO::FETCH_ASSOC);
 
 // Récupération des notes pour entreprises
-$stmtRatingsEntreprise = $bdd->prepare("SELECT 
+$stmtRatingsentreprise = $bdd->prepare("SELECT 
     SUM(n.stars) AS total_note,
     i.id,
     n.freelancer_id,
@@ -48,9 +48,9 @@ JOIN inscription i ON i.id = n.freelancer_id
 WHERE i.id != :user_id
 AND d.statut = 'terminé' AND i.role = 'entreprise'
 GROUP BY i.id");
-$stmtRatingsEntreprise->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-$stmtRatingsEntreprise->execute();
-$ratingsEntreprise = $stmtRatingsEntreprise->fetchAll(PDO::FETCH_ASSOC);
+$stmtRatingsentreprise->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+$stmtRatingsentreprise->execute();
+$ratingsentreprise = $stmtRatingsentreprise->fetchAll(PDO::FETCH_ASSOC);
 
 // Calcul moyennes notes freelances
 $notes = [];
@@ -62,7 +62,7 @@ foreach ($ratings as $rating) {
 
 // Calcul moyennes notes entreprises
 $notes_entreprise = [];
-foreach ($ratingsEntreprise as $rating) {
+foreach ($ratingsentreprise as $rating) {
     if (!empty($rating['id']) && $rating['occurence'] > 0) {
         $notes_entreprise[$rating['id']] = $rating['total_note'] / $rating['occurence'];
     }
@@ -233,28 +233,6 @@ foreach ($ratingsEntreprise as $rating) {
             </div>
         </section>
 
-<<<<<<< HEAD
-        <!-- Section Entreprises -->
-        <section class="mb-5">
-            <h3 class="text-center">Nos Entreprises</h3>
-            <div id="entrepriseCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="7000">
-                <div class="carousel-inner">
-                    <?php
-                    $perSlide = 3;
-                    $chunked = array_chunk($entreprises, $perSlide);
-                    $active = true;
-                    foreach ($chunked as $group): ?>
-                        <div class="carousel-item <?= $active ? 'active' : '' ?>">
-                            <div class="row justify-content-center g-4">
-                                <?php foreach ($group as $entreprise): ?>
-                                    <div class="col-lg-4 col-md-6">
-                                        <div class="card h-100 text-center shadow-sm">
-                                            <img src="../logo/<?= htmlspecialchars($entreprise['photo']) ?>" alt="Logo de <?= htmlspecialchars($entreprise['nom']) ?>" class="rounded-circle mx-auto mt-3" height="120" width="120" />
-                                            <div class="card-body d-flex flex-column">
-                                                <h5 class="card-title fw-bold"><?= htmlspecialchars($entreprise['nom']) ?></h5>
-                                                <p class="card-text flex-grow-1"><?= htmlspecialchars($entreprise['description']) ?></p>
-                                                <div class="mb-3 rating">
-=======
 
 <section class=" my-4 py-4 bg-black bg-opacity-75 ">
     <h3 class="mb-2 text-center fw-bold text-warning p-2 historique"> NOS ENTREPRISES </h3>
@@ -297,7 +275,6 @@ foreach ($ratingsEntreprise as $rating) {
                                                     <div class="mb-3">
                                                     <h5>Note moyenne:</h5>
                                                     <div class="rating">
->>>>>>> 37bdd84c4e07b54885920e32b460b5bf760cf80f
                                                     <?php
                                                     $id = $entreprise['id'];
                                                     $moyenne = $notes_entreprise[$id] ?? 0;
