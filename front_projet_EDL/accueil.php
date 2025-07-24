@@ -234,7 +234,7 @@ foreach ($ratingsentreprise as $rating) {
         </section>
 
 
-<section class=" my-4 py-4 bg-black bg-opacity-75 ">
+<section class=" my-4 py-4">
     <h3 class="mb-2 text-center fw-bold text-warning p-2 historique"> NOS ENTREPRISES </h3>
 
     <div id="entrepriseCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -258,7 +258,7 @@ foreach ($ratingsentreprise as $rating) {
                     <div class="row justify-content-center px-3">
                         <?php foreach ($group as $entreprise): ?>
                             <div class="col-lg-3 col-md-6 ">
-                                <div class="card text-center py-3 my-2 border-0 " style="width: 18vw;">
+                                <div class="card text-center py-3 my-2 border-0 ">
                                     <img src="../logo/<?= htmlspecialchars($entreprise['photo']) ?>"
                                         class="rounded-circle mx-auto d-block" alt="Entreprise" height="100" width="100">
                                     <div class="card-body">
