@@ -18,7 +18,7 @@ $freelancers = $smt->fetchAll(PDO::FETCH_ASSOC);
 $smt = $bdd->prepare("SELECT i.id, i.nom, i.photo, i.description FROM inscription i 
 WHERE i.id != ? AND i.role = 'entreprise'");
 $smt->execute([$user_id]);
-$entreprise = $smt->fetchAll(PDO::FETCH_ASSOC);
+$entreprises = $smt->fetchAll(PDO::FETCH_ASSOC);
 
 // Récupération des notes pour freelances
 $stmtRatings = $bdd->prepare("SELECT 
@@ -37,7 +37,7 @@ $stmtRatings->execute();
 $ratings = $stmtRatings->fetchAll(PDO::FETCH_ASSOC);
 
 // Récupération des notes pour entreprises
-$stmtRatingsentreprise = $bdd->prepare("SELECT 
+$stmtRatingsEntreprise = $bdd->prepare("SELECT 
     SUM(n.stars) AS total_note,
     i.id,
     n.freelancer_id,
@@ -48,9 +48,9 @@ JOIN inscription i ON i.id = n.freelancer_id
 WHERE i.id != :user_id
 AND d.statut = 'terminé' AND i.role = 'entreprise'
 GROUP BY i.id");
-$stmtRatingsentreprise->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-$stmtRatingsentreprise->execute();
-$ratingsentreprise = $stmtRatingsentreprise->fetchAll(PDO::FETCH_ASSOC);
+$stmtRatingsEntreprise->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+$stmtRatingsEntreprise->execute();
+$ratingsEntreprise = $stmtRatingsEntreprise->fetchAll(PDO::FETCH_ASSOC);
 
 // Calcul moyennes notes freelances
 $notes = [];
@@ -62,7 +62,7 @@ foreach ($ratings as $rating) {
 
 // Calcul moyennes notes entreprises
 $notes_entreprise = [];
-foreach ($ratingsentreprise as $rating) {
+foreach ($ratingsEntreprise as $rating) {
     if (!empty($rating['id']) && $rating['occurence'] > 0) {
         $notes_entreprise[$rating['id']] = $rating['total_note'] / $rating['occurence'];
     }
